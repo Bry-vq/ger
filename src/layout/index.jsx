@@ -7,7 +7,7 @@ const MainLayout = () => {
 		<Box
 			sx={{
 				display: "flex",
-				minHeight: "100vh",
+				minHeight: "100%",
 				backgroundColor: "grey.100",
 			}}
 		>

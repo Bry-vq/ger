@@ -1,0 +1,56 @@
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getInsurabilityRangesService } from "../services/rangesServices.js";
+import { QUERY_KEYS } from "../../../utils/constanst.js";
+import { getRiskTypesService } from "../services/riskTypeServices.js";
+import { addRateService, getRatesService } from "../services/ratesServices.js";
+
+export const useRate = (insurerId) => {
+	// Create rate
+	const { mutate: createRate } = useMutation({
+		mutationFn: addRateService,
+		onSuccess: () => {
+			queryClient.invalidateQueries(QUERY_KEYS.RATES);
+		},
+	});
+	// Fetch rates
+	const { data: rates, isFetching: isRatesFetching } = useQuery({
+		queryKey: [QUERY_KEYS.RATES, insurerId],
+		queryFn: () => getRatesService(insurerId),
+	});
+
+	// Fetch insurability ranges
+	const { data: ranges, isFetching: isRangesFetching } = useQuery({
+		queryKey: [QUERY_KEYS.RANGES, insurerId],
+		queryFn: () => getInsurabilityRangesService(insurerId),
+	});
+
+	// Fetch risk types
+	const { data: riskTypes, isFetching: isRiskTypesFetching } = useQuery({
+		queryKey: [QUERY_KEYS.RISK_TYPE, insurerId],
+		queryFn: () => getRiskTypesService(insurerId),
+	});
+
+	// Map ranges for the select input
+	const mappedRanges =
+		ranges?.map((range) => ({
+			value: range.id,
+			label: `${range.rangeStart} - ${range.rangeEnd}`, // Label for the user
+		})) || [];
+
+	// Map risk types for the select input
+	const mappedRiskTypes =
+		riskTypes?.map((type) => ({
+			value: type.id, // ID as value for the select
+			label: type.name, // Name as label for the user
+		})) || [];
+
+	return {
+		rates,
+		isRatesFetching,
+		createRate,
+		ranges: mappedRanges,
+		riskTypes: mappedRiskTypes,
+		isRangesFetching,
+		isRiskTypesFetching,
+	};
+};

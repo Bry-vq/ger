@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Box, Paper, useTheme } from "@mui/material";
+import { Container, Box, Paper, useTheme, Typography } from "@mui/material";
 import LoginForm from "../components/LoginForm.jsx";
 
 const LoginPage = () => {
@@ -11,7 +11,8 @@ const LoginPage = () => {
 				display: "flex",
 				justifyContent: "center",
 				alignItems: "center",
-				// backgroundImage: 'url(/src/assets/Login_Inventio.jpg)',
+				textAlign: "center",
+				//backgroundImage: './src/assets/img/LogoIAR.jpeg)',
 				// backgroundPosition: 'center',
 				// backgroundSize: 'cover',
 			}}
@@ -21,9 +22,10 @@ const LoginPage = () => {
 					elevation={6}
 					sx={{ p: 4, borderTop: `12px solid ${theme.palette.primary.main}` }}
 				>
-					<Box mb={4} textAlign="center">
-						{/* <img  width={300} /> */}
-					</Box>
+					<img src="./src/assets/logoIar.jpg" alt="Logo IAR" />
+					<Typography variant="h4" textAlign="center">
+						Gestor de Inspecciones
+					</Typography>
 					<LoginForm />
 				</Paper>
 			</Container>

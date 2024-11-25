@@ -142,6 +142,9 @@ const overrides = (theme) => ({
       sizeLarge: {
         minHeight: 48,
       },
+      root: {
+        borderRadius: Number(theme.shape.borderRadius) * 2,
+      },
     },
   },
   MuiCard: {
@@ -178,13 +181,35 @@ const overrides = (theme) => ({
     defaultProps: {
       elevation: 0,
     },
+    styleOverrides: {
+      root: {
+        borderRadius: Number(theme.shape.borderRadius) * 2,
+      },
+    },
   },
   MuiTableCell: {
     styleOverrides: {
       head: {
         color: theme.palette.text.secondary,
-        backgroundColor: theme.palette.background.default,
+        backgroundColor: "theme.palette.background.default",
       },
+    },
+  },
+  MuiDataGrid: {
+    styleOverrides: {
+      root: {
+        borderRadius: Number(theme.shape.borderRadius) * 2,
+      },
+    },
+    defaultProps: {
+      slotProps: {
+        pagination: {
+          labelRowsPerPage: "Filas por página",
+          labelDisplayedRows: ({ from, to, count }) =>
+            `${from}–${to} de ${count !== -1 ? count : `más de ${to}`}`,
+        },
+      },
+      localeText:{ noRowsLabel: "No hay resultados" }
     },
   },
   MuiTooltip: {

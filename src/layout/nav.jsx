@@ -1,57 +1,87 @@
-import { Box, Avatar, Typography, List } from "@mui/material";
+import { Box, Typography, List } from "@mui/material";
 import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import navConfig from "./config-navigation.jsx";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 
-// Estilo personalizado para los botones de navegación
 const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
-	color: theme.palette.common.white,
+	color: theme.palette.common.black,
 	"&:hover": {
-		backgroundColor: "rgba(255, 255, 255, 0.08)",
+		backgroundColor: theme.palette.grey[300],
+	},
+	"&.Mui-selected": {
+		backgroundColor: theme.palette.primary.lighter,
+		color: theme.palette.primary.dark,
+		borderLeft: `4px solid ${theme.palette.primary.main}`, // Borde lateral
+		boxShadow: `inset 4px 0 0 ${theme.palette.primary.main}`, // Sombra lateral
 	},
 }));
 
-const NavItem = ({ item, onClick }) => {
+const StyledBox = styled(Box)(({ theme }) => ({
+	color: theme.palette.common.black,
+	"&:hover": {
+		backgroundColor: theme.palette.grey[300],
+		borderRadius: "8px",
+		cursor: "pointer",
+	},
+}));
+
+const NavItem = ({ item, onClick, selected }) => {
 	const { icon, title, path } = item;
 
 	return (
-		<StyledListItemButton onClick={() => onClick(path)}>
-			<ListItemIcon sx={{ color: "common.white" }}>{icon}</ListItemIcon>
-			<ListItemText primary={title} sx={{ color: "common.white" }} />
+		<StyledListItemButton
+			selected={selected}
+			onClick={() => onClick(path)}
+			sx={{
+				"&:hover": {
+					backgroundColor: "grey.300",
+				},
+			}}
+		>
+			<ListItemIcon sx={{ color: "common.black" }}>{icon}</ListItemIcon>
+			<ListItemText primary={title} sx={{ color: "common.black" }} />
 		</StyledListItemButton>
 	);
 };
 
 const Nav = () => {
 	const navigate = useNavigate();
+	const location = useLocation(); // Para obtener la ruta actual
 
 	const handleItemClick = (path) => {
 		navigate(path);
 	};
 
 	const renderAccount = (
-		<Box
+		<StyledBox
 			sx={{
 				my: 3,
 				mx: 2.5,
 				py: 2,
-				px: 2.5,
+				px: 1.5,
 				display: "flex",
+				flexDirection: "column",
+				alignItems: "center",
+				backgroundColor: "grey.300",
+				borderRadius: "8px",
 			}}
 		>
-			<Box sx={{ ml: 2 }}>
-				<Typography variant="h5" sx={{ color: "common.white" }}>
-					GESIAR
-				</Typography>
-			</Box>
-		</Box>
+			<Typography variant="h5" fontWeight={600}>
+				GESIAR
+			</Typography>
+		</StyledBox>
 	);
 
 	const renderMenu = (
 		<List component="nav">
 			{navConfig.map((item) => (
-				<NavItem key={item.title} item={item} onClick={handleItemClick} />
+				<NavItem
+					key={item.title}
+					item={item}
+					onClick={handleItemClick}
+					selected={location.pathname.includes(item.path)}
+				/>
 			))}
 		</List>
 	);
@@ -59,12 +89,12 @@ const Nav = () => {
 	return (
 		<Box
 			sx={{
-				width: 250,
-				backgroundColor: "primary.main",
+				width: 300,
+				backgroundColor: "grey.200",
 				height: "100vh",
 				position: "sticky",
 				top: 0,
-				borderRadius: "0 8px 8px 0",
+				borderRight: "2px solid #e0e0e0",
 				display: "flex",
 				flexDirection: "column",
 			}}

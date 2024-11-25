@@ -8,19 +8,26 @@ const LoginForm = () => {
 				margin="normal"
 				required
 				fullWidth
-				label="Email Address"
+				label="Correro Electronico"
 				name="email"
 				type="email"
-				autoComplete="email"
 			/>
-			<Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
+			<TextField
+				margin="normal"
+				required
+				fullWidth
+				label="Contraseña"
+				name="password"
+				type="password"
+			/>
+			<Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
 				<Button
 					type="button"
 					variant="contained"
 					color="primary"
 					sx={{ mr: 2 }}
 				>
-					Sign In
+					Ingresar
 				</Button>
 			</Box>
 		</Box>
