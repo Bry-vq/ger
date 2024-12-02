@@ -6,13 +6,15 @@ const AxiosClient = () => {
 	});
 };
 
-const requestHeaderMaker = (token) => {
-	return {
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${token}`,
-		},
+const requestHeaderMaker = (token = null) => {
+	const headers = {
+		"Content-Type": "application/json",
+		Accept: "application/json",
 	};
+	if (token) {
+		headers.Authorization = `Bearer ${token}`;
+	}
+	return { headers };
 };
 
 export { AxiosClient, requestHeaderMaker };
