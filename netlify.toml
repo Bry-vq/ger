@@ -6,16 +6,21 @@
 [[headers]]
 for = "/*"
 [headers.values]
-    Content-Security-Policy = """
+  Content-Security-Policy = """
     default-src 'self';
-    connect-src 'self' https://core-backend-gesiar-d4d2aqb2gac6ggc7.canadacentral-01.azurewebsites.net;
-    script-src 'self' 'unsafe-inline';
+    connect-src 'self' https://core-backend-gesiar-d4d2aqb2gac6ggc7.canadacentral-01.azurewebsites.net https://api.netlify.com;
+    script-src 'self' 'unsafe-inline' 'unsafe-eval';
     style-src 'self' 'unsafe-inline';
-    """
+    img-src 'self' data:;
+    font-src 'self';
+    frame-ancestors 'none';
+  """
   Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
   X-Frame-Options = "DENY"
   X-Content-Type-Options = "nosniff"
   Referrer-Policy = "strict-origin-when-cross-origin"
+  Access-Control-Allow-Origin = "https://gesiar.netlify.app"
+  Access-Control-Allow-Credentials = "true"
 
 [[redirects]]
   from = "/*"
