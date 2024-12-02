@@ -1,5 +1,5 @@
 [build]
-  publish = "dist" # Ajusta si tu carpeta de build tiene otro nombre
+  publish = "dist" # Cambia "dist" si tu carpeta de build tiene otro nombre
   command = "pnpm build" # Comando para construir el proyecto
 
 [[headers]]
@@ -22,7 +22,7 @@
     Access-Control-Allow-Credentials = "true"
 
 [[headers]]
-  for = "/*"
+  for = "/api/*"
   [headers.values]
     Access-Control-Allow-Origin = "https://gesiar.netlify.app"
     Access-Control-Allow-Credentials = "true"
@@ -31,8 +31,8 @@
     Cache-Control = "no-cache"
 
 [[redirects]]
-  from = "/*"
-  to = "https://core-backend-gesiar-d4d2aqb2gac6ggc7.canadacentral-01.azurewebsites.net/insurers/:splat"
+  from = "/api/*"
+  to = "https://core-backend-gesiar-d4d2aqb2gac6ggc7.canadacentral-01.azurewebsites.net/:splat"
   status = 200
   force = true
 
