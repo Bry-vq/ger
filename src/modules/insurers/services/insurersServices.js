@@ -5,7 +5,7 @@ export const getInsurersService = async () => {
 	try {
 		const axiosClient = AxiosClient();
 		const requestHeaders = requestHeaderMaker();
-		const response = await axiosClient.get("/insurers", requestHeaders);
+		const response = await axiosClient.get("/insurers/", requestHeaders);
 
 		if (!response.data)
 			throw new Error("Failed to fetch insurers. No response data.");
