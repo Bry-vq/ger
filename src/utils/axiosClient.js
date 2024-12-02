@@ -9,7 +9,7 @@ const AxiosClient = () => {
 const requestHeaderMaker = (token = null) => {
 	const headers = {
 		"Content-Type": "application/json",
-		Accept: "application/json",
+		"Accept": "application/json",
 	};
 	if (token) {
 		headers.Authorization = `Bearer ${token}`;
