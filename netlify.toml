@@ -32,5 +32,11 @@
 
 [[redirects]]
   from = "/*"
+  to = "https://core-backend-gesiar-d4d2aqb2gac6ggc7.canadacentral-01.azurewebsites.net/insurers/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
   to = "/index.html"
   status = 200
