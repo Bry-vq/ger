@@ -18,8 +18,6 @@
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Access-Control-Allow-Origin = "https://gesiar.netlify.app"
-    Access-Control-Allow-Credentials = "true"
 
 [[headers]]
   for = "/api/*"
