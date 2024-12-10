@@ -1,33 +1,36 @@
 import React from "react";
 import { TextField, Button, Box } from "@mui/material";
 
-const LoginForm = () => {
+const LoginForm = ({ onSubmit, register, errors, isPending }) => {
 	return (
-		<Box component="form" noValidate sx={{ mt: 1 }}>
+		<Box component="form" noValidate sx={{ mt: 1 }} onSubmit={onSubmit}>
 			<TextField
 				margin="normal"
 				required
 				fullWidth
-				label="Correro Electronico"
-				name="email"
-				type="email"
+				label="Usuario"
+				{...register("username", { required: "El usuario es requerido" })}
+				error={!!errors.username}
+				helperText={errors.username ? errors.username.message : ""}
 			/>
 			<TextField
 				margin="normal"
 				required
 				fullWidth
 				label="Contraseña"
-				name="password"
 				type="password"
+				{...register("password", { required: "La contraseña es requerida" })}
+				error={!!errors.password}
+				helperText={errors.password ? errors.password.message : ""}
 			/>
 			<Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
 				<Button
-					type="button"
+					type="submit"
 					variant="contained"
 					color="primary"
-					sx={{ mr: 2 }}
+					disabled={isPending}
 				>
-					Ingresar
+					{isPending ? "Cargando..." : "Ingresar"}
 				</Button>
 			</Box>
 		</Box>
