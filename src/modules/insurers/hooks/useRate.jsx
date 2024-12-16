@@ -42,7 +42,7 @@ export const useRate = (insurerId) => {
 	const mappedRiskTypes =
 		riskTypes?.map((type) => ({
 			value: type.id, // ID as value for the select
-			label: type.name, // Name as label for the user
+			label: `${type.name} - ${type.description}`, // Name as label for the user
 		})) || [];
 
 	return {

@@ -83,9 +83,15 @@ export const InsureRates = () => {
 		},
 		{
 			field: "insuredValue",
-			headerName: "Valor Asegurado",
+			headerName: "Valor Tarifa",
 			flex: 2,
 			renderCell: (params) => formatCurrency(params.row.insuredValue),
+		},
+		{
+			field: "fee",
+			headerName: "Honorario Inspector",
+			flex: 2,
+			renderCell: (params) => formatCurrency(params.row.fee),
 		},
 		{
 			field: "actions",
@@ -153,7 +159,7 @@ export const InsureRates = () => {
 									<Select {...field} error={!!errors.riskTypeId}>
 										{riskTypes.map((type, i) => (
 											<MuiMenuItem key={type.value} value={type.value}>
-												{console.log(type)}
+												{console.log("type", type)}
 												{type.label}
 											</MuiMenuItem>
 										))}
@@ -196,12 +202,12 @@ export const InsureRates = () => {
 						{/* Field for Insured Value */}
 						<TextField
 							margin="dense"
-							label="Valor Asegurado"
+							label="Valor Tarifa"
 							fullWidth
 							variant="outlined"
 							type="number"
 							{...register("insuredValue", {
-								required: "El valor asegurado es obligatorio",
+								required: "El valor de la tarifa asegurada es obligatorio",
 							})}
 							error={!!errors.insuredValue}
 							helperText={errors.insuredValue?.message}
@@ -209,12 +215,12 @@ export const InsureRates = () => {
 						{/* Field for Fee */}
 						<TextField
 							margin="dense"
-							label="Tarifa"
+							label="Honorario Inspector"
 							fullWidth
 							variant="outlined"
 							type="number"
 							{...register("fee", {
-								required: "La tarifa es obligatoria",
+								required: "La tarifa del inspector es obligatoria",
 							})}
 							error={!!errors.fee}
 							helperText={errors.fee?.message}
