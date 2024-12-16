@@ -3,13 +3,14 @@ import { getInsurabilityRangesService } from "../services/rangesServices.js";
 import { QUERY_KEYS } from "../../../utils/constanst.js";
 import { getRiskTypesService } from "../services/riskTypeServices.js";
 import { addRateService, getRatesService } from "../services/ratesServices.js";
+import { queryClient } from "../../../utils/queryClient.js";
 
 export const useRate = (insurerId) => {
 	// Create rate
 	const { mutate: createRate } = useMutation({
 		mutationFn: addRateService,
 		onSuccess: () => {
-			queryClient.invalidateQueries(QUERY_KEYS.RATES);
+			queryClient().invalidateQueries(QUERY_KEYS.RATES);
 		},
 	});
 	// Fetch rates

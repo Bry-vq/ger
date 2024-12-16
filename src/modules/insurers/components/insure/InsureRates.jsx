@@ -32,7 +32,7 @@ export const InsureRates = () => {
 	const [isOptionsMenuOpen, setIsOptionsMenuOpen] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const { insurerId } = useParams();
-	const { ranges, riskTypes } = useRate(insurerId);
+	const { rates, ranges, riskTypes, createRate } = useRate(insurerId);
 	const {
 		register,
 		control,
@@ -60,25 +60,30 @@ export const InsureRates = () => {
 	};
 
 	const onSubmit = (data) => {
-		console.log(data);
+		createRate({ ...data, insurerId });
 		handleModalClose();
 	};
 
 	const columns = [
 		{ field: "id", headerName: "ID", flex: 1 },
-		{ field: "risk_type", headerName: "Tipo de Riesgo", flex: 2 },
 		{
-			field: "insurability_range",
+			field: "riskType",
+			headerName: "Tipo de Riesgo",
+			flex: 2,
+			renderCell: (params) => params.row.riskType.name,
+		},
+		{
+			field: "insurabilityRange",
 			headerName: "Rango",
 			flex: 2,
 			renderCell: (params) =>
-				formatRangeAsCurrency(params.row.insurability_range),
+				formatRangeAsCurrency(`${params.row.insurabilityRange.rangeStart} - ${params.row.insurabilityRange.rangeEnd}`),
 		},
 		{
-			field: "insured_value",
+			field: "insuredValue",
 			headerName: "Valor Asegurado",
 			flex: 2,
-			renderCell: (params) => formatCurrency(params.row.insured_value),
+			renderCell: (params) => formatCurrency(params.row.insuredValue),
 		},
 		{
 			field: "actions",
@@ -108,6 +113,7 @@ export const InsureRates = () => {
 			),
 		},
 	];
+	console.log("rates", rates);
 
 	return (
 		<Box>
@@ -120,7 +126,7 @@ export const InsureRates = () => {
 
 			{/* Table displaying insurance rates */}
 			<Paper elevation={1}>
-				<DataGrid columns={columns} rows={[]} getRowId={(row) => row.value} />
+				<DataGrid columns={columns} rows={rates ?? []} />
 			</Paper>
 
 			{/* Modal for adding a new insurance rate */}
@@ -137,12 +143,12 @@ export const InsureRates = () => {
 						<FormControl fullWidth margin="dense">
 							<InputLabel>Tipo de Riesgo</InputLabel>
 							<Controller
-								name="risk_type"
+								name="riskTypeId"
 								control={control}
 								defaultValue=""
 								rules={{ required: "El tipo de riesgo es obligatorio" }}
 								render={({ field }) => (
-									<Select {...field} error={!!errors.risk_type}>
+									<Select {...field} error={!!errors.riskTypeId}>
 										{riskTypes.map((type, i) => (
 											<MuiMenuItem key={type.value} value={type.value}>
 												{console.log(type)}
@@ -152,9 +158,9 @@ export const InsureRates = () => {
 									</Select>
 								)}
 							/>
-							{errors.risk_type && (
+							{errors.riskTypeId && (
 								<Box color="error.main" fontSize="small">
-									{errors.risk_type.message}
+									{errors.riskTypeId.message}
 								</Box>
 							)}
 						</FormControl>
@@ -162,14 +168,14 @@ export const InsureRates = () => {
 						<FormControl fullWidth margin="dense">
 							<InputLabel>Rango de Asegurabilidad</InputLabel>
 							<Controller
-								name="insurability_range"
+								name="insurabilityRangeId"
 								control={control}
 								defaultValue=""
 								rules={{
 									required: "El rango de asegurabilidad es obligatorio",
 								}}
 								render={({ field }) => (
-									<Select {...field} error={!!errors.insurability_range}>
+									<Select {...field} error={!!errors.insurabilityRangeId}>
 										{ranges.map((range) => (
 											<MuiMenuItem key={range.value} value={range.value}>
 												{console.log(range)}
@@ -179,9 +185,9 @@ export const InsureRates = () => {
 									</Select>
 								)}
 							/>
-							{errors.insurability_range && (
+							{errors.insurabilityRangeId && (
 								<Box color="error.main" fontSize="small">
-									{errors.insurability_range.message}
+									{errors.insurabilityRangeId.message}
 								</Box>
 							)}
 						</FormControl>
@@ -192,11 +198,11 @@ export const InsureRates = () => {
 							fullWidth
 							variant="outlined"
 							type="number"
-							{...register("insured_value", {
+							{...register("insuredValue", {
 								required: "El valor asegurado es obligatorio",
 							})}
-							error={!!errors.insured_value}
-							helperText={errors.insured_value?.message}
+							error={!!errors.insuredValue}
+							helperText={errors.insuredValue?.message}
 						/>
 						<DialogActions>
 							<Button onClick={handleModalClose} color="primary">
