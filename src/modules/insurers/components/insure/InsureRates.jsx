@@ -65,12 +65,17 @@ export const InsureRates = () => {
 	};
 
 	const columns = [
-		{ field: "id", headerName: "ID", flex: 1 },
 		{
-			field: "riskType",
+			field: "riskTypeName",
 			headerName: "Tipo de Riesgo",
 			flex: 2,
 			renderCell: (params) => params.row.riskType.name,
+		},
+		{
+			field: "riskTypeDescription",
+			headerName: "Descripcion",
+			flex: 2,
+			renderCell: (params) => params.row.riskType.description,
 		},
 		{
 			field: "insurabilityRange",
