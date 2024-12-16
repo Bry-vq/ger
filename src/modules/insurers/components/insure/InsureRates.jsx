@@ -77,7 +77,9 @@ export const InsureRates = () => {
 			headerName: "Rango",
 			flex: 2,
 			renderCell: (params) =>
-				formatRangeAsCurrency(`${params.row.insurabilityRange.rangeStart} - ${params.row.insurabilityRange.rangeEnd}`),
+				formatRangeAsCurrency(
+					`${params.row.insurabilityRange.rangeStart} - ${params.row.insurabilityRange.rangeEnd}`,
+				),
 		},
 		{
 			field: "insuredValue",
@@ -204,6 +206,20 @@ export const InsureRates = () => {
 							error={!!errors.insuredValue}
 							helperText={errors.insuredValue?.message}
 						/>
+						{/* Field for Fee */}
+						<TextField
+							margin="dense"
+							label="Tarifa"
+							fullWidth
+							variant="outlined"
+							type="number"
+							{...register("fee", {
+								required: "La tarifa es obligatoria",
+							})}
+							error={!!errors.fee}
+							helperText={errors.fee?.message}
+						/>
+						{/* Dialog actions */}
 						<DialogActions>
 							<Button onClick={handleModalClose} color="primary">
 								Cancelar
