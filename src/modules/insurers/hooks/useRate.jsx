@@ -45,8 +45,24 @@ export const useRate = (insurerId) => {
 			label: `${type.name} - ${type.description}`, // Name as label for the user
 		})) || [];
 
+	// 📌 Flatten rates TODO: this can be improved from backend
+	const flattenedRates =
+		rates?.map((rate) => ({
+			id: rate.id,
+			insurerId: rate.insurerId,
+			insuredValue: rate?.insuredValue ?? 0,
+			fee: rate?.fee ?? 0,
+			riskTypeId: rate?.riskType?.id ?? "",
+			riskTypeName: rate?.riskType?.name ?? "",
+			riskTypeDescription: rate?.riskType?.description ?? "",
+			insurabilityRangeId: rate?.insurabilityRange?.id ?? "",
+			insurabilityRangeText: `${rate?.insurabilityRange?.rangeStart ?? 0} - ${rate?.insurabilityRange?.rangeEnd ?? 0}`,
+			insurerName: rate?.insurer?.name ?? "",
+			...rate,
+		})) || [];
+
 	return {
-		rates,
+		rates: flattenedRates,
 		isRatesFetching,
 		createRate,
 		ranges: mappedRanges,

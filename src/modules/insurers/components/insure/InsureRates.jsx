@@ -69,22 +69,20 @@ export const InsureRates = () => {
 			field: "riskTypeName",
 			headerName: "Tipo de Riesgo",
 			flex: 2,
-			renderCell: (params) => params.row.riskType.name,
+			renderCell: (params) => params.row.riskTypeName,
 		},
 		{
 			field: "riskTypeDescription",
 			headerName: "Descripcion",
 			flex: 2,
-			renderCell: (params) => params.row.riskType.description,
+			renderCell: (params) => params.row.riskTypeDescription,
 		},
 		{
 			field: "insurabilityRange",
 			headerName: "Rango",
 			flex: 2,
 			renderCell: (params) =>
-				formatRangeAsCurrency(
-					`${params.row.insurabilityRange.rangeStart} - ${params.row.insurabilityRange.rangeEnd}`,
-				),
+				formatRangeAsCurrency(params.row.insurabilityRangeText),
 		},
 		{
 			field: "insuredValue",
@@ -126,7 +124,6 @@ export const InsureRates = () => {
 			),
 		},
 	];
-	console.log("rates", rates);
 
 	return (
 		<Box>
