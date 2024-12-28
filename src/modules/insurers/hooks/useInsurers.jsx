@@ -19,6 +19,7 @@ export const useInsurers = () => {
 			queryClient().invalidateQueries({
 				queryKey: [QUERY_KEYS.INSURES],
 			});
+			// toast.success("Aseguradora agregada correctamente");
 		},
 		onError: (error) => {
 			console.error(error);

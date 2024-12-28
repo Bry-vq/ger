@@ -13,6 +13,7 @@ export const useRate = (insurerId) => {
 			queryClient().invalidateQueries(QUERY_KEYS.RATES);
 		},
 	});
+	
 	// Fetch rates
 	const { data: rates, isFetching: isRatesFetching } = useQuery({
 		queryKey: [QUERY_KEYS.RATES, insurerId],

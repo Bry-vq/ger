@@ -1,5 +1,10 @@
 import { IconFile } from "@tabler/icons-react";
-import { IconHome, IconSettings, IconShieldCheck } from "@tabler/icons-react";
+import {
+	IconHome,
+	IconSettings,
+	IconShieldCheck,
+	IconUsers,
+} from "@tabler/icons-react";
 
 const navConfig = [
 	{
@@ -16,6 +21,11 @@ const navConfig = [
 		title: "Aseguradoras",
 		path: "/aseguradoras",
 		icon: <IconShieldCheck />,
+	},
+	{
+		title: "Asegurados",
+		path: "/asegurados",
+		icon: <IconUsers />,
 	},
 	{
 		title: "Configuración",

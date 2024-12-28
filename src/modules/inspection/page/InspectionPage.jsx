@@ -10,9 +10,31 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { InspectionTable } from "../components/InspectionTable.jsx";
+import { InspectionForm } from "../components/InspectionForm.jsx";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export const InspectionPage = () => {
 	const [open, setOpen] = useState(false);
+	const {
+		register,
+		handleSubmit,
+		reset,
+		control,
+		onSubmit,
+		formState: { errors },
+	} = useForm({
+		resolver: yupResolver({}),
+		defaultValues: {
+			name: "",
+			document: "",
+			email: "",
+			address: "",
+			department: "",
+			city: "",
+			phone: "",
+		},
+	});
 
 	return (
 		<Box sx={{ width: "100%", minHeight: "100%", p: 3 }}>
@@ -52,12 +74,11 @@ export const InspectionPage = () => {
 			>
 				<DialogTitle>Agregar Inspección</DialogTitle>
 				<DialogContent>
-					{/* <InsureForm onSubmit={handleFormSubmit} /> */}
-					<TextField
-						fullWidth
-						label="Nombre"
-						variant="outlined"
-						sx={{ mb: 2 }}
+					<InspectionForm
+						register={register}
+						control={control}
+						errors={errors}
+						onSubmit={onSubmit}
 					/>
 				</DialogContent>
 				<DialogActions>

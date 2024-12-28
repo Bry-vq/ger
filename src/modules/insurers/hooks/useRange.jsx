@@ -26,6 +26,19 @@ export const useRange = (insurerId) => {
 		},
 	});
 
+	// const { mutateAsync: updateRange } = useMutation({
+	// 	mutationFn: updateInsurabilityRangeService,
+	// 	queryKey: [QUERY_KEYS.RANGES],
+	// 	onSuccess: async () => {
+	// 		await queryClient().invalidateQueries({
+	// 			queryKey: [QUERY_KEYS.RANGES],
+	// 		});
+	// 	},
+	// 	onError: (error) => {
+	// 		console.error(error);
+	// 	},
+	// });
+
 	return {
 		ranges,
 		isRangesFetching,

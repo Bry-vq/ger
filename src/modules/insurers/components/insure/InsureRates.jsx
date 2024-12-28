@@ -11,7 +11,6 @@ import {
 	DialogTitle,
 	TextField,
 	Select,
-	MenuItem as MuiMenuItem,
 	FormControl,
 	InputLabel,
 } from "@mui/material";
@@ -102,14 +101,14 @@ export const InsureRates = () => {
 			renderCell: (params) => (
 				<Box display="flex" justifyContent="center">
 					<IconButton
-						onClick={(event) => handleMenuOptionClick(event, params.row.value)}
+						onClick={(event) => handleMenuOptionClick(event, params.row.id)}
 					>
 						<IconDotsVertical />
 					</IconButton>
 					<Menu
 						id="basic-menu"
 						anchorEl={anchorEl}
-						open={isOptionsMenuOpen && selectedRowId === params.row.value}
+						open={isOptionsMenuOpen && selectedRowId === params.row.id}
 						onClose={handleMenuOptionClose}
 						MenuListProps={{
 							"aria-labelledby": "basic-button",
@@ -160,10 +159,9 @@ export const InsureRates = () => {
 								render={({ field }) => (
 									<Select {...field} error={!!errors.riskTypeId}>
 										{riskTypes.map((type, i) => (
-											<MuiMenuItem key={type.value} value={type.value}>
-												{console.log("type", type)}
+											<MenuItem key={type.value} value={type.value}>
 												{type.label}
-											</MuiMenuItem>
+											</MenuItem>
 										))}
 									</Select>
 								)}

@@ -1,55 +1,52 @@
+import React, { useState } from "react";
 import {
 	Box,
 	Button,
-	Typography,
 	Dialog,
-	DialogTitle,
-	DialogContent,
 	DialogActions,
+	DialogContent,
+	DialogTitle,
+	Typography,
 } from "@mui/material";
-import { InsurersTable } from "../components/insure/InsuresTable";
-import { InsureForm } from "../components/insure/InsureForm";
-import { useInsurers } from "../hooks/useInsurers";
-import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
+import * as yup from "yup";
+import { InsuredTable } from "../components/InsuredTable.jsx";
+import { InsuredForm } from "../components/InsuerdForm.jsx";
 
-const insureFormSchema = yup.object().shape({
-	name: yup.string().required("Nombre es obligatorio"),
-	document: yup.string().required("Documento es obligatorio"),
-	email: yup.string().email("Email no válido").required("Email es obligatorio"),
-	address: yup.string().required("Dirección es obligatoria"),
-	department: yup.string().required("Departamento es obligatorio"),
+const insuredFormSchema = yup.object().shape({
+	name: yup.string().required("Razon Social Asegurado es obligatoria"),
+	document: yup.string().required("Documento del Asegurado es obligatorio"),
+	documentType: yup.string().required("Tipo de Documento es obligatorio"),
+	address: yup.string().required("Dirección Asegurado es obligatoria"),
 	city: yup.string().required("Ciudad es obligatoria"),
-	phone: yup.string().required("Teléfono es obligatorio"),
+	department: yup.string().required("Departamento Asegurado es obligatorio"),
 });
 
-export const InsuresPage = () => {
-	const { insures, isInsuresFetching, addInsurer } = useInsurers();
+export const InsuredPage = () => {
 	const [open, setOpen] = useState(false);
 	const {
 		register,
 		handleSubmit,
 		reset,
+		control,
 		formState: { errors },
 	} = useForm({
-		resolver: yupResolver(insureFormSchema),
+		resolver: yupResolver(insuredFormSchema),
 		defaultValues: {
 			name: "",
+			documentType: "",
 			document: "",
-			email: "",
 			address: "",
-			department: "",
 			city: "",
-			phone: "",
+			department: "",
 		},
 	});
 
 	const handleFormSubmit = (data) => {
-		addInsurer(data);
-		reset();
-		setOpen(false);
+		console.log(data);
+		// reset();
+		// setOpen(false);
 	};
 
 	return (
@@ -62,19 +59,14 @@ export const InsuresPage = () => {
 				}}
 			>
 				<Typography variant="h4" fontWeight="bold">
-					Aseguradoras
+					Asegurados
 				</Typography>
-				<Button
-					variant="contained"
-					color="primary"
-					onClick={() => setOpen(true)}
-					sx={{ height: 40 }}
-				>
-					Agregar aseguradora
+				<Button variant="contained" onClick={() => setOpen(true)}>
+					Agregar Asegurado
 				</Button>
 			</Box>
 
-			<InsurersTable data={insures} isLoading={isInsuresFetching} />
+			<InsuredTable />
 
 			<Dialog
 				open={open}
@@ -88,12 +80,13 @@ export const InsuresPage = () => {
 					},
 				}}
 			>
-				<DialogTitle>Agregar Aseguradora</DialogTitle>
+				<DialogTitle>Agregar Asegurado</DialogTitle>
 				<DialogContent>
-					<InsureForm
+					<InsuredForm
 						register={register}
 						errors={errors}
 						onSubmit={handleSubmit(handleFormSubmit)}
+						control={control}
 					/>
 				</DialogContent>
 				<DialogActions>
@@ -101,7 +94,7 @@ export const InsuresPage = () => {
 						Cancelar
 					</Button>
 					<Button
-						form="insure-form"
+						form="insured-form"
 						type="submit"
 						color="primary"
 						variant="contained"

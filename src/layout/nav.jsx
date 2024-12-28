@@ -12,8 +12,8 @@ const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
 	"&.Mui-selected": {
 		backgroundColor: theme.palette.primary.lighter,
 		color: theme.palette.primary.dark,
-		borderLeft: `4px solid ${theme.palette.primary.main}`, // Borde lateral
-		boxShadow: `inset 4px 0 0 ${theme.palette.primary.main}`, // Sombra lateral
+		borderLeft: `4px solid ${theme.palette.primary.main}`, 
+		boxShadow: `inset 4px 0 0 ${theme.palette.primary.main}`,
 	},
 }));
 
@@ -47,7 +47,7 @@ const NavItem = ({ item, onClick, selected }) => {
 
 const Nav = () => {
 	const navigate = useNavigate();
-	const location = useLocation(); // Para obtener la ruta actual
+	const location = useLocation();
 
 	const handleItemClick = (path) => {
 		navigate(path);

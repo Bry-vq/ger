@@ -7,6 +7,11 @@ import {
 	ListItemText,
 	Typography,
 	Paper,
+	Button,
+	Dialog,
+	DialogTitle,
+	DialogContent,
+	DialogActions,
 } from "@mui/material";
 import { IconInfoCircle, IconPhone } from "@tabler/icons-react";
 import { useTheme } from "@mui/material/styles";
@@ -18,6 +23,7 @@ export const InsureDetail = () => {
 	const { insurerId } = useParams();
 	const { insurer } = useInsurer(insurerId);
 	const [activeTab, setActiveTab] = useState(0);
+	const [open, setOpen] = useState(false);
 
 	const handleSelectTab = (tabIndex) => {
 		setActiveTab(tabIndex);
@@ -122,7 +128,51 @@ export const InsureDetail = () => {
 			</Box>
 
 			<Box flex={5} p={3} sx={{ backgroundColor: theme.palette.grey[100] }}>
-				{renderContent()}
+				<Box
+					sx={{
+						display: "flex",
+						justifyContent: "space-between",
+					}}
+				>
+					{renderContent()}
+					<Button
+						variant="contained"
+						sx={{ height: 40 }}
+						onClick={() => {
+							setOpen(true);
+						}}
+					>
+						Editar
+					</Button>
+				</Box>
+				<Dialog
+					open={open}
+					onClose={() => setOpen(false)}
+					maxWidth="md"
+					fullWidth
+					sx={{
+						"& .MuiDialog-paper": {
+							width: "50%",
+							maxWidth: "none",
+						},
+					}}
+				>
+					<DialogTitle>Editar Aseguradora</DialogTitle>
+					<DialogContent>Aqui sera el modal de editar</DialogContent>
+					<DialogActions>
+						<Button onClick={() => setOpen(false)} color="primary">
+							Cancelar
+						</Button>
+						<Button
+							form="insure-form"
+							type="submit"
+							color="primary"
+							variant="contained"
+						>
+							Guardar
+						</Button>
+					</DialogActions>
+				</Dialog>
 			</Box>
 		</Paper>
 	);

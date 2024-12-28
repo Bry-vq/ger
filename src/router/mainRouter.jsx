@@ -5,6 +5,7 @@ import { HomeRouterStack } from "../modules/home/router/HomeRouter.jsx";
 import { InsureRouterStack } from "../modules/insurers/router/insureRouter.jsx";
 import { InspectionRouterStack } from "../modules/inspection/router/inspectionRouter.jsx";
 import { useAuth } from "../modules/auth/login/hooks/useAuth.jsx";
+import { InsuredRouterStack } from "../modules/insured/router/insuredRouter.jsx";
 
 export function PrivateRoute({ children }) {
 	const { authState } = useAuth();
@@ -41,6 +42,7 @@ export const router = createBrowserRouter([
 			HomeRouterStack,
 			InsureRouterStack,
 			InspectionRouterStack,
+			InsuredRouterStack,
 			{ path: "*", element: <Navigate to="/home" replace /> }, // Fallback route
 		],
 	},

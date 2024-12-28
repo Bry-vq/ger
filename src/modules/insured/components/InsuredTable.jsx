@@ -11,7 +11,7 @@ import { IconDotsVertical, IconEye } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 
-export const InsurersTable = ({ data = [], isLoading }) => {
+export const InsuredTable = ({ data = [], isLoading }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [selectedRowId, setSelectedRowId] = useState(null);
 	const [isOptionsMenuOpen, setIsOptionsMenuOpen] = useState(false);
@@ -31,7 +31,7 @@ export const InsurersTable = ({ data = [], isLoading }) => {
 	const columns = [
 		{ field: "id", headerName: "ID", flex: 1 },
 		{ field: "document", headerName: "Documento", flex: 1 },
-		{ field: "name", headerName: "Nombre", flex: 1 },
+		{ field: "name", headerName: "Razón Social", flex: 1 },
 		{
 			field: "actions",
 			headerName: "",
@@ -53,7 +53,7 @@ export const InsurersTable = ({ data = [], isLoading }) => {
 					>
 						<MenuItem
 							onClick={() => {
-								navigate(`/aseguradoras/${params.row.id}`);
+								navigate(`/asegurado/${params.row.id}`);
 								handleMenuOptionClose();
 							}}
 						>
