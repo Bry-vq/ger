@@ -1,10 +1,17 @@
-import { Box, IconButton, Menu, MenuItem, Paper } from "@mui/material";
+import {
+	Box,
+	CircularProgress,
+	IconButton,
+	Menu,
+	MenuItem,
+	Paper,
+} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
 import { IconDotsVertical, IconEye } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 
-export const EmployeesTable = ({ employees }) => {
+export const EmployeesTable = ({ employees, isLoading }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [selectedRowId, setSelectedRowId] = useState(null); // Para almacenar la fila seleccionada
 	const [isOptionsMenuOpen, setIsOptionsMenuOpen] = useState(false);
@@ -64,8 +71,31 @@ export const EmployeesTable = ({ employees }) => {
 		},
 	];
 	return (
-		<Paper elevation={1}>
-			<DataGrid columns={columns} rows={employees} getRowId={(row) => row.id} />
+		<Paper elevation={1} sx={{ height: "500px" }}>
+			{isLoading ? (
+				<Box
+					display="flex"
+					justifyContent="center"
+					alignItems="center"
+					height="100%"
+				>
+					<CircularProgress />
+				</Box>
+			) : (
+				<DataGrid
+					columns={columns}
+					rows={employees}
+					getRowId={(row) => row.id}
+				/>
+			)}
 		</Paper>
+		// <Paper elevation={1}>
+		// 	<DataGrid
+		// 		columns={columns}
+		// 		rows={employees}
+		// 		getRowId={(row) => row.id}
+		// 		isLoading={isLoading}
+		// 	/>
+		// </Paper>
 	);
 };

@@ -25,7 +25,7 @@ const employeesFormSchema = yup.object().shape({
 
 export const EmployeesPage = () => {
 	const [open, setOpen] = useState(false);
-	const { employees, addEmployee } = useEmployee();
+	const { employees, isEmployeesFetching, addEmployee } = useEmployee();
 	const {
 		register,
 		handleSubmit,
@@ -71,7 +71,7 @@ export const EmployeesPage = () => {
 				</Button>
 			</Box>
 
-			<EmployeesTable employees={employees} />
+			<EmployeesTable employees={employees} isLoading={isEmployeesFetching} />
 
 			<Dialog
 				open={open}

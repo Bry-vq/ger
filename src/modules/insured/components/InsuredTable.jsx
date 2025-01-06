@@ -11,7 +11,7 @@ import { IconDotsVertical, IconEye } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 
-export const InsuredTable = ({ data = [], isLoading }) => {
+export const InsuredTable = ({ data, isLoading }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [selectedRowId, setSelectedRowId] = useState(null);
 	const [isOptionsMenuOpen, setIsOptionsMenuOpen] = useState(false);

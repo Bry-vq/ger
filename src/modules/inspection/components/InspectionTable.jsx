@@ -1,4 +1,11 @@
-import { Box, IconButton, Menu, MenuItem, Paper } from "@mui/material";
+import {
+	Box,
+	CircularProgress,
+	IconButton,
+	Menu,
+	MenuItem,
+	Paper,
+} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
 import { IconDotsVertical, IconEye } from "@tabler/icons-react";
@@ -23,7 +30,7 @@ const mockInsurers = [
 	},
 ];
 
-export const InspectionTable = () => {
+export const InspectionTable = ({ data = [], isLoading }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [selectedRowId, setSelectedRowId] = useState(null); // Para almacenar la fila seleccionada
 	const [isOptionsMenuOpen, setIsOptionsMenuOpen] = useState(false);
@@ -88,11 +95,24 @@ export const InspectionTable = () => {
 
 	return (
 		<Paper elevation={1}>
-			<DataGrid
-				columns={columns}
-				rows={mockInsurers}
-				getRowId={(row) => row.id}
-			/>
+			{isLoading ? (
+				<Box
+					display="flex"
+					justifyContent="center"
+					alignItems="center"
+					height="100%"
+				>
+					<CircularProgress />
+				</Box>
+			) : (
+				<DataGrid
+					rows={data}
+					columns={columns}
+					pageSize={5}
+					rowsPerPageOptions={[5]}
+					checkboxSelection
+				/>
+			)}
 		</Paper>
 	);
 };
