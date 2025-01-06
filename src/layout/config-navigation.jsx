@@ -28,7 +28,7 @@ const navConfig = [
 		icon: <IconUsers />,
 	},
 	{
-		title: "Empleados",
+		title: "Inspectores",
 		path: "/empleados",
 		icon: <IconUsers />,
 	},

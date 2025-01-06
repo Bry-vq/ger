@@ -4,6 +4,7 @@ import {
 	addEmployeeService,
 	getEmployeesService,
 } from "../services/employeesServices.jsx";
+import { queryClient } from "../../../utils/queryClient.js";
 
 export const useEmployee = () => {
 	const { data: employees, isFetching: isEmployeesFetching } = useQuery({
