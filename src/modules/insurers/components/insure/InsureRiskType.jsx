@@ -55,7 +55,6 @@ export const InsureRiskType = () => {
 			...data,
 			insurerId: Number.parseInt(insurerId),
 		};
-		console.log(finalData);
 		addRisk(finalData);
 		handleModalClose();
 	};

@@ -1,3 +1,11 @@
+import { useInsurerBranches } from "../../hooks/useInsurerBranch.jsx";
+import { IconDotsVertical, IconEye } from "@tabler/icons-react";
+import { BranchForm } from "../branch/BranchForm.jsx";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { DataGrid } from "@mui/x-data-grid";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import * as yup from "yup";
 import {
 	Box,
 	Button,
@@ -10,29 +18,56 @@ import {
 	DialogContent,
 	DialogActions,
 } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import { useState } from "react";
-import { IconDotsVertical, IconEye } from "@tabler/icons-react";
-import { BranchForm } from "../branch/BranchForm.jsx";
-import { useInsurerBranches } from "../../hooks/useInsurerBranch.jsx";
+import { useParams } from "react-router-dom";
+
+const branchesFormSchema = yup.object().shape({
+	address: yup.string().required("Dirección es obligatoria"),
+	city: yup.string().required("Ciudad es obligatoria"),
+	department: yup.string().required("Departamento es obligatorio"),
+});
 
 export const BranchesTable = () => {
-	const [anchorEl, setAnchorEl] = useState(null);
-	const [selectedRowId, setSelectedRowId] = useState(null); // Para almacenar la fila seleccionada
 	const [isOptionsMenuOpen, setIsOptionsMenuOpen] = useState(false);
+	const [selectedRowId, setSelectedRowId] = useState(null);
+	const [anchorEl, setAnchorEl] = useState(null);
 	const [open, setOpen] = useState(false);
-	const { branches } = useInsurerBranches(1);
-	console.log(branches);
+	const { insurerId } = useParams();
+
+	const { branches, addBranch } = useInsurerBranches(1);
+
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+	} = useForm({
+		resolver: yupResolver(branchesFormSchema),
+		defaultValues: {
+			address: "",
+			city: "",
+			department: "",
+		},
+	});
 
 	const handleMenuOptionClick = (event, rowId) => {
 		setAnchorEl(event.currentTarget);
-		setSelectedRowId(rowId); // Establece la fila seleccionada
+		setSelectedRowId(rowId);
 		setIsOptionsMenuOpen(true);
 	};
 
 	const handleMenuOptionClose = () => {
 		setAnchorEl(null);
 		setIsOptionsMenuOpen(false);
+	};
+
+	const handleFormSubmit = (data) => {
+		const finalData = {
+			...data,
+			insurerId: Number.parseInt(insurerId),
+		};
+		addBranch(finalData);
+		reset();
+		setOpen(false);
 	};
 
 	const columns = [
@@ -109,14 +144,18 @@ export const BranchesTable = () => {
 			>
 				<DialogTitle>Agregar Sucursal</DialogTitle>
 				<DialogContent>
-					<BranchForm />
+					<BranchForm
+						register={register}
+						errors={errors}
+						onSubmit={handleSubmit(handleFormSubmit)}
+					/>
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={() => setOpen(false)} color="primary">
 						Cancelar
 					</Button>
 					<Button
-						form="insure-form"
+						form="branch-form"
 						type="submit"
 						color="primary"
 						variant="contained"

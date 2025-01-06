@@ -104,8 +104,6 @@ export const BranchDetailPage = () => {
 
 			{activeTab === 0 && <BranchDetail />}
 			{activeTab === 1 && <AdvisorTable />}
-			{/* {activeTab === 0 && <InsureDetail />}
-			{activeTab === 2 && <BranchesTable />} */}
 			<Dialog
 				open={open}
 				onClose={() => setOpen(false)}

@@ -129,7 +129,7 @@ export const InsureRates = () => {
 			{/* Button to open the modal */}
 			<Box display="flex" justifyContent="flex-end" mb={2}>
 				<Button variant="contained" color="primary" onClick={handleModalOpen}>
-					Agregar Tarifa {/* Add Rate */}
+					Agregar Tarifa 
 				</Button>
 			</Box>
 

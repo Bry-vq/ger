@@ -1,21 +1,33 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "../../../utils/constanst.js";
-import { getInsurerBranchesService } from "../services/insurerBranchesServices.js";
+import {
+	addInsurerBranchService,
+	getInsurerBranchesService,
+} from "../services/insurerBranchesServices.js";
+import { queryClient } from "../../../utils/queryClient.js";
 
 export const useInsurerBranches = (insurerId) => {
-	// const { data: insurer, isFetching: isInsurerFetching } = useQuery({
-	// 	queryKey: [QUERY_KEYS.INSURER, insurerId],
-	// 	queryFn: () => getInsurerService(insurerId),
-	// 	enabled: !!insurerId,
-	// });
-
 	const { data: branches, isFetching: isBranchesFetching } = useQuery({
 		queryKey: [QUERY_KEYS.BRANCHES],
 		queryFn: () => getInsurerBranchesService(insurerId),
 	});
 
+	const { mutateAsync: addBranch } = useMutation({
+		mutationFn: addInsurerBranchService,
+		queryKey: [QUERY_KEYS.BRANCHES],
+		onSuccess: () => {
+			queryClient().invalidateQueries({
+				queryKey: [QUERY_KEYS.BRANCHES],
+			});
+		},
+		onError: (error) => {
+			console.error(error);
+		},
+	});
+
 	return {
 		branches,
 		isBranchesFetching,
+		addBranch,
 	};
 };

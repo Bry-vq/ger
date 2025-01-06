@@ -1,4 +1,10 @@
+import { InsuredTable } from "../components/InsuredTable.jsx";
+import { InsuredForm } from "../components/InsuerdForm.jsx";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useInsured } from "../hooks/useInsured.jsx";
+import { useForm } from "react-hook-form";
 import React, { useState } from "react";
+import * as yup from "yup";
 import {
 	Box,
 	Button,
@@ -8,11 +14,6 @@ import {
 	DialogTitle,
 	Typography,
 } from "@mui/material";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { InsuredTable } from "../components/InsuredTable.jsx";
-import { InsuredForm } from "../components/InsuerdForm.jsx";
 
 const insuredFormSchema = yup.object().shape({
 	name: yup.string().required("Razon Social Asegurado es obligatoria"),
@@ -25,6 +26,8 @@ const insuredFormSchema = yup.object().shape({
 
 export const InsuredPage = () => {
 	const [open, setOpen] = useState(false);
+	const { insureds, isInsuredsFetching, addInsured } = useInsured();
+
 	const {
 		register,
 		handleSubmit,
@@ -44,9 +47,9 @@ export const InsuredPage = () => {
 	});
 
 	const handleFormSubmit = (data) => {
-		console.log(data);
-		// reset();
-		// setOpen(false);
+		addInsured(data);
+		reset();
+		setOpen(false);
 	};
 
 	return (
@@ -66,7 +69,7 @@ export const InsuredPage = () => {
 				</Button>
 			</Box>
 
-			<InsuredTable />
+			<InsuredTable data={insureds} isLoading={isInsuredsFetching} />
 
 			<Dialog
 				open={open}

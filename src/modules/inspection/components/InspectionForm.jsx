@@ -80,6 +80,14 @@ export const InspectionForm = ({ control, errors, onSubmit }) => {
 
 			<TextField
 				fullWidth
+				label="Inpector"
+				variant="outlined"
+				multiline
+				sx={{ mb: 2 }}
+			/>
+
+			<TextField
+				fullWidth
 				label="Sucursal Aseguradora"
 				variant="outlined"
 				sx={{ mb: 2 }}
@@ -92,12 +100,29 @@ export const InspectionForm = ({ control, errors, onSubmit }) => {
 			/>
 			<TextField
 				fullWidth
+				label="Fecha de Asignación"
+				variant="outlined"
+				sx={{ mb: 2 }}
+			/>
+			<TextField
+				fullWidth
 				label="Fecha de Inspección"
 				variant="outlined"
 				sx={{ mb: 2 }}
 			/>
-
+			<TextField
+				fullWidth
+				label="Fecha de Entrega"
+				variant="outlined"
+				sx={{ mb: 2 }}
+			/>
 			<TextField fullWidth label="Tarifa" variant="outlined" sx={{ mb: 2 }} />
+			<TextField
+				fullWidth
+				label="Valor Total Asegurado"
+				variant="outlined"
+				sx={{ mb: 2 }}
+			/>
 			<TextField
 				fullWidth
 				label="Honorarios Extras"
