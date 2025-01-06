@@ -3,7 +3,7 @@ import MainLayout from "../layout/index.jsx";
 import { AuthRouterStack } from "../modules/auth/router/authRouter.jsx";
 import { HomeRouterStack } from "../modules/home/router/HomeRouter.jsx";
 import { InsureRouterStack } from "../modules/insurers/router/insureRouter.jsx";
-import { InspectionRouterStack } from "../modules/inspection/router/InspectionRouter.jsx";
+import { InspectionRouterStack } from "../modules/inspection/router/inspectionRouter.jsx";
 import { useAuth } from "../modules/auth/login/hooks/useAuth.jsx";
 import { InsuredRouterStack } from "../modules/insured/router/insuredRouter.jsx";
 import { EmployeesRouterStack } from "../modules/employees/router/employeesRouter.jsx";
@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
 			InspectionRouterStack,
 			InsuredRouterStack,
 			EmployeesRouterStack,
-			{ path: "*", element: <Navigate to="/home" replace /> }, // Fallback route
+			{ path: "*", element: <Navigate to="/home" replace /> },
 		],
 	},
 ]);
