@@ -1,9 +1,10 @@
-import { IconFile } from "@tabler/icons-react";
 import {
+	IconFile,
 	IconHome,
 	IconSettings,
 	IconShieldCheck,
 	IconUsers,
+	IconBriefcase,
 } from "@tabler/icons-react";
 
 const navConfig = [
@@ -30,7 +31,7 @@ const navConfig = [
 	{
 		title: "Inspectores",
 		path: "/empleados",
-		icon: <IconUsers />,
+		icon: <IconBriefcase />,
 	},
 	{
 		title: "Configuración",

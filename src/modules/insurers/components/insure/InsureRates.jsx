@@ -186,7 +186,6 @@ export const InsureRates = () => {
 									<Select {...field} error={!!errors.insurabilityRangeId}>
 										{ranges.map((range) => (
 											<MenuItem key={range.value} value={range.value}>
-												{console.log(range)}
 												{formatRangeAsCurrency(range.label)}
 											</MenuItem>
 										))}

@@ -110,7 +110,6 @@ export const InspectionTable = ({ data = [], isLoading }) => {
 					columns={columns}
 					pageSize={5}
 					rowsPerPageOptions={[5]}
-					checkboxSelection
 				/>
 			)}
 		</Paper>
