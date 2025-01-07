@@ -8,7 +8,7 @@ import { queryClient } from "../../../utils/queryClient.js";
 
 export const useInsurerBranches = (insurerId) => {
 	const { data: branches, isFetching: isBranchesFetching } = useQuery({
-		queryKey: [QUERY_KEYS.BRANCHES],
+		queryKey: [QUERY_KEYS.BRANCHES, insurerId],
 		queryFn: () => getInsurerBranchesService(insurerId),
 	});
 

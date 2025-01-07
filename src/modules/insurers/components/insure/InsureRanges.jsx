@@ -62,7 +62,6 @@ export const InsureRanges = () => {
 	};
 
 	const columns = [
-		{ field: "id", headerName: "ID", flex: 1 },
 		{
 			field: "rangeStart",
 			headerName: "Valor Inicial",

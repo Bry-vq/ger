@@ -60,7 +60,6 @@ export const InsureRiskType = () => {
 	};
 
 	const columns = [
-		{ field: "id", headerName: "ID", flex: 1 },
 		{ field: "name", headerName: "Tipo de Riesgo", flex: 2 },
 		{ field: "description", headerName: "Descripción", flex: 3 },
 		{

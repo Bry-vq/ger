@@ -48,7 +48,6 @@ export const InspectionTable = ({ data = [], isLoading }) => {
 	};
 
 	const columns = [
-		{ field: "id", headerName: "Id", flex: 1 },
 		{ field: "insure", headerName: "Aseguradora", flex: 1 },
 		{ field: "insured", headerName: "Asegurado", flex: 1 },
 		{ field: "range", headerName: "Rango", flex: 1 },

@@ -71,7 +71,6 @@ export const BranchesTable = () => {
 	};
 
 	const columns = [
-		{ field: "id", headerName: "ID", flex: 1 },
 		{ field: "address", headerName: "Nombre Sucursal", flex: 1 },
 		{ field: "city", headerName: "Ciudad", flex: 1 },
 		{ field: "department", headerName: "Departamento", flex: 1 },
