@@ -5,7 +5,7 @@ export const BranchForm = ({ register, onSubmit, errors }) => {
 		<form id="branch-form" onSubmit={onSubmit}>
 			<Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
 				<TextField
-					label="Dirección"
+					label="Nombre Sucursal"
 					{...register("address")}
 					error={!!errors.address}
 					helperText={errors.address ? errors.address.message : ""}

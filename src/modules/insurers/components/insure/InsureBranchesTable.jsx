@@ -33,7 +33,7 @@ export const BranchesTable = () => {
 	const [open, setOpen] = useState(false);
 	const { insurerId } = useParams();
 
-	const { branches, addBranch } = useInsurerBranches(1);
+	const { branches, addBranch } = useInsurerBranches(insurerId);
 
 	const {
 		register,
@@ -72,7 +72,7 @@ export const BranchesTable = () => {
 
 	const columns = [
 		{ field: "id", headerName: "ID", flex: 1 },
-		{ field: "address", headerName: "Dirección", flex: 1 },
+		{ field: "address", headerName: "Nombre Sucursal", flex: 1 },
 		{ field: "city", headerName: "Ciudad", flex: 1 },
 		{ field: "department", headerName: "Departamento", flex: 1 },
 		{
