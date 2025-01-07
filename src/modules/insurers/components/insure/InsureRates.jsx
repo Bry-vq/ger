@@ -129,7 +129,7 @@ export const InsureRates = () => {
 			{/* Button to open the modal */}
 			<Box display="flex" justifyContent="flex-end" mb={2}>
 				<Button variant="contained" color="primary" onClick={handleModalOpen}>
-					Agregar Tarifa 
+					Agregar Tarifa
 				</Button>
 			</Box>
 
@@ -185,10 +185,10 @@ export const InsureRates = () => {
 								render={({ field }) => (
 									<Select {...field} error={!!errors.insurabilityRangeId}>
 										{ranges.map((range) => (
-											<MuiMenuItem key={range.value} value={range.value}>
+											<MenuItem key={range.value} value={range.value}>
 												{console.log(range)}
 												{formatRangeAsCurrency(range.label)}
-											</MuiMenuItem>
+											</MenuItem>
 										))}
 									</Select>
 								)}
