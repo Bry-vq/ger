@@ -29,7 +29,6 @@ export const InsuredTable = ({ data, isLoading }) => {
 	};
 
 	const columns = [
-		{ field: "id", headerName: "ID", flex: 1 },
 		{ field: "document", headerName: "Documento", flex: 1 },
 		{ field: "name", headerName: "Razón Social", flex: 1 },
 		{ field: "address", headerName: "Dirección", flex: 1 },

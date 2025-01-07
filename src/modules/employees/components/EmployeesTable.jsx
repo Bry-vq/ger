@@ -29,7 +29,7 @@ export const EmployeesTable = ({ employees, isLoading }) => {
 	};
 
 	const columns = [
-		{ field: "document", headerName: "Id", flex: 1 },
+		{ field: "document", headerName: "Documento", flex: 1 },
 		{ field: "username", headerName: "Nombre", flex: 1 },
 		{ field: "phone", headerName: "Teléfono", flex: 1 },
 		{
