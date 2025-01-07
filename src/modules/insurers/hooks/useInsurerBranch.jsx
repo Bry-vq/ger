@@ -16,9 +16,7 @@ export const useInsurerBranches = (insurerId) => {
 		mutationFn: addInsurerBranchService,
 		queryKey: [QUERY_KEYS.BRANCHES],
 		onSuccess: () => {
-			queryClient().invalidateQueries({
-				queryKey: [QUERY_KEYS.BRANCHES],
-			});
+			queryClient().invalidateQueries(QUERY_KEYS.BRANCHES);
 		},
 		onError: (error) => {
 			console.error(error);
