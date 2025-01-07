@@ -13,9 +13,11 @@ import { InspectionTable } from "../components/InspectionTable.jsx";
 import { InspectionForm } from "../components/InspectionForm.jsx";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useInspection } from "../hooks/useInspection.jsx";
 
 export const InspectionPage = () => {
 	const [open, setOpen] = useState(false);
+	const { inspecitons, addInspeciton } = useInspection();
 	const {
 		register,
 		handleSubmit,
@@ -24,7 +26,7 @@ export const InspectionPage = () => {
 		onSubmit,
 		formState: { errors },
 	} = useForm({
-		resolver: yupResolver({}),
+		// resolver: yupResolver({}),
 		defaultValues: {
 			name: "",
 			document: "",
@@ -35,6 +37,8 @@ export const InspectionPage = () => {
 			phone: "",
 		},
 	});
+
+	console.log(inspecitons);
 
 	return (
 		<Box sx={{ width: "100%", minHeight: "100%", p: 3 }}>

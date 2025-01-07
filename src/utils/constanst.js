@@ -7,4 +7,5 @@ export const QUERY_KEYS = {
     BRANCHES: "branches",
     EMPLOYEES: "employees",
     INSUREDS: "insureds",
+    INSPECTIONS: "inspections",
 };

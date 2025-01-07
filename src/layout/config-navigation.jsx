@@ -14,11 +14,6 @@ const navConfig = [
 		icon: <IconHome />,
 	},
 	{
-		title: "Inspecciones",
-		path: "/inspecciones",
-		icon: <IconFile />,
-	},
-	{
 		title: "Aseguradoras",
 		path: "/aseguradoras",
 		icon: <IconShieldCheck />,
@@ -32,6 +27,11 @@ const navConfig = [
 		title: "Inspectores",
 		path: "/empleados",
 		icon: <IconBriefcase />,
+	},
+	{
+		title: "Inspecciones",
+		path: "/inspecciones",
+		icon: <IconFile />,
 	},
 	{
 		title: "Configuración",
