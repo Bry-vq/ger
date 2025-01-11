@@ -17,7 +17,7 @@ import { useInspection } from "../hooks/useInspection.jsx";
 
 export const InspectionPage = () => {
 	const [open, setOpen] = useState(false);
-	const { inspecitons, addInspeciton } = useInspection();
+	const { inspecitons, addInspeciton, inspectionsSelect } = useInspection();
 	const {
 		register,
 		handleSubmit,
@@ -37,8 +37,6 @@ export const InspectionPage = () => {
 			phone: "",
 		},
 	});
-
-	console.log(inspecitons);
 
 	return (
 		<Box sx={{ width: "100%", minHeight: "100%", p: 3 }}>
