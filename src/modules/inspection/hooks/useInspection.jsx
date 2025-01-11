@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { queryClient } from "../../../utils/queryClient.js";
 import {
 	addInspectionService,
+	getInspectionsSelectService,
 	getInspectionsService,
 } from "../services/inspectionServices.js";
 import { QUERY_KEYS } from "../../../utils/constanst.js";
@@ -22,7 +23,14 @@ export const useInspection = () => {
 		},
 	});
 
+	const { data: inspectionsSelect, isFetching: isInspectionsSelectFetching } =
+		useQuery({
+			queryKey: [QUERY_KEYS.INSPECTIONS_SELECT],
+			queryFn: getInspectionsSelectService,
+		});
+
 	return {
+		inspectionsSelect,
 		inspections,
 		isInspectionsFetching,
 		addInspection,

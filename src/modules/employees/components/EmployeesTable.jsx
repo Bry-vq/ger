@@ -56,10 +56,10 @@ export const EmployeesTable = ({ employees, isLoading }) => {
 						<MenuItem
 							onClick={() => {
 								console.log(params.row); // Navega a la página de detalles de la aseguradora
-								navigate(
-									`/empleados/${params.row.Aseguradora_ID}/sucursal/${params.row.Sucursal_ID}`,
-								);
-								handleMenuOptionClose(); // Cierra el menú después de hacer clic
+								// navigate(
+								// 	`/empleados/${params.row.Aseguradora_ID}/sucursal/${params.row.Sucursal_ID}`,
+								// );
+								// handleMenuOptionClose(); // Cierra el menú después de hacer clic
 							}}
 						>
 							<IconEye size={24} />

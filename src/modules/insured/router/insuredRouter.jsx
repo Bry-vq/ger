@@ -1,3 +1,4 @@
+import { InsuredDetailPage } from "../pages/InsuredDetailPage.jsx";
 import { InsuredPage } from "../pages/InsuredPage.jsx";
 
 export const InsuredRouterStack = {
@@ -9,7 +10,7 @@ export const InsuredRouterStack = {
 		},
 		{
 			path: ":insuredId",
-			// element: <InsuredPage />,
+			element: <InsuredDetailPage />,
 		},
 	],
 };

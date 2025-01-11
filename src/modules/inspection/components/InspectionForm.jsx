@@ -46,6 +46,40 @@ export const InspectionForm = ({ control, errors, onSubmit }) => {
 			<FormControl
 				fullWidth
 				margin="dense"
+				// error={!!errors.insuredId}
+				sx={{ mb: 2, mt: 1 }}
+			>
+				<InputLabel id="simple-select-label-insured-branch">
+					Sede Solicitud Asegurado
+				</InputLabel>
+				<Controller
+					name="insuredBranchId"
+					labelId="simple-select-label-insured-branch"
+					control={control}
+					render={({ field }) => (
+						<Select
+							{...field}
+							label="Sede Solicitud Asegurado"
+							//  error={!!errors.insuredId}
+						>
+							<MenuItem key={0} value={0}>
+								Option
+							</MenuItem>
+							<MenuItem key={1} value={2}>
+								Option2
+							</MenuItem>
+						</Select>
+					)}
+				/>
+				{/* {errors.insurerId && (
+					<Box color="error.main" fontSize="small">
+						{errors.insurerId.message}
+					</Box>
+				)} */}
+			</FormControl>
+			<FormControl
+				fullWidth
+				margin="dense"
 				sx={{ mb: 2, mt: 0 }}
 				// error={!!errors.insurerId}
 			>
@@ -77,21 +111,72 @@ export const InspectionForm = ({ control, errors, onSubmit }) => {
 					</Box>
 				)} */}
 			</FormControl>
-
-			<TextField
+			<FormControl
 				fullWidth
-				label="Inpector"
-				variant="outlined"
-				multiline
-				sx={{ mb: 2 }}
-			/>
+				margin="dense"
+				sx={{ mb: 2, mt: 0 }}
+				// error={!!errors.insurerId}
+			>
+				<InputLabel id="simple-select-label-branch">Sucursal</InputLabel>
+				<Controller
+					name="branchId"
+					labelId="simple-select-label-branch"
+					control={control}
+					render={({ field }) => (
+						<Select
+							{...field}
+							label="Sucursal"
+							// error={!!errors.insurerId}
+						>
+							<MenuItem key={0} value={0}>
+								Option
+							</MenuItem>
+							<MenuItem key={1} value={2}>
+								Option2
+							</MenuItem>
+						</Select>
+					)}
+				/>
+				{/* {errors.insurerId && (
+					<Box color="error.main" fontSize="small">
+						{errors.insurerId.message}
+					</Box>
+				)} */}
+			</FormControl>
 
-			<TextField
+			<FormControl
 				fullWidth
-				label="Sucursal Aseguradora"
-				variant="outlined"
-				sx={{ mb: 2 }}
-			/>
+				margin="dense"
+				sx={{ mb: 2, mt: 0 }}
+				// error={!!errors.insurerId}
+			>
+				<InputLabel id="simple-select-label-employee">Inspector</InputLabel>
+				<Controller
+					name="employeeId"
+					labelId="simple-select-label-employee"
+					control={control}
+					render={({ field }) => (
+						<Select
+							{...field}
+							label="Inspector"
+							// error={!!errors.insurerId}
+						>
+							<MenuItem key={0} value={0}>
+								Option
+							</MenuItem>
+							<MenuItem key={1} value={2}>
+								Option2
+							</MenuItem>
+						</Select>
+					)}
+				/>
+				{/* {errors.insurerId && (
+					<Box color="error.main" fontSize="small">
+						{errors.insurerId.message}
+					</Box>
+				)} */}
+			</FormControl>
+
 			<TextField
 				fullWidth
 				label="Fecha de Solicitud"
@@ -116,18 +201,69 @@ export const InspectionForm = ({ control, errors, onSubmit }) => {
 				variant="outlined"
 				sx={{ mb: 2 }}
 			/>
-			<TextField fullWidth label="Tarifa" variant="outlined" sx={{ mb: 2 }} />
+			<FormControl
+				fullWidth
+				margin="dense"
+				sx={{ mb: 2, mt: 0 }}
+				// error={!!errors.insurerId}
+			>
+				<InputLabel id="simple-select-label-employee">
+					Tipo de Riesgo
+				</InputLabel>
+				<Controller
+					name="riskTipeId"
+					labelId="simple-select-label-employee"
+					control={control}
+					render={({ field }) => (
+						<Select
+							{...field}
+							label="Tipo de Riesgo"
+							// error={!!errors.insurerId}
+						>
+							<MenuItem key={0} value={0}>
+								Option
+							</MenuItem>
+							<MenuItem key={1} value={2}>
+								Option2
+							</MenuItem>
+						</Select>
+					)}
+				/>
+				{/* {errors.insurerId && (
+					<Box color="error.main" fontSize="small">
+						{errors.insurerId.message}
+					</Box>
+				)} */}
+			</FormControl>
 			<TextField
 				fullWidth
 				label="Valor Total Asegurado"
 				variant="outlined"
 				sx={{ mb: 2 }}
 			/>
+			<TextField fullWidth label="Tarifa" variant="outlined" sx={{ mb: 2 }} />
 			<TextField
 				fullWidth
-				label="Honorarios Extras"
+				label="Pago Extra por Transporte"
 				variant="outlined"
-				multiline
+				sx={{ mb: 2 }}
+			/>
+			<TextField
+				fullWidth
+				label="Pago Extra por Movilización"
+				variant="outlined"
+				sx={{ mb: 2 }}
+			/>
+			<TextField
+				fullWidth
+				label="Pago Extra por Manutención"
+				variant="outlined"
+				sx={{ mb: 2 }}
+			/>
+			<TextField
+				fullWidth
+				label="Pago Extra por Alojamiento"
+				variant="outlined"
 				sx={{ mb: 2 }}
 			/>
 			<TextField
