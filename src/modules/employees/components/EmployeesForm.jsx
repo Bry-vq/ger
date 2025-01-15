@@ -7,6 +7,7 @@ import {
 	Typography,
 } from "@mui/material";
 import { Controller } from "react-hook-form";
+import { restrictToColombianPhone, restrictToNumbers } from "../../../utils/functions";
 
 const documentTypes = [
 	{ id: 1, value: "CC", label: "Cédula de Ciudadanía" },
@@ -70,6 +71,7 @@ export const EmployeesForm = ({ register, control, errors, onSubmit }) => {
 				fullWidth
 				label="Documento"
 				{...register("document")}
+				onChange={restrictToNumbers}
 				variant="outlined"
 				multiline
 				sx={{ mb: 2 }}
@@ -86,6 +88,7 @@ export const EmployeesForm = ({ register, control, errors, onSubmit }) => {
 				fullWidth
 				label="Teléfono"
 				{...register("phone")}
+				onChange={restrictToColombianPhone}
 				variant="outlined"
 				multiline
 				sx={{ mb: 2 }}

@@ -32,6 +32,7 @@ export const InsuresPage = () => {
 		register,
 		handleSubmit,
 		reset,
+		setValue,
 		formState: { errors },
 	} = useForm({
 		resolver: yupResolver(insureFormSchema),
@@ -93,6 +94,7 @@ export const InsuresPage = () => {
 					<InsureForm
 						register={register}
 						errors={errors}
+						setValue={setValue}
 						onSubmit={handleSubmit(handleFormSubmit)}
 					/>
 				</DialogContent>

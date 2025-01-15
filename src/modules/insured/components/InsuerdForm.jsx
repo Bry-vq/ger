@@ -5,8 +5,13 @@ import {
 	TextField,
 	MenuItem,
 	Typography,
+	Autocomplete,
+	Box,
+	createFilterOptions,
 } from "@mui/material";
 import { Controller } from "react-hook-form";
+import { CITES } from "../../../const/departments";
+import { restrictToNumbers } from "../../../utils/functions";
 
 const documentTypes = [
 	{ id: 1, value: "CC", label: "Cédula de Ciudadanía" },
@@ -14,8 +19,12 @@ const documentTypes = [
 	{ id: 3, value: "NIT", label: "NIT" },
 	{ id: 4, value: "PAS", label: "Pasaporte" },
 ];
+const filterOptions = createFilterOptions({
+	stringify: (option) => option.name,
+	limit: 8
+});
 
-export const InsuredForm = ({ register, onSubmit, errors, control }) => {
+export const InsuredForm = ({ register, onSubmit, errors, control, setValue }) => {
 	return (
 		<form id="insured-form" onSubmit={onSubmit}>
 			<TextField
@@ -70,9 +79,36 @@ export const InsuredForm = ({ register, onSubmit, errors, control }) => {
 				fullWidth
 				label="Documento del Asegurado"
 				{...register("document")}
+				onChange={restrictToNumbers}
 				sx={{ mb: 2 }}
 				error={!!errors.document}
 				helperText={errors.document ? errors.document.message : ""}
+			/>
+			<Autocomplete
+				disablePortal
+				sx={{ mb: 2, mt: 1 }}
+				onChange={(_, newValue) => {
+					setValue("department", newValue.department)
+					setValue("city", newValue.name)
+				}}
+				disableClearable
+				filterOptions={filterOptions}
+				options={CITES}
+				getOptionLabel={(option) => `${option.name} - ${option.department}`}
+				renderOption={(props, option) => {
+					const { ...optionProps } = props;
+					return (
+						<Box
+							key={option.id}
+							component="li"
+							{...optionProps}
+						>
+							{`${option.name} - ${option.department}`}
+						</Box>
+					);
+				}}
+				renderInput={(params) => <TextField {...params} label="Ciudad Asegurado"
+				/>}
 			/>
 			<TextField
 				fullWidth
@@ -81,22 +117,6 @@ export const InsuredForm = ({ register, onSubmit, errors, control }) => {
 				sx={{ mb: 2 }}
 				error={!!errors.address}
 				helperText={errors.address ? errors.address.message : ""}
-			/>
-			<TextField
-				fullWidth
-				label="Ciudad Asegurado"
-				{...register("city")}
-				sx={{ mb: 2 }}
-				error={!!errors.city}
-				helperText={errors.city ? errors.city.message : ""}
-			/>
-			<TextField
-				fullWidth
-				label="Departamento Asegurado"
-				{...register("department")}
-				sx={{ mb: 2 }}
-				error={!!errors.department}
-				helperText={errors.department ? errors.department.message : ""}
 			/>
 		</form>
 	);

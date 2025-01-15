@@ -1,6 +1,14 @@
-import { Box, TextField } from "@mui/material";
+import { Autocomplete, Box, createFilterOptions, TextField } from "@mui/material";
+import PropTypes from 'prop-types';
+import { CITES } from "../../../../const/departments";
+import { restrictToColombianPhone, restrictToNumbers } from "../../../../utils/functions";
 
-export const InsureForm = ({ register, onSubmit, errors }) => {
+const filterOptions = createFilterOptions({
+	stringify: (option) => option.name,
+	limit: 8
+});
+
+export const InsureForm = ({ register, onSubmit, errors, setValue }) => {
 	return (
 		<form id="insure-form" onSubmit={onSubmit}>
 			<Box display="flex" flexDirection="column" gap={2}>
@@ -14,6 +22,7 @@ export const InsureForm = ({ register, onSubmit, errors }) => {
 				<TextField
 					label="Documento"
 					{...register("document")}
+					onChange={restrictToNumbers}
 					error={!!errors.document}
 					helperText={errors.document ? errors.document.message : ""}
 					required
@@ -25,6 +34,31 @@ export const InsureForm = ({ register, onSubmit, errors }) => {
 					helperText={errors.email ? errors.email.message : ""}
 					required
 				/>
+				<Autocomplete
+					disablePortal
+					onChange={(_, newValue) => {
+						setValue("department", newValue.department)
+						setValue("city", newValue.name)
+					}}
+					disableClearable
+					filterOptions={filterOptions}
+					options={CITES}
+					getOptionLabel={(option) => `${option.name} - ${option.department}`}
+					renderOption={(props, option) => {
+						const { ...optionProps } = props;
+						return (
+							<Box
+								key={option.id}
+								component="li"
+								{...optionProps}
+							>
+								{`${option.name} - ${option.department}`}
+							</Box>
+						);
+					}}
+					renderInput={(params) => <TextField {...params} label="Ciudad"
+					/>}
+				/>
 				<TextField
 					label="Dirección"
 					{...register("address")}
@@ -33,22 +67,9 @@ export const InsureForm = ({ register, onSubmit, errors }) => {
 					required
 				/>
 				<TextField
-					label="Departamento"
-					{...register("department")}
-					error={!!errors.department}
-					helperText={errors.department ? errors.department.message : ""}
-					required
-				/>
-				<TextField
-					label="Ciudad"
-					{...register("city")}
-					error={!!errors.city}
-					helperText={errors.city ? errors.city.message : ""}
-					required
-				/>
-				<TextField
 					label="Teléfono"
 					{...register("phone")}
+					onChange={restrictToColombianPhone}
 					error={!!errors.phone}
 					helperText={errors.phone ? errors.phone.message : ""}
 					required
@@ -57,3 +78,11 @@ export const InsureForm = ({ register, onSubmit, errors }) => {
 		</form>
 	);
 };
+
+InsureForm.propTypes = {
+	register: PropTypes.func.isRequired,
+	onSubmit: PropTypes.func.isRequired,
+	setValue: PropTypes.func.isRequired,
+	errors: PropTypes.object.isRequired,
+};
+
