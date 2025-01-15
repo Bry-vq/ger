@@ -21,6 +21,7 @@ import { IconUser } from "@tabler/icons-react";
 import { BranchDetail } from "../components/branch/BranchDetail.jsx";
 import { AdvisorTable } from "../components/advisor/AdvisorTable.jsx";
 import { AdvisorForm } from "../components/advisor/AdvisorForm.jsx";
+import { useSupervisor } from "../hooks/useSupervisor.jsx";
 
 const tabs = [
 	{ title: "Detalles", icon: <IconFileDescription /> },
@@ -33,6 +34,7 @@ export const BranchDetailPage = () => {
 	const theme = useTheme();
 	const navigate = useNavigate();
 	const [open, setOpen] = useState(false);
+	const { supervisors, isFetching, addSupervisor } = useSupervisor(branchId);
 
 	return (
 		<Box sx={{ width: "100%", minHeight: "100%", p: 3 }}>

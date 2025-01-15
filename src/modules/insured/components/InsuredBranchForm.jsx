@@ -1,11 +1,11 @@
 import { Box, TextField } from "@mui/material";
 
-export const BranchForm = ({ register, onSubmit, errors }) => {
+export const InsuredBranchForm = ({ register, onSubmit, errors }) => {
 	return (
-		<form id="branch-form" onSubmit={onSubmit}>
+		<form id="insuerd-branch-form" onSubmit={onSubmit}>
 			<Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
 				<TextField
-					label="Nombre Sucursal"
+					label="Sede"
 					{...register("name")}
 					error={!!errors.name}
 					helperText={errors.name ? errors.name.message : ""}

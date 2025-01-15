@@ -26,7 +26,7 @@ const tabs = [
 	{ title: "Sucursales", icon: <IconBuilding /> },
 ];
 
-export const InsureDetailPage = () => {
+export const InsurerDetailPage = () => {
 	const [activeTab, setActiveTab] = useState(0);
 	const { insurerId } = useParams();
 	const location = useLocation();

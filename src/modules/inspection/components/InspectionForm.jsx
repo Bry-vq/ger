@@ -5,16 +5,19 @@ import {
 	MenuItem,
 	Select,
 	TextField,
+	Typography,
 } from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
-export const InspectionForm = ({ control, errors, onSubmit }) => {
+export const InspectionForm = ({ register, control, errors, onSubmit }) => {
+	console.log("errors", errors);
 	return (
 		<form id="inspection-form" onSubmit={onSubmit}>
+			{/* Asegurado */}
 			<FormControl
 				fullWidth
 				margin="dense"
-				// error={!!errors.insuredId}
+				error={!!errors.insuredId}
 				sx={{ mb: 2, mt: 1 }}
 			>
 				<InputLabel id="simple-select-label-insured">Asegurado</InputLabel>
@@ -23,11 +26,7 @@ export const InspectionForm = ({ control, errors, onSubmit }) => {
 					labelId="simple-select-label-insured"
 					control={control}
 					render={({ field }) => (
-						<Select
-							{...field}
-							label="Asegurado"
-							//  error={!!errors.insuredId}
-						>
+						<Select {...field} label="Asegurado" error={!!errors.insuredId}>
 							<MenuItem key={0} value={0}>
 								Option
 							</MenuItem>
@@ -37,16 +36,18 @@ export const InspectionForm = ({ control, errors, onSubmit }) => {
 						</Select>
 					)}
 				/>
-				{/* {errors.insurerId && (
-					<Box color="error.main" fontSize="small">
-						{errors.insurerId.message}
-					</Box>
-				)} */}
+				{errors.insuredId && (
+					<Typography color="error.main" fontSize="small">
+						{errors.insuredId.message}
+					</Typography>
+				)}
 			</FormControl>
+
+			{/* Sede Solicitud Asegurado */}
 			<FormControl
 				fullWidth
 				margin="dense"
-				// error={!!errors.insuredId}
+				error={!!errors.insuredBranchId}
 				sx={{ mb: 2, mt: 1 }}
 			>
 				<InputLabel id="simple-select-label-insured-branch">
@@ -60,7 +61,7 @@ export const InspectionForm = ({ control, errors, onSubmit }) => {
 						<Select
 							{...field}
 							label="Sede Solicitud Asegurado"
-							//  error={!!errors.insuredId}
+							error={!!errors.insuredBranchId}
 						>
 							<MenuItem key={0} value={0}>
 								Option
@@ -71,20 +72,22 @@ export const InspectionForm = ({ control, errors, onSubmit }) => {
 						</Select>
 					)}
 				/>
-				{/* {errors.insurerId && (
-					<Box color="error.main" fontSize="small">
-						{errors.insurerId.message}
-					</Box>
-				)} */}
+				{errors.insuredBranchId && (
+					<Typography color="error.main" fontSize="small">
+						{errors.insuredBranchId.message}
+					</Typography>
+				)}
 			</FormControl>
+
+			{/* Compañía Aseguradora */}
 			<FormControl
 				fullWidth
 				margin="dense"
+				error={!!errors.insurerId}
 				sx={{ mb: 2, mt: 0 }}
-				// error={!!errors.insurerId}
 			>
 				<InputLabel id="simple-select-label-insurer">
-					Compañia Aseguradora
+					Compañía Aseguradora
 				</InputLabel>
 				<Controller
 					name="insurerId"
@@ -93,8 +96,8 @@ export const InspectionForm = ({ control, errors, onSubmit }) => {
 					render={({ field }) => (
 						<Select
 							{...field}
-							label="Compañia Aseguradora"
-							// error={!!errors.insurerId}
+							label="Compañía Aseguradora"
+							error={!!errors.insurerId}
 						>
 							<MenuItem key={0} value={0}>
 								Option
@@ -105,17 +108,19 @@ export const InspectionForm = ({ control, errors, onSubmit }) => {
 						</Select>
 					)}
 				/>
-				{/* {errors.insurerId && (
-					<Box color="error.main" fontSize="small">
+				{errors.insurerId && (
+					<Typography color="error.main" fontSize="small">
 						{errors.insurerId.message}
-					</Box>
-				)} */}
+					</Typography>
+				)}
 			</FormControl>
+
+			{/* Sucursal */}
 			<FormControl
 				fullWidth
 				margin="dense"
+				error={!!errors.branchId}
 				sx={{ mb: 2, mt: 0 }}
-				// error={!!errors.insurerId}
 			>
 				<InputLabel id="simple-select-label-branch">Sucursal</InputLabel>
 				<Controller
@@ -123,11 +128,7 @@ export const InspectionForm = ({ control, errors, onSubmit }) => {
 					labelId="simple-select-label-branch"
 					control={control}
 					render={({ field }) => (
-						<Select
-							{...field}
-							label="Sucursal"
-							// error={!!errors.insurerId}
-						>
+						<Select {...field} label="Sucursal" error={!!errors.branchId}>
 							<MenuItem key={0} value={0}>
 								Option
 							</MenuItem>
@@ -137,18 +138,19 @@ export const InspectionForm = ({ control, errors, onSubmit }) => {
 						</Select>
 					)}
 				/>
-				{/* {errors.insurerId && (
-					<Box color="error.main" fontSize="small">
-						{errors.insurerId.message}
-					</Box>
-				)} */}
+				{errors.branchId && (
+					<Typography color="error.main" fontSize="small">
+						{errors.branchId.message}
+					</Typography>
+				)}
 			</FormControl>
 
+			{/* Inspector */}
 			<FormControl
 				fullWidth
 				margin="dense"
+				error={!!errors.employeeId}
 				sx={{ mb: 2, mt: 0 }}
-				// error={!!errors.insurerId}
 			>
 				<InputLabel id="simple-select-label-employee">Inspector</InputLabel>
 				<Controller
@@ -156,11 +158,7 @@ export const InspectionForm = ({ control, errors, onSubmit }) => {
 					labelId="simple-select-label-employee"
 					control={control}
 					render={({ field }) => (
-						<Select
-							{...field}
-							label="Inspector"
-							// error={!!errors.insurerId}
-						>
+						<Select {...field} label="Inspector" error={!!errors.employeeId}>
 							<MenuItem key={0} value={0}>
 								Option
 							</MenuItem>
@@ -170,55 +168,82 @@ export const InspectionForm = ({ control, errors, onSubmit }) => {
 						</Select>
 					)}
 				/>
-				{/* {errors.insurerId && (
-					<Box color="error.main" fontSize="small">
-						{errors.insurerId.message}
-					</Box>
-				)} */}
+				{errors.employeeId && (
+					<Typography color="error.main" fontSize="small">
+						{errors.employeeId.message}
+					</Typography>
+				)}
 			</FormControl>
-
 			<TextField
 				fullWidth
 				label="Fecha de Solicitud"
+				type="date"
 				variant="outlined"
 				sx={{ mb: 2 }}
+				{...register("applicationDate")}
+				error={!!errors.applicationDate}
+				helperText={errors.applicationDate?.message}
+				slotProps={{
+					inputLabel: { shrink: true },
+				}}
 			/>
 			<TextField
 				fullWidth
 				label="Fecha de Asignación"
 				variant="outlined"
+				type="date"
 				sx={{ mb: 2 }}
+				{...register("assignmentDate")}
+				error={!!errors.assignmentDate}
+				helperText={errors.assignmentDate?.message}
+				slotProps={{
+					inputLabel: { shrink: true },
+				}}
 			/>
 			<TextField
 				fullWidth
 				label="Fecha de Inspección"
 				variant="outlined"
+				type="date"
 				sx={{ mb: 2 }}
+				{...register("inspectionDate")}
+				error={!!errors.inspectionDate}
+				helperText={errors.inspectionDate?.message}
+				slotProps={{
+					inputLabel: { shrink: true },
+				}}
 			/>
 			<TextField
 				fullWidth
 				label="Fecha de Entrega"
 				variant="outlined"
+				type="date"
 				sx={{ mb: 2 }}
+				{...register("deliveryDate")}
+				error={!!errors.deliveryDate}
+				helperText={errors.deliveryDate?.message}
+				slotProps={{
+					inputLabel: { shrink: true },
+				}}
 			/>
 			<FormControl
 				fullWidth
 				margin="dense"
 				sx={{ mb: 2, mt: 0 }}
-				// error={!!errors.insurerId}
+				error={!!errors.riskTypeId}
 			>
 				<InputLabel id="simple-select-label-employee">
 					Tipo de Riesgo
 				</InputLabel>
 				<Controller
-					name="riskTipeId"
+					name="riskTypeId"
 					labelId="simple-select-label-employee"
 					control={control}
 					render={({ field }) => (
 						<Select
 							{...field}
 							label="Tipo de Riesgo"
-							// error={!!errors.insurerId}
+							error={!!errors.riskTypeId}
 						>
 							<MenuItem key={0} value={0}>
 								Option
@@ -229,42 +254,90 @@ export const InspectionForm = ({ control, errors, onSubmit }) => {
 						</Select>
 					)}
 				/>
-				{/* {errors.insurerId && (
-					<Box color="error.main" fontSize="small">
-						{errors.insurerId.message}
-					</Box>
-				)} */}
+				{errors.riskTypeId && (
+					<Typography color="error.main" fontSize="small">
+						{errors.riskTypeId.message}
+					</Typography>
+				)}
 			</FormControl>
 			<TextField
 				fullWidth
 				label="Valor Total Asegurado"
 				variant="outlined"
 				sx={{ mb: 2 }}
+				{...register("totalInsuredValue")}
+				error={!!errors.totalInsuredValue}
+				helperText={errors.totalInsuredValue?.message}
+				slotProps={{
+					inputLabel: { shrink: true },
+				}}
 			/>
-			<TextField fullWidth label="Tarifa" variant="outlined" sx={{ mb: 2 }} />
+			<TextField
+				fullWidth
+				label="Tarifa"
+				variant="outlined"
+				sx={{ mb: 2 }}
+				disabled
+			/>
 			<TextField
 				fullWidth
 				label="Pago Extra por Transporte"
 				variant="outlined"
 				sx={{ mb: 2 }}
+				{...register("extraPaymentForTransport")}
+				error={!!errors.extraPaymentForTransport}
+				helperText={errors.extraPaymentForTransport?.message}
+				slotProps={{
+					inputLabel: { shrink: true },
+				}}
 			/>
 			<TextField
 				fullWidth
 				label="Pago Extra por Movilización"
 				variant="outlined"
 				sx={{ mb: 2 }}
+				{...register("extraPaymentForMobilization")}
+				error={!!errors.extraPaymentForMobilization}
+				helperText={errors.extraPaymentForMobilization?.message}
+				slotProps={{
+					inputLabel: { shrink: true },
+				}}
 			/>
 			<TextField
 				fullWidth
 				label="Pago Extra por Manutención"
 				variant="outlined"
 				sx={{ mb: 2 }}
+				{...register("extraPaymentForMaintenance")}
+				error={!!errors.extraPaymentForMaintenance}
+				helperText={errors.extraPaymentForMaintenance?.message}
+				slotProps={{
+					inputLabel: { shrink: true },
+				}}
 			/>
 			<TextField
 				fullWidth
 				label="Pago Extra por Alojamiento"
 				variant="outlined"
 				sx={{ mb: 2 }}
+				{...register("extraPaymentForAccommodation")}
+				error={!!errors.extraPaymentForAccommodation}
+				helperText={errors.extraPaymentForAccommodation?.message}
+				slotProps={{
+					inputLabel: { shrink: true },
+				}}
+			/>
+			<TextField
+				fullWidth
+				label="Pago Diferenciado"
+				variant="outlined"
+				sx={{ mb: 2 }}
+				{...register("differentiatedPayment")}
+				error={!!errors.differentiatedPayment}
+				helperText={errors.differentiatedPayment?.message}
+				slotProps={{
+					inputLabel: { shrink: true },
+				}}
 			/>
 			<TextField
 				fullWidth
@@ -273,6 +346,12 @@ export const InspectionForm = ({ control, errors, onSubmit }) => {
 				multiline
 				rows={4}
 				sx={{ mb: 2 }}
+				{...register("comments")}
+				error={!!errors.comments}
+				helperText={errors.comments?.message}
+				slotProps={{
+					inputLabel: { shrink: true },
+				}}
 			/>
 		</form>
 	);
