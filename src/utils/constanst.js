@@ -9,5 +9,8 @@ export const QUERY_KEYS = {
     INSUREDS: "insureds",
     INSPECTIONS: "inspections",
     INSPECTIONS_INSURERS_SELECT: "inspectionsInsurersSelect",
+<<<<<<< HEAD
     SUPERVISORS: "supervisors",
+=======
+>>>>>>> main
 };

@@ -272,6 +272,7 @@ export const InspectionForm = ({ register, control, errors, onSubmit }) => {
 					inputLabel: { shrink: true },
 				}}
 			/>
+			<TextField fullWidth label="Tarifa" variant="outlined" sx={{ mb: 2 }} />
 			<TextField
 				fullWidth
 				label="Tarifa"
