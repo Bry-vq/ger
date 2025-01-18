@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { InsuredBranchForm } from "./InsuredBranchForm.jsx";
+import { useInsured } from "../hooks/useInsured.jsx";
 
 const InsuredBranchesFormSchema = yup.object().shape({
 	name: yup.string().required("Sede es obligatoria"),
@@ -33,6 +34,7 @@ export const InsuredBranchesTable = () => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [open, setOpen] = useState(false);
 	const { insuredId } = useParams();
+	const { insuredBranches, addInsuredBranch } = useInsured(insuredId);
 
 	const {
 		register,
@@ -66,10 +68,9 @@ export const InsuredBranchesTable = () => {
 			...data,
 			insuredId: Number.parseInt(insuredId),
 		};
-		console.log("finalData", finalData);
-		// addBranch(finalData);
-		// reset();
-		// setOpen(false);
+		addInsuredBranch(finalData);
+		reset();
+		setOpen(false);
 	};
 
 	const columns = [
@@ -78,41 +79,6 @@ export const InsuredBranchesTable = () => {
 		{ field: "city", headerName: "Ciudad", flex: 1 },
 		{ field: "address", headerName: "Dirección", flex: 1 },
 		{ field: "phone", headerName: "Teléfono", flex: 1 },
-		{
-			field: "actions",
-			headerName: "",
-			renderCell: (params) => (
-				<Box display="flex" justifyContent="center">
-					<IconButton
-						onClick={(event) => handleMenuOptionClick(event, params.row.id)}
-					>
-						<IconDotsVertical />
-					</IconButton>
-					<Menu
-						id="basic-menu"
-						anchorEl={anchorEl}
-						open={isOptionsMenuOpen && selectedRowId === params.row.id} // Abre el menú solo para la fila correcta
-						onClose={handleMenuOptionClose}
-						MenuListProps={{
-							"aria-labelledby": "basic-button",
-						}}
-					>
-						<MenuItem
-							onClick={() => {
-								console.log(params.row); // Navega a la página de detalles de la aseguradora
-								// navigate(
-								// 	`/aseguradoras/${params.row.Aseguradora_ID}/sucursal/${params.row.Sucursal_ID}`,
-								// );
-								handleMenuOptionClose(); // Cierra el menú después de hacer clic
-							}}
-						>
-							<IconEye size={24} />
-							Ver
-						</MenuItem>
-					</Menu>
-				</Box>
-			),
-		},
 	];
 
 	return (
@@ -127,7 +93,11 @@ export const InsuredBranchesTable = () => {
 				</Button>
 			</Box>
 			<Paper elevation={1}>
-				<DataGrid columns={columns} rows={[]} getRowId={(row) => row.id} />
+				<DataGrid
+					columns={columns}
+					rows={insuredBranches}
+					getRowId={(row) => row.id}
+				/>
 			</Paper>
 
 			<Dialog

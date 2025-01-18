@@ -1,11 +1,11 @@
 import { AxiosClient, requestHeaderMaker } from "../../../utils/axiosClient.js";
 import { handleAxiosError } from "../../../utils/axiosError.js";
 
-export const getSupervisorsService = async () => {
+export const getSupervisorsService = async (branchId) => {
     try {
         const axiosClient = AxiosClient();
         const requestHeaders = requestHeaderMaker();
-        const response = await axiosClient.get("/supervisors", requestHeaders);
+        const response = await axiosClient.get(`/supervisors/${branchId}`, requestHeaders);
 
         if (!response.data)
             throw new Error("Failed to fetch supervisors. No response data.");

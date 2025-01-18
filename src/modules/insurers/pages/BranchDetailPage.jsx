@@ -1,40 +1,24 @@
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import {
-	Box,
-	Typography,
-	IconButton,
-	useTheme,
-	Card,
-	Button,
-	Dialog,
-	DialogTitle,
-	DialogContent,
-	DialogActions,
-} from "@mui/material";
-import { IconArrowLeft } from "@tabler/icons-react";
 import { BranchDetailHeader } from "../components/branch/BranchDetailHeader.jsx";
-import { useState } from "react";
-import { IconFileDescription } from "@tabler/icons-react";
-import { IconUser } from "@tabler/icons-react";
-import { BranchDetail } from "../components/branch/BranchDetail.jsx";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { AdvisorTable } from "../components/advisor/AdvisorTable.jsx";
-import { AdvisorForm } from "../components/advisor/AdvisorForm.jsx";
-import { useSupervisor } from "../hooks/useSupervisor.jsx";
+import { Box, Typography, IconButton, useTheme } from "@mui/material";
+import { BranchDetail } from "../components/branch/BranchDetail.jsx";
+import { IconFileDescription } from "@tabler/icons-react";
+import { IconArrowLeft } from "@tabler/icons-react";
+import { IconUser } from "@tabler/icons-react";
+import { useState } from "react";
 
 const tabs = [
 	{ title: "Detalles", icon: <IconFileDescription /> },
 	{ title: "Asesores", icon: <IconUser /> },
 ];
+
 export const BranchDetailPage = () => {
 	const [activeTab, setActiveTab] = useState(0);
 	const { branchId } = useParams();
+	const navigate = useNavigate();
 	const location = useLocation();
 	const theme = useTheme();
-	const navigate = useNavigate();
-	const [open, setOpen] = useState(false);
-	const { supervisors, isFetching, addSupervisor } = useSupervisor(branchId);
 
 	return (
 		<Box sx={{ width: "100%", minHeight: "100%", p: 3 }}>
@@ -86,15 +70,6 @@ export const BranchDetailPage = () => {
 						</Box>
 					</Box>
 				</Box>
-
-				<Button
-					variant="contained"
-					color="primary"
-					onClick={() => setOpen(true)}
-					sx={{ height: 40 }}
-				>
-					Agregar Asesor
-				</Button>
 			</Box>
 
 			<BranchDetailHeader
@@ -106,36 +81,6 @@ export const BranchDetailPage = () => {
 
 			{activeTab === 0 && <BranchDetail />}
 			{activeTab === 1 && <AdvisorTable />}
-			<Dialog
-				open={open}
-				onClose={() => setOpen(false)}
-				maxWidth="md" // Controla el ancho máximo
-				fullWidth // Hace que el diálogo ocupe el 100% del ancho definido por `maxWidth`
-				sx={{
-					"& .MuiDialog-paper": {
-						width: "50%", // Ocupa el 50% del ancho de la pantalla
-						maxWidth: "none", // Evita que `maxWidth` sobreescriba el ancho
-					},
-				}}
-			>
-				<DialogTitle>Agregar Asesor</DialogTitle>
-				<DialogContent>
-					<AdvisorForm onSubmit={() => {}} />
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={() => setOpen(false)} color="primary">
-						Cancelar
-					</Button>
-					<Button
-						form="insure-form"
-						type="submit"
-						color="primary"
-						variant="contained"
-					>
-						Guardar
-					</Button>
-				</DialogActions>
-			</Dialog>
 		</Box>
 	);
 };

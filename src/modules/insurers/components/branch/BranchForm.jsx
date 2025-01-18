@@ -1,6 +1,18 @@
-import { Box, TextField } from "@mui/material";
+import {
+	Box,
+	createFilterOptions,
+	TextField,
+	Autocomplete,
+} from "@mui/material";
+import { restrictToColombianPhone } from "../../../../utils/functions.js";
+import { CITES } from "../../../../const/departments.js";
 
-export const BranchForm = ({ register, onSubmit, errors }) => {
+const filterOptions = createFilterOptions({
+	stringify: (option) => option.name,
+	limit: 8,
+});
+
+export const BranchForm = ({ register, onSubmit, errors, setValue }) => {
 	return (
 		<form id="branch-form" onSubmit={onSubmit}>
 			<Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -11,19 +23,25 @@ export const BranchForm = ({ register, onSubmit, errors }) => {
 					helperText={errors.name ? errors.name.message : ""}
 					required
 				/>
-				<TextField
-					label="Departamento"
-					{...register("department")}
-					error={!!errors.department}
-					helperText={errors.department ? errors.department.message : ""}
-					required
-				/>
-				<TextField
-					label="Ciudad"
-					{...register("city")}
-					error={!!errors.city}
-					helperText={errors.city ? errors.city.message : ""}
-					required
+				<Autocomplete
+					disablePortal
+					onChange={(_, newValue) => {
+						setValue("department", newValue.department);
+						setValue("city", newValue.name);
+					}}
+					disableClearable
+					filterOptions={filterOptions}
+					options={CITES}
+					getOptionLabel={(option) => `${option.name} - ${option.department}`}
+					renderOption={(props, option) => {
+						const { key, ...restProps } = props;
+						return (
+							<Box key={option.id} component="li" {...restProps}>
+								{`${option.name} - ${option.department}`}
+							</Box>
+						);
+					}}
+					renderInput={(params) => <TextField {...params} label="Ciudad" />}
 				/>
 				<TextField
 					label="Direccion"
@@ -33,8 +51,9 @@ export const BranchForm = ({ register, onSubmit, errors }) => {
 					required
 				/>
 				<TextField
-					label="Telefono"
+					label="Teléfono"
 					{...register("phone")}
+					onChange={restrictToColombianPhone}
 					error={!!errors.phone}
 					helperText={errors.phone ? errors.phone.message : ""}
 					required

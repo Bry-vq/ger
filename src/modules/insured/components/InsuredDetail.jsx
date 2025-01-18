@@ -16,12 +16,14 @@ import {
 import { IconInfoCircle, IconPhone } from "@tabler/icons-react";
 import { useTheme } from "@mui/material/styles";
 import { useParams } from "react-router-dom";
+import { useInsured } from "../hooks/useInsured.jsx";
 
 export const InsuredDetail = () => {
 	const theme = useTheme();
-	const { insurerdId } = useParams();
+	const { insuredId } = useParams();
 	const [activeTab, setActiveTab] = useState(0);
 	const [open, setOpen] = useState(false);
+	const { insured } = useInsured(insuredId);
 
 	const handleSelectTab = (tabIndex) => {
 		setActiveTab(tabIndex);
@@ -36,36 +38,33 @@ export const InsuredDetail = () => {
 							Información General
 						</Typography>
 						<Typography variant="body1" color="text.secondary">
-							Nombre:
+							Nombre: {insured?.name}
 						</Typography>
 						<Typography variant="body1" color="text.secondary">
-							NIT:
+							NIT: {insured?.document}
 						</Typography>
 						<Typography variant="body1" color="text.secondary">
-							Ciudad Sede Principal:
+							Ciudad Sede Principal: {insured?.city}
 						</Typography>
 						<Typography variant="body1" color="text.secondary">
-							Departamento Sede Principal:
+							Departamento Sede Principal: {insured?.department}
 						</Typography>
 						<Typography variant="body1" color="text.secondary">
-							Dirección Sede Principal:
+							Dirección Sede Principal: {insured?.address}
 						</Typography>
 					</Box>
 				);
 			case 1:
 				return (
 					<Box p={3}>
-						<Typography variant="h6" fontWeight="bold" gutterBottom>
-							Contacto
+						<Typography variant="body1" color="text.secondary">
+							Nombre: {insured?.name}
 						</Typography>
 						<Typography variant="body1" color="text.secondary">
-							Nombre:
+							Teléfono: {insured?.phone}
 						</Typography>
 						<Typography variant="body1" color="text.secondary">
-							Teléfono:
-						</Typography>
-						<Typography variant="body1" color="text.secondary">
-							Email:
+							Email: {insured?.email}
 						</Typography>
 					</Box>
 				);

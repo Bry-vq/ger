@@ -4,11 +4,13 @@ import {
 	addSupervisorService,
 	getSupervisorsService,
 } from "../services/SupervisorServices.js";
+import { queryClient } from "../../../utils/queryClient.js";
 
-export const useSupervisor = () => {
+export const useSupervisor = (branchId) => {
 	const { data: supervisors, isFetching } = useQuery({
-		queryKey: [QUERY_KEYS.SUPERVISORS],
-		queryFn: getSupervisorsService,
+		queryKey: [QUERY_KEYS.SUPERVISORS, branchId],
+		queryFn: () => getSupervisorsService(branchId),
+		enabled: !!branchId,
 	});
 
 	const { mutateAsync: addSupervisor } = useMutation({
