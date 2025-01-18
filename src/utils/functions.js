@@ -17,6 +17,7 @@ export const restrictToNumbers = (event) => {
   event.target.value = numericValue; // Actualiza el valor del input
   return numericValue; // Retorna el valor numérico
 };
+
 export const restrictToColombianPhone = (event) => {
   let value = event.target.value.replace(/\D/g, "");
 

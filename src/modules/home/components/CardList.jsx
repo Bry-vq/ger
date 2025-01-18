@@ -6,19 +6,19 @@ export const CardList = () => {
 			<Card sx={{ padding: "8px", width: "100%" }}>
 				<Typography variant="h6">Titulo 1</Typography>
 				<Typography variant="body2" color="text.secondary">
-					vainas
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
 				</Typography>
 			</Card>
 			<Card sx={{ padding: "8px", width: "100%" }}>
 				<Typography variant="h6">Titulo 2</Typography>
 				<Typography variant="body2" color="text.secondary">
-					vainas
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
 				</Typography>
 			</Card>
 			<Card sx={{ padding: "8px", width: "100%" }}>
 				<Typography variant="h6">Titulo 3</Typography>
 				<Typography variant="body2" color="text.secondary">
-					vainas
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
 				</Typography>
 			</Card>
 		</Box>
