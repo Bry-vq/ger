@@ -96,6 +96,11 @@ export const InsureRates = () => {
 			renderCell: (params) => formatCurrency(params.row.fee),
 		},
 		{
+			field: "year",
+			headerName: "Año de Tarifa",
+			flex: 2,
+		},
+		{
 			field: "actions",
 			headerName: "",
 			renderCell: (params) => (
@@ -223,6 +228,19 @@ export const InsureRates = () => {
 							})}
 							error={!!errors.fee}
 							helperText={errors.fee?.message}
+						/>
+						{/* Field for Year */}
+						<TextField
+							margin="dense"
+							label="Año de Tarifa"
+							fullWidth
+							variant="outlined"
+							type="number"
+							{...register("year", {
+								required: "El año de la tarifa es obligatorio",
+							})}
+							error={!!errors.year}
+							helperText={errors.year?.message}
 						/>
 						{/* Dialog actions */}
 						<DialogActions>

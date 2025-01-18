@@ -5,7 +5,12 @@ export const QUERY_KEYS = {
     RANGES: "ranges",
     RATES: "rates",
     BRANCHES: "branches",
+    BRANCH: "branch",
     EMPLOYEES: "employees",
     INSUREDS: "insureds",
+    INSURED: "insured",
+    INSURED_BRANCHES: "insuredBranches",
     INSPECTIONS: "inspections",
+    INSPECTIONS_INSURERS_SELECT: "inspectionsInsurersSelect",
+    SUPERVISORS: "supervisors",
 };

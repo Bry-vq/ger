@@ -11,34 +11,135 @@ import {
 import { useState } from "react";
 import { InspectionTable } from "../components/InspectionTable.jsx";
 import { InspectionForm } from "../components/InspectionForm.jsx";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useInspection } from "../hooks/useInspection.jsx";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+
+export const InspectionFormSchema = yup.object().shape({
+	insuredId: yup
+		.number()
+		.required("El asegurado es obligatorio")
+		.min(1, "Seleccione un asegurado válido"),
+	insuredBranchId: yup
+		.number()
+		.required("La sede del asegurado es obligatoria")
+		.min(1, "Seleccione una sede válida"),
+	insurerId: yup
+		.number()
+		.required("La compañía aseguradora es obligatoria")
+		.min(1, "Seleccione una aseguradora válida"),
+	branchId: yup
+		.number()
+		.required("La sucursal es obligatoria")
+		.min(1, "Seleccione una sucursal válida"),
+	employeeId: yup
+		.number()
+		.required("El inspector es obligatorio")
+		.min(1, "Seleccione un inspector válido"),
+	riskTypeId: yup
+		.number()
+		.required("El tipo de riesgo es obligatorio")
+		.min(1, "Seleccione un tipo de riesgo válido"),
+	applicationDate: yup
+		.date()
+		.required("La fecha de solicitud es obligatoria")
+		.typeError("Formato de fecha inválido"),
+	assignmentDate: yup
+		.date()
+		.required("La fecha de asignación es obligatoria")
+		.typeError("Formato de fecha inválido"),
+	inspectionDate: yup
+		.date()
+		.required("La fecha de inspección es obligatoria")
+		.typeError("Formato de fecha inválido"),
+	deliveryDate: yup
+		.date()
+		.required("La fecha de entrega es obligatoria")
+		.typeError("Formato de fecha inválido"),
+	totalInsuredValue: yup
+		.number()
+		.transform((value, originalValue) =>
+			originalValue === "" ? undefined : value,
+		)
+		.required("El valor total asegurado es obligatorio")
+		.positive("Debe ser un número positivo"),
+	extraPaymentForTransport: yup
+		.number()
+		.transform((value, originalValue) =>
+			originalValue === "" ? undefined : value,
+		)
+		.required("Pago extra por transporte es obligatorio")
+		.min(0, "Debe ser un número positivo"),
+	extraPaymentForMobilization: yup
+		.number()
+		.transform((value, originalValue) =>
+			originalValue === "" ? undefined : value,
+		)
+		.required("Pago extra por movilización es obligatorio")
+		.min(0, "Debe ser un número positivo"),
+	extraPaymentForMaintenance: yup
+		.number()
+		.transform((value, originalValue) =>
+			originalValue === "" ? undefined : value,
+		)
+		.required("Pago extra por manutención es obligatorio")
+		.min(0, "Debe ser un número positivo"),
+	extraPaymentForAccommodation: yup
+		.number()
+		.transform((value, originalValue) =>
+			originalValue === "" ? undefined : value,
+		)
+		.required("Pago extra por alojamiento es obligatorio")
+		.min(0, "Debe ser un número positivo"),
+	differentiatedPayment: yup
+		.number()
+		.transform((value, originalValue) =>
+			originalValue === "" ? undefined : value,
+		)
+		.required("El pago diferenciado es obligatorio")
+		.min(0, "Debe ser un número positivo"),
+	comments: yup
+		.string()
+		.nullable()
+		.max(500, "Los comentarios no pueden superar los 500 caracteres"),
+});
 
 export const InspectionPage = () => {
 	const [open, setOpen] = useState(false);
-	const { inspecitons, addInspeciton } = useInspection();
+	const { inspecitons, addInspeciton, inspectionsSelect } = useInspection();
 	const {
 		register,
 		handleSubmit,
 		reset,
 		control,
-		onSubmit,
 		formState: { errors },
 	} = useForm({
-		// resolver: yupResolver({}),
+		resolver: yupResolver(InspectionFormSchema),
 		defaultValues: {
-			name: "",
-			document: "",
-			email: "",
-			address: "",
-			department: "",
-			city: "",
-			phone: "",
+			insuredId: undefined,
+			insuredBranchId: undefined,
+			insurerId: undefined,
+			branchId: undefined,
+			employeeId: undefined,
+			applicationDate: undefined,
+			assignmentDate: undefined,
+			inspectionDate: undefined,
+			deliveryDate: undefined,
+			riskTypeId: undefined,
+			totalInsuredValue: undefined,
+			extraPaymentForTransport: undefined,
+			extraPaymentForMobilization: undefined,
+			extraPaymentForMaintenance: undefined,
+			extraPaymentForAccommodation: undefined,
+			differentiatedPayment: undefined,
+			comments: undefined,
 		},
 	});
 
-	console.log(inspecitons);
+	const handleFormSubmit = (data) => {
+		console.log(data);
+	};
 
 	return (
 		<Box sx={{ width: "100%", minHeight: "100%", p: 3 }}>
@@ -82,7 +183,7 @@ export const InspectionPage = () => {
 						register={register}
 						control={control}
 						errors={errors}
-						onSubmit={onSubmit}
+						onSubmit={handleSubmit(handleFormSubmit)}
 					/>
 				</DialogContent>
 				<DialogActions>
@@ -90,7 +191,7 @@ export const InspectionPage = () => {
 						Cancelar
 					</Button>
 					<Button
-						form="insure-form"
+						form="inspection-form"
 						type="submit"
 						color="primary"
 						variant="contained"

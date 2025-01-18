@@ -1,6 +1,5 @@
-// InsureRouterStack.js
 import { BranchDetailPage } from "../pages/BranchDetailPage.jsx";
-import { InsureDetailPage } from "../pages/InsureDetailPage.jsx";
+import { InsurerDetailPage } from "../pages/InsurerDetailPage.jsx";
 import { InsuresPage } from "../pages/InsurersPage.jsx";
 
 export const InsureRouterStack = {
@@ -12,10 +11,10 @@ export const InsureRouterStack = {
 		},
 		{
 			path: ":insurerId",
-			element: <InsureDetailPage />,
+			element: <InsurerDetailPage />,
 		},
 		{
-			path: ":insurerId/branch/:branchId",
+			path: ":insurerId/sucursal/:branchId",
 			element: <BranchDetailPage />,
 		},
 	],

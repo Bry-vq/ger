@@ -55,8 +55,9 @@ export const InsuredTable = ({ data, isLoading }) => {
 					>
 						<MenuItem
 							onClick={() => {
-								navigate(`/asegurado/${params.row.id}`);
-								handleMenuOptionClose();
+								console.log(params.row);
+								navigate(`/asegurados/${params.row.id}`);
+								// handleMenuOptionClose();
 							}}
 						>
 							<IconEye size={24} />

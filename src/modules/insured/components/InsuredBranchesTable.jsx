@@ -1,6 +1,4 @@
-import { useInsurerBranches } from "../../hooks/useInsurerBranch.jsx";
 import { IconDotsVertical, IconEye } from "@tabler/icons-react";
-import { BranchForm } from "../branch/BranchForm.jsx";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DataGrid } from "@mui/x-data-grid";
 import { useForm } from "react-hook-form";
@@ -19,32 +17,32 @@ import {
 	DialogActions,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { InsuredBranchForm } from "./InsuredBranchForm.jsx";
+import { useInsured } from "../hooks/useInsured.jsx";
 
-const branchesFormSchema = yup.object().shape({
-	address: yup.string().required("Dirección es obligatoria"),
-	city: yup.string().required("Ciudad es obligatoria"),
+const InsuredBranchesFormSchema = yup.object().shape({
+	name: yup.string().required("Sede es obligatoria"),
 	department: yup.string().required("Departamento es obligatorio"),
+	city: yup.string().required("Ciudad es obligatoria"),
+	address: yup.string().required("Dirección es obligatoria"),
+	phone: yup.string().required("Teléfono es obligatorio"),
 });
 
-export const BranchesTable = () => {
+export const InsuredBranchesTable = () => {
 	const [isOptionsMenuOpen, setIsOptionsMenuOpen] = useState(false);
 	const [selectedRowId, setSelectedRowId] = useState(null);
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [open, setOpen] = useState(false);
-	const { insurerId } = useParams();
-	const navigate = useNavigate();
-
-	const { branches, addBranch } = useInsurerBranches(insurerId);
+	const { insuredId } = useParams();
+	const { insuredBranches, addInsuredBranch } = useInsured(insuredId);
 
 	const {
 		register,
 		handleSubmit,
 		reset,
 		formState: { errors },
-		setValue,
 	} = useForm({
-		resolver: yupResolver(branchesFormSchema),
+		resolver: yupResolver(InsuredBranchesFormSchema),
 		defaultValues: {
 			name: "",
 			city: "",
@@ -68,51 +66,19 @@ export const BranchesTable = () => {
 	const handleFormSubmit = (data) => {
 		const finalData = {
 			...data,
-			insurerId: Number.parseInt(insurerId),
+			insuredId: Number.parseInt(insuredId),
 		};
-		addBranch(finalData);
+		addInsuredBranch(finalData);
 		reset();
 		setOpen(false);
 	};
 
 	const columns = [
-		{ field: "address", headerName: "Nombre Sucursal", flex: 1 },
-		{ field: "city", headerName: "Ciudad", flex: 1 },
+		{ field: "name", headerName: "Sede", flex: 1 },
 		{ field: "department", headerName: "Departamento", flex: 1 },
-		{
-			field: "actions",
-			headerName: "",
-			renderCell: (params) => (
-				<Box display="flex" justifyContent="center">
-					<IconButton
-						onClick={(event) => handleMenuOptionClick(event, params.row.id)}
-					>
-						<IconDotsVertical />
-					</IconButton>
-					<Menu
-						id="basic-menu"
-						anchorEl={anchorEl}
-						open={isOptionsMenuOpen && selectedRowId === params.row.id}
-						onClose={handleMenuOptionClose}
-						MenuListProps={{
-							"aria-labelledby": "basic-button",
-						}}
-					>
-						<MenuItem
-							onClick={() => {
-								navigate(
-									`/aseguradoras/${params.row.insurerId}/sucursal/${params.row.id}`,
-								);
-								handleMenuOptionClose();
-							}}
-						>
-							<IconEye size={24} />
-							Ver
-						</MenuItem>
-					</Menu>
-				</Box>
-			),
-		},
+		{ field: "city", headerName: "Ciudad", flex: 1 },
+		{ field: "address", headerName: "Dirección", flex: 1 },
+		{ field: "phone", headerName: "Teléfono", flex: 1 },
 	];
 
 	return (
@@ -123,13 +89,13 @@ export const BranchesTable = () => {
 					color="primary"
 					onClick={() => setOpen(!open)}
 				>
-					Agregar Sucursal
+					Agregar Sede
 				</Button>
 			</Box>
 			<Paper elevation={1}>
 				<DataGrid
 					columns={columns}
-					rows={branches}
+					rows={insuredBranches}
 					getRowId={(row) => row.id}
 				/>
 			</Paper>
@@ -146,13 +112,12 @@ export const BranchesTable = () => {
 					},
 				}}
 			>
-				<DialogTitle>Agregar Sucursal</DialogTitle>
+				<DialogTitle>Agregar Sede del Asegurado</DialogTitle>
 				<DialogContent>
-					<BranchForm
+					<InsuredBranchForm
 						register={register}
-						errors={errors}
 						onSubmit={handleSubmit(handleFormSubmit)}
-						setValue={setValue}
+						errors={errors}
 					/>
 				</DialogContent>
 				<DialogActions>
@@ -160,7 +125,7 @@ export const BranchesTable = () => {
 						Cancelar
 					</Button>
 					<Button
-						form="branch-form"
+						form="insuerd-branch-form"
 						type="submit"
 						color="primary"
 						variant="contained"

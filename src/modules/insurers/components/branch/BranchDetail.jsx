@@ -12,9 +12,13 @@ import {
 } from "@mui/material";
 import { IconInfoCircle, IconPhone } from "@tabler/icons-react";
 import { useTheme } from "@mui/material/styles";
+import { useParams } from "react-router-dom";
+import { useInsurerBranches } from "../../hooks/useInsurerBranch.jsx";
 
 export const BranchDetail = () => {
+	const { branchId } = useParams();
 	const [activeTab, setActiveTab] = useState(0);
+	const { branch } = useInsurerBranches(null, branchId);
 	const theme = useTheme();
 
 	const handleSelectTab = (tabIndex) => {
@@ -30,13 +34,13 @@ export const BranchDetail = () => {
 							Información General
 						</Typography>
 						<Typography variant="body1" color="text.secondary">
-							Ciudad: Bogota
+							Ciudad: {branch?.city}
 						</Typography>
 						<Typography variant="body1" color="text.secondary">
-							Departamento: Cundinamarca
+							Departamento: {branch?.department}
 						</Typography>
 						<Typography variant="body1" color="text.secondary">
-							Dirección: Calle 123
+							Dirección: {branch?.address}
 						</Typography>
 					</Box>
 				);

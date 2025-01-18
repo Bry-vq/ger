@@ -1,21 +1,20 @@
-import { BranchDetailHeader } from "../components/branch/BranchDetailHeader.jsx";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
-import { AdvisorTable } from "../components/advisor/AdvisorTable.jsx";
 import { Box, Typography, IconButton, useTheme } from "@mui/material";
-import { BranchDetail } from "../components/branch/BranchDetail.jsx";
-import { IconFileDescription } from "@tabler/icons-react";
 import { IconArrowLeft } from "@tabler/icons-react";
-import { IconUser } from "@tabler/icons-react";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { InsuredDetailHeader } from "../components/InsuredDetailHeader.jsx";
 import { useState } from "react";
+import { IconFileDescription, IconBuildingArch } from "@tabler/icons-react";
+import { InsuredDetail } from "../components/InsuredDetail.jsx";
+import { InsuredBranchesTable } from "../components/InsuredBranchesTable.jsx";
 
 const tabs = [
 	{ title: "Detalles", icon: <IconFileDescription /> },
-	{ title: "Asesores", icon: <IconUser /> },
+	{ title: "Sedes", icon: <IconBuildingArch /> },
 ];
 
-export const BranchDetailPage = () => {
+export const InsuredDetailPage = () => {
 	const [activeTab, setActiveTab] = useState(0);
-	const { branchId } = useParams();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const theme = useTheme();
@@ -36,7 +35,7 @@ export const BranchDetailPage = () => {
 					</IconButton>
 					<Box>
 						<Typography variant="h4" fontWeight="bold">
-							Detalles de la Sucursal: {branchId}
+							Detalles del Asegurado
 						</Typography>
 						<Box sx={{ display: "flex" }}>
 							<Typography
@@ -53,34 +52,20 @@ export const BranchDetailPage = () => {
 							>
 								/{location.pathname.split("/")[2]}
 							</Typography>
-							<Typography
-								variant="subtitle1"
-								color={theme.palette.text.primary}
-								fontWeight="medium"
-							>
-								/{location.pathname.split("/")[3]}
-							</Typography>
-							<Typography
-								variant="subtitle1"
-								color={theme.palette.text.secondary}
-								fontWeight="medium"
-							>
-								/{location.pathname.split("/")[4]}
-							</Typography>
 						</Box>
 					</Box>
 				</Box>
 			</Box>
 
-			<BranchDetailHeader
-				userTitle="Sucursal"
+			<InsuredDetailHeader
+				userTitle="Asegurado"
 				activeTab={activeTab}
 				onTabClicked={setActiveTab}
 				tabs={tabs}
 			/>
 
-			{activeTab === 0 && <BranchDetail />}
-			{activeTab === 1 && <AdvisorTable />}
+			{activeTab === 0 && <InsuredDetail />}
+			{activeTab === 1 && <InsuredBranchesTable />}
 		</Box>
 	);
 };
