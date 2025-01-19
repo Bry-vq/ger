@@ -28,16 +28,3 @@ export const addInspectionService = async (data) => {
     }
 }
 
-export const getInspectionsSelectService = async () => {
-    try {
-        const axiosClient = AxiosClient();
-        const response = await axiosClient.get("/insurers/select");
-
-        if (!response.data)
-            throw new Error("Failed to fetch inspections select. No response data.");
-
-        return response.data;
-    } catch (error) {
-        throw new Error(handleAxiosError(error));
-    }
-}

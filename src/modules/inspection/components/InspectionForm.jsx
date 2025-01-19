@@ -1,5 +1,4 @@
 import {
-	Box,
 	FormControl,
 	InputLabel,
 	MenuItem,
@@ -7,10 +6,39 @@ import {
 	TextField,
 	Typography,
 } from "@mui/material";
+import { useEffect } from "react";
+import { useState } from "react";
 import { Controller } from "react-hook-form";
 
-export const InspectionForm = ({ register, control, errors, onSubmit }) => {
-	console.log("errors", errors);
+export const InspectionForm = ({
+	insurersSelect,
+	insurerBranchesSelect,
+	insuredsSelect,
+	insuredBranchesSelect,
+	employeesSelect,
+	riskTypesSelect,
+	ratesByRisk,
+	totalInsuredValue,
+	register,
+	control,
+	errors,
+	onSubmit,
+}) => {
+	const [calculatedRate, setCalculatedRate] = useState(null);
+
+	useEffect(() => {
+		if (ratesByRisk && totalInsuredValue > 0) {
+			const rate = ratesByRisk.find(
+				(rate) =>
+					totalInsuredValue >= rate.insurabilityRange.rangeStart &&
+					totalInsuredValue <= rate.insurabilityRange.rangeEnd,
+			);
+			setCalculatedRate(rate || null);
+		} else {
+			setCalculatedRate(null);
+		}
+	}, [ratesByRisk, totalInsuredValue]);
+
 	return (
 		<form id="inspection-form" onSubmit={onSubmit}>
 			{/* Asegurado */}
@@ -27,12 +55,11 @@ export const InspectionForm = ({ register, control, errors, onSubmit }) => {
 					control={control}
 					render={({ field }) => (
 						<Select {...field} label="Asegurado" error={!!errors.insuredId}>
-							<MenuItem key={0} value={0}>
-								Option
-							</MenuItem>
-							<MenuItem key={1} value={2}>
-								Option2
-							</MenuItem>
+							{insuredsSelect?.map((insured) => (
+								<MenuItem key={insured.value} value={insured.value}>
+									{insured.label}
+								</MenuItem>
+							))}
 						</Select>
 					)}
 				/>
@@ -63,12 +90,11 @@ export const InspectionForm = ({ register, control, errors, onSubmit }) => {
 							label="Sede Solicitud Asegurado"
 							error={!!errors.insuredBranchId}
 						>
-							<MenuItem key={0} value={0}>
-								Option
-							</MenuItem>
-							<MenuItem key={1} value={2}>
-								Option2
-							</MenuItem>
+							{insuredBranchesSelect?.map((insuredBranch) => (
+								<MenuItem key={insuredBranch.value} value={insuredBranch.value}>
+									{insuredBranch.label}
+								</MenuItem>
+							))}
 						</Select>
 					)}
 				/>
@@ -99,12 +125,11 @@ export const InspectionForm = ({ register, control, errors, onSubmit }) => {
 							label="Compañía Aseguradora"
 							error={!!errors.insurerId}
 						>
-							<MenuItem key={0} value={0}>
-								Option
-							</MenuItem>
-							<MenuItem key={1} value={2}>
-								Option2
-							</MenuItem>
+							{insurersSelect?.map((insurer) => (
+								<MenuItem key={insurer.value} value={insurer.value}>
+									{insurer.label}
+								</MenuItem>
+							))}
 						</Select>
 					)}
 				/>
@@ -129,12 +154,11 @@ export const InspectionForm = ({ register, control, errors, onSubmit }) => {
 					control={control}
 					render={({ field }) => (
 						<Select {...field} label="Sucursal" error={!!errors.branchId}>
-							<MenuItem key={0} value={0}>
-								Option
-							</MenuItem>
-							<MenuItem key={1} value={2}>
-								Option2
-							</MenuItem>
+							{insurerBranchesSelect?.map((branch) => (
+								<MenuItem key={branch.value} value={branch.value}>
+									{branch.label}
+								</MenuItem>
+							))}
 						</Select>
 					)}
 				/>
@@ -159,12 +183,11 @@ export const InspectionForm = ({ register, control, errors, onSubmit }) => {
 					control={control}
 					render={({ field }) => (
 						<Select {...field} label="Inspector" error={!!errors.employeeId}>
-							<MenuItem key={0} value={0}>
-								Option
-							</MenuItem>
-							<MenuItem key={1} value={2}>
-								Option2
-							</MenuItem>
+							{employeesSelect?.map((employee) => (
+								<MenuItem key={employee.value} value={employee.value}>
+									{employee.label}
+								</MenuItem>
+							))}
 						</Select>
 					)}
 				/>
@@ -245,12 +268,11 @@ export const InspectionForm = ({ register, control, errors, onSubmit }) => {
 							label="Tipo de Riesgo"
 							error={!!errors.riskTypeId}
 						>
-							<MenuItem key={0} value={0}>
-								Option
-							</MenuItem>
-							<MenuItem key={1} value={2}>
-								Option2
-							</MenuItem>
+							{riskTypesSelect?.map((riskType) => (
+								<MenuItem key={riskType.value} value={riskType.value}>
+									{riskType.label}
+								</MenuItem>
+							))}
 						</Select>
 					)}
 				/>
@@ -272,13 +294,17 @@ export const InspectionForm = ({ register, control, errors, onSubmit }) => {
 					inputLabel: { shrink: true },
 				}}
 			/>
-			<TextField fullWidth label="Tarifa" variant="outlined" sx={{ mb: 2 }} />
 			<TextField
 				fullWidth
 				label="Tarifa"
 				variant="outlined"
 				sx={{ mb: 2 }}
 				disabled
+				value={
+					calculatedRate
+						? `Rango: ${calculatedRate.insurabilityRange.rangeStart} - ${calculatedRate.insurabilityRange.rangeEnd}`
+						: "Sin tarifa aplicable"
+				}
 			/>
 			<TextField
 				fullWidth

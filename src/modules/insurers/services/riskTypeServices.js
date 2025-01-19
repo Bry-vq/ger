@@ -14,6 +14,20 @@ export const getRiskTypesService = async (insurerId) => {
 	}
 };
 
+export const getRiskTypesSelectService = async (insurerId) => {
+	try {
+		const axiosClient = AxiosClient();
+		const response = await axiosClient.get(`/risk-types/${insurerId}/select`);
+
+		if (!response.data)
+			throw new Error("Failed to fetch risk types select. No response data.");
+
+		return response.data;
+	} catch (error) {
+		throw new Error(handleAxiosError(error));
+	}
+}
+
 export const addRiskTypeService = async (data) => {
 	try {
 		const axiosClient = AxiosClient();

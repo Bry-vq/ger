@@ -15,6 +15,20 @@ export const getInsuredsService = async () => {
     }
 }
 
+export const getInsuredsSelectService = async () => {
+    try {
+        const axiosClient = AxiosClient();
+        const response = await axiosClient.get("/insureds/select");
+
+        if (!response.data)
+            throw new Error("Failed to fetch insureds select. No response data.");
+
+        return response.data;
+    } catch (error) {
+        throw new Error(handleAxiosError(error));
+    }
+}
+
 export const getInsuredService = async (insuredId) => {
     try {
         const axiosClient = AxiosClient();
@@ -36,6 +50,20 @@ export const getInsuredBranchesService = async (insuredId) => {
 
         if (!response.data)
             throw new Error("Failed to fetch insured branches. No response data.");
+
+        return response.data;
+    } catch (error) {
+        throw new Error(handleAxiosError(error));
+    }
+}
+
+export const getInsuredBranchesSelectService = async (insuredId) => {
+    try {
+        const axiosClient = AxiosClient();
+        const response = await axiosClient.get(`/insured-branches/${insuredId}/select`);
+
+        if (!response.data)
+            throw new Error("Failed to fetch insured branches select. No response data.");
 
         return response.data;
     } catch (error) {

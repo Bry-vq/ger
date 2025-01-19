@@ -14,6 +14,20 @@ export const getInsurerBranchesService = async (insurerId) => {
     }
 };
 
+export const getInsurerBranchesSelectService = async (insurerId) => {
+    try {
+        const axiosClient = AxiosClient();
+        const response = await axiosClient.get(`/branches/${insurerId}/select`);
+
+        if (!response.data)
+            throw new Error("Failed to fetch insures select. No response data.");
+
+        return response.data;
+    } catch (error) {
+        throw new Error(handleAxiosError(error));
+    }
+}
+
 export const getInsurerBranchService = async (branchId) => {
     try {
         const axiosClient = AxiosClient();

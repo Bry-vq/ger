@@ -107,35 +107,53 @@ export const InspectionFormSchema = yup.object().shape({
 
 export const InspectionPage = () => {
 	const [open, setOpen] = useState(false);
-	const { inspecitons, addInspeciton, inspectionsSelect } = useInspection();
+
 	const {
 		register,
 		handleSubmit,
+		watch,
 		reset,
 		control,
 		formState: { errors },
 	} = useForm({
 		resolver: yupResolver(InspectionFormSchema),
 		defaultValues: {
-			insuredId: undefined,
-			insuredBranchId: undefined,
-			insurerId: undefined,
-			branchId: undefined,
-			employeeId: undefined,
-			applicationDate: undefined,
-			assignmentDate: undefined,
-			inspectionDate: undefined,
-			deliveryDate: undefined,
-			riskTypeId: undefined,
-			totalInsuredValue: undefined,
-			extraPaymentForTransport: undefined,
-			extraPaymentForMobilization: undefined,
-			extraPaymentForMaintenance: undefined,
-			extraPaymentForAccommodation: undefined,
-			differentiatedPayment: undefined,
-			comments: undefined,
+			insuredId: "",
+			insuredBranchId: "",
+			insurerId: "",
+			branchId: "",
+			employeeId: "",
+			applicationDate: "",
+			assignmentDate: "",
+			inspectionDate: "",
+			deliveryDate: "",
+			riskTypeId: "",
+			totalInsuredValue: "",
+			extraPaymentForTransport: "",
+			extraPaymentForMobilization: "",
+			extraPaymentForMaintenance: "",
+			extraPaymentForAccommodation: "",
+			differentiatedPayment: "",
+			comments: "",
 		},
 	});
+
+	const insurerId = watch("insurerId");
+	const insuredId = watch("insuredId");
+	const riskTypeId = watch("riskTypeId");
+	const totalInsuredValue = watch("totalInsuredValue");
+
+	const {
+		inspections,
+		addInspeciton,
+		insurersSelect,
+		insurerBranchesSelect,
+		insuredsSelect,
+		insuredBranchesSelect,
+		employeesSelect,
+		riskTypesSelect,
+		ratesByRisk,
+	} = useInspection(open, insurerId, insuredId, riskTypeId);
 
 	const handleFormSubmit = (data) => {
 		console.log(data);
@@ -172,7 +190,7 @@ export const InspectionPage = () => {
 				fullWidth // Hace que el diálogo ocupe el 100% del ancho definido por `maxWidth`
 				sx={{
 					"& .MuiDialog-paper": {
-						width: "50%", // Ocupa el 50% del ancho de la pantalla
+						width: "80%", // Ocupa el 50% del ancho de la pantalla
 						maxWidth: "none", // Evita que `maxWidth` sobreescriba el ancho
 					},
 				}}
@@ -184,6 +202,14 @@ export const InspectionPage = () => {
 						control={control}
 						errors={errors}
 						onSubmit={handleSubmit(handleFormSubmit)}
+						insurersSelect={insurersSelect}
+						insurerBranchesSelect={insurerBranchesSelect}
+						insuredsSelect={insuredsSelect}
+						employeesSelect={employeesSelect}
+						riskTypesSelect={riskTypesSelect}
+						insuredBranchesSelect={insuredBranchesSelect}
+						ratesByRisk={ratesByRisk}
+						totalInsuredValue={totalInsuredValue}
 					/>
 				</DialogContent>
 				<DialogActions>

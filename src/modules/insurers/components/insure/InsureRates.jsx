@@ -59,7 +59,7 @@ export const InsureRates = () => {
 	};
 
 	const onSubmit = (data) => {
-		createRate({ ...data, insurerId });
+		createRate({ ...data, insurerId, year: Number(data.year) });
 		handleModalClose();
 	};
 

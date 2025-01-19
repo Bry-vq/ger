@@ -15,6 +15,20 @@ export const getRatesService = async (insurerId) => {
 	}
 };
 
+export const getRatesByRiskService = async (insurerId, riskId) => {
+	try {
+		const axiosClient = AxiosClient();
+		const response = await axiosClient.get(`/rates/${insurerId}/risk/${riskId}/select`);
+
+		if (!response.data)
+			throw new Error("Failed to fetch rates by risk. No response data.");
+
+		return response.data;
+	} catch (error) {
+		throw new Error(handleAxiosError(error));
+	}
+};
+
 export const addRateService = async (rate) => {
 	try {
 		const axiosClient = AxiosClient();
