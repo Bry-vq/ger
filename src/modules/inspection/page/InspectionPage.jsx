@@ -114,6 +114,7 @@ export const InspectionPage = () => {
 		watch,
 		reset,
 		control,
+		setValue,
 		formState: { errors },
 	} = useForm({
 		resolver: yupResolver(InspectionFormSchema),
@@ -145,7 +146,7 @@ export const InspectionPage = () => {
 
 	const {
 		inspections,
-		addInspeciton,
+		addInspection,
 		insurersSelect,
 		insurerBranchesSelect,
 		insuredsSelect,
@@ -157,6 +158,9 @@ export const InspectionPage = () => {
 
 	const handleFormSubmit = (data) => {
 		console.log(data);
+		addInspection(data);
+		reset();
+		setOpen(false);
 	};
 
 	return (
@@ -181,7 +185,7 @@ export const InspectionPage = () => {
 				</Button>
 			</Box>
 
-			<InspectionTable />
+			<InspectionTable data={inspections} />
 
 			<Dialog
 				open={open}
@@ -200,6 +204,7 @@ export const InspectionPage = () => {
 					<InspectionForm
 						register={register}
 						control={control}
+						setValue={setValue}
 						errors={errors}
 						onSubmit={handleSubmit(handleFormSubmit)}
 						insurersSelect={insurersSelect}

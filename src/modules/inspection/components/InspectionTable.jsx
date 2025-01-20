@@ -48,10 +48,28 @@ export const InspectionTable = ({ data = [], isLoading }) => {
 	};
 
 	const columns = [
-		{ field: "insure", headerName: "Aseguradora", flex: 1 },
-		{ field: "insured", headerName: "Asegurado", flex: 1 },
-		{ field: "range", headerName: "Rango", flex: 1 },
-		{ field: "assignationDate", headerName: "Fecha Asignación", flex: 1 },
+		{ field: "insurerName", headerName: "Aseguradora", flex: 1 },
+		{ field: "insuredName", headerName: "Asegurado", flex: 1 },
+		{
+			field: "riskType",
+			headerName: "Riesgo",
+			flex: 1,
+			renderCell: (params) => {
+				const riskType = params.row.rate?.riskType;
+				return riskType ? riskType.name : "N/A";
+			},
+		},
+		{
+			field: "range",
+			headerName: "Rango",
+			flex: 1,
+			renderCell: (params) => {
+				const range = params.row.rate?.insurabilityRange;
+				return range ? `${range.rangeStart} - ${range.rangeEnd}` : "N/A";
+			},
+		},
+		{ field: "totalInsuredValue", headerName: "Valor Asegurado", flex: 1 },
+		{ field: "assignmentDate", headerName: "Fecha Asignación", flex: 1 },
 		{ field: "inspectionDate", headerName: "Fecha Inspección", flex: 1 },
 		{
 			field: "actions",
@@ -77,10 +95,10 @@ export const InspectionTable = ({ data = [], isLoading }) => {
 						<MenuItem
 							onClick={() => {
 								console.log(params.row); // Navega a la página de detalles de la aseguradora
-								navigate(
-									`/aseguradoras/${params.row.Aseguradora_ID}/sucursal/${params.row.Sucursal_ID}`,
-								);
-								handleMenuOptionClose(); // Cierra el menú después de hacer clic
+								// navigate(
+								// 	`/aseguradoras/${params.row.Aseguradora_ID}/sucursal/${params.row.Sucursal_ID}`,
+								// );
+								// handleMenuOptionClose(); // Cierra el menú después de hacer clic
 							}}
 						>
 							<IconEye size={24} />

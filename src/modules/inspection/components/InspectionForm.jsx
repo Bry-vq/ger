@@ -21,6 +21,7 @@ export const InspectionForm = ({
 	totalInsuredValue,
 	register,
 	control,
+	setValue,
 	errors,
 	onSubmit,
 }) => {
@@ -34,10 +35,17 @@ export const InspectionForm = ({
 					totalInsuredValue <= rate.insurabilityRange.rangeEnd,
 			);
 			setCalculatedRate(rate || null);
+
+			if (rate) {
+				setValue("insurerRateId", rate.id, { shouldValidate: true });
+			} else {
+				setValue("insurerRateId", null, { shouldValidate: true });
+			}
 		} else {
 			setCalculatedRate(null);
+			setValue("insurerRateId", null, { shouldValidate: true });
 		}
-	}, [ratesByRisk, totalInsuredValue]);
+	}, [ratesByRisk, totalInsuredValue, setValue]);
 
 	return (
 		<form id="inspection-form" onSubmit={onSubmit}>
