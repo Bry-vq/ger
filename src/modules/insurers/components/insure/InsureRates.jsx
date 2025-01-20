@@ -18,10 +18,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { IconDotsVertical, IconEdit } from "@tabler/icons-react";
-import {
-	formatCurrency,
-	formatRangeAsCurrency,
-} from "../../../../utils/functions.js";
+import { formatCurrency } from "../../../../utils/functions.js";
 import { useRate } from "../../hooks/useRate.jsx";
 import { useParams } from "react-router-dom";
 
@@ -80,8 +77,7 @@ export const InsureRates = () => {
 			field: "insurabilityRange",
 			headerName: "Rango",
 			flex: 2,
-			renderCell: (params) =>
-				formatRangeAsCurrency(params.row.insurabilityRangeText),
+			renderCell: (params) => params.row.insurabilityRangeText,
 		},
 		{
 			field: "insuredValue",
@@ -191,7 +187,7 @@ export const InsureRates = () => {
 									<Select {...field} error={!!errors.insurabilityRangeId}>
 										{ranges.map((range) => (
 											<MenuItem key={range.value} value={range.value}>
-												{formatRangeAsCurrency(range.label)}
+												{range.label}
 											</MenuItem>
 										))}
 									</Select>

@@ -1,4 +1,3 @@
-import { IconDotsVertical, IconEye } from "@tabler/icons-react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DataGrid } from "@mui/x-data-grid";
 import { useForm } from "react-hook-form";
@@ -7,9 +6,6 @@ import * as yup from "yup";
 import {
 	Box,
 	Button,
-	IconButton,
-	Menu,
-	MenuItem,
 	Paper,
 	Dialog,
 	DialogTitle,
@@ -29,9 +25,6 @@ const InsuredBranchesFormSchema = yup.object().shape({
 });
 
 export const InsuredBranchesTable = () => {
-	const [isOptionsMenuOpen, setIsOptionsMenuOpen] = useState(false);
-	const [selectedRowId, setSelectedRowId] = useState(null);
-	const [anchorEl, setAnchorEl] = useState(null);
 	const [open, setOpen] = useState(false);
 	const { insuredId } = useParams();
 	const { insuredBranches, addInsuredBranch } = useInsured(insuredId);
@@ -40,6 +33,7 @@ export const InsuredBranchesTable = () => {
 		register,
 		handleSubmit,
 		reset,
+		setValue,
 		formState: { errors },
 	} = useForm({
 		resolver: yupResolver(InsuredBranchesFormSchema),
@@ -52,22 +46,12 @@ export const InsuredBranchesTable = () => {
 		},
 	});
 
-	const handleMenuOptionClick = (event, rowId) => {
-		setAnchorEl(event.currentTarget);
-		setSelectedRowId(rowId);
-		setIsOptionsMenuOpen(true);
-	};
-
-	const handleMenuOptionClose = () => {
-		setAnchorEl(null);
-		setIsOptionsMenuOpen(false);
-	};
-
 	const handleFormSubmit = (data) => {
 		const finalData = {
 			...data,
 			insuredId: Number.parseInt(insuredId),
 		};
+		console.log(finalData);
 		addInsuredBranch(finalData);
 		reset();
 		setOpen(false);
@@ -118,6 +102,7 @@ export const InsuredBranchesTable = () => {
 						register={register}
 						onSubmit={handleSubmit(handleFormSubmit)}
 						errors={errors}
+						setValue={setValue}
 					/>
 				</DialogContent>
 				<DialogActions>
@@ -125,7 +110,7 @@ export const InsuredBranchesTable = () => {
 						Cancelar
 					</Button>
 					<Button
-						form="insuerd-branch-form"
+						form="insured-branch-form"
 						type="submit"
 						color="primary"
 						variant="contained"

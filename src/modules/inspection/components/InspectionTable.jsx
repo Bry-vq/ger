@@ -10,6 +10,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
 import { IconDotsVertical, IconEye } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
+import { formatCurrency } from "../../../utils/functions.js";
 
 const mockInsurers = [
 	{
@@ -65,10 +66,17 @@ export const InspectionTable = ({ data = [], isLoading }) => {
 			flex: 1,
 			renderCell: (params) => {
 				const range = params.row.rate?.insurabilityRange;
-				return range ? `${range.rangeStart} - ${range.rangeEnd}` : "N/A";
+				return range
+					? `${formatCurrency(range.rangeStart)} - ${formatCurrency(range.rangeEnd)}`
+					: "N/A";
 			},
 		},
-		{ field: "totalInsuredValue", headerName: "Valor Asegurado", flex: 1 },
+		{
+			field: "totalInsuredValue",
+			headerName: "Valor Asegurado",
+			flex: 1,
+			renderCell: (params) => formatCurrency(params.row.totalInsuredValue),
+		},
 		{ field: "assignmentDate", headerName: "Fecha Asignación", flex: 1 },
 		{ field: "inspectionDate", headerName: "Fecha Inspección", flex: 1 },
 		{

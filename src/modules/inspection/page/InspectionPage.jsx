@@ -202,6 +202,7 @@ export const InspectionPage = () => {
 				<DialogTitle>Agregar Inspección</DialogTitle>
 				<DialogContent>
 					<InspectionForm
+						watch={watch}
 						register={register}
 						control={control}
 						setValue={setValue}

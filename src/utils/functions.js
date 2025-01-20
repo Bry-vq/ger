@@ -6,12 +6,6 @@ export const formatCurrency = (value) => {
   }).format(value);
 };
 
-// Helper function to format insurability_range as currency
-export const formatRangeAsCurrency = (range) => {
-  const [start, end] = range.split(" - ").map(Number);
-  return `${formatCurrency(start)} - ${formatCurrency(end)}`;
-};
-
 export const restrictToNumbers = (event) => {
   const numericValue = event.target.value.replace(/\D/g, ""); // Reemplaza todo lo que no sea número
   event.target.value = numericValue; // Actualiza el valor del input

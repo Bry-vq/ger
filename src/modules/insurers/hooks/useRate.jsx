@@ -4,6 +4,7 @@ import { QUERY_KEYS } from "../../../utils/constanst.js";
 import { getRiskTypesService } from "../services/riskTypeServices.js";
 import { addRateService, getRatesService } from "../services/ratesServices.js";
 import { queryClient } from "../../../utils/queryClient.js";
+import { formatCurrency } from "../../../utils/functions.js";
 
 export const useRate = (insurerId) => {
 	// Create rate
@@ -13,7 +14,7 @@ export const useRate = (insurerId) => {
 			queryClient().invalidateQueries(QUERY_KEYS.RATES);
 		},
 	});
-	
+
 	// Fetch rates
 	const { data: rates, isFetching: isRatesFetching } = useQuery({
 		queryKey: [QUERY_KEYS.RATES, insurerId],
@@ -36,7 +37,7 @@ export const useRate = (insurerId) => {
 	const mappedRanges =
 		ranges?.map((range) => ({
 			value: range.id,
-			label: `${range.rangeStart} - ${range.rangeEnd}`, // Label for the user
+			label: `${formatCurrency(range.rangeStart)} - ${formatCurrency(range.rangeEnd)}`, // Label for the user
 		})) || [];
 
 	// Map risk types for the select input
@@ -57,7 +58,7 @@ export const useRate = (insurerId) => {
 			riskTypeName: rate?.riskType?.name ?? "",
 			riskTypeDescription: rate?.riskType?.description ?? "",
 			insurabilityRangeId: rate?.insurabilityRange?.id ?? "",
-			insurabilityRangeText: `${rate?.insurabilityRange?.rangeStart ?? 0} - ${rate?.insurabilityRange?.rangeEnd ?? 0}`,
+			insurabilityRangeText: `${formatCurrency(rate?.insurabilityRange?.rangeStart) ?? 0} - ${formatCurrency(rate?.insurabilityRange?.rangeEnd) ?? 0}`,
 			insurerName: rate?.insurer?.name ?? "",
 			...rate,
 		})) || [];

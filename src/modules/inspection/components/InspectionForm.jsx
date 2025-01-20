@@ -9,6 +9,8 @@ import {
 import { useEffect } from "react";
 import { useState } from "react";
 import { Controller } from "react-hook-form";
+import { formatCurrency } from "../../../utils/functions.js";
+import { NumericFormat } from "react-number-format";
 
 export const InspectionForm = ({
 	insurersSelect,
@@ -19,6 +21,7 @@ export const InspectionForm = ({
 	riskTypesSelect,
 	ratesByRisk,
 	totalInsuredValue,
+	watch,
 	register,
 	control,
 	setValue,
@@ -46,6 +49,15 @@ export const InspectionForm = ({
 			setValue("insurerRateId", null, { shouldValidate: true });
 		}
 	}, [ratesByRisk, totalInsuredValue, setValue]);
+
+	// Helper function to handle formatting on blur
+	const handleCurrencyBlur = (fieldName) => (event) => {
+		const rawValue = event.target.value.replace(/[^0-9.-]+/g, ""); // Remove non-numeric characters
+		const numericValue = Number.parseFloat(rawValue);
+		console.log(numericValue);
+	};
+
+	console.log(watch("totalInsuredValue"));
 
 	return (
 		<form id="inspection-form" onSubmit={onSubmit}>
@@ -77,7 +89,6 @@ export const InspectionForm = ({
 					</Typography>
 				)}
 			</FormControl>
-
 			{/* Sede Solicitud Asegurado */}
 			<FormControl
 				fullWidth
@@ -112,7 +123,6 @@ export const InspectionForm = ({
 					</Typography>
 				)}
 			</FormControl>
-
 			{/* Compañía Aseguradora */}
 			<FormControl
 				fullWidth
@@ -147,7 +157,6 @@ export const InspectionForm = ({
 					</Typography>
 				)}
 			</FormControl>
-
 			{/* Sucursal */}
 			<FormControl
 				fullWidth
@@ -176,7 +185,6 @@ export const InspectionForm = ({
 					</Typography>
 				)}
 			</FormControl>
-
 			{/* Inspector */}
 			<FormControl
 				fullWidth
@@ -290,17 +298,31 @@ export const InspectionForm = ({
 					</Typography>
 				)}
 			</FormControl>
-			<TextField
-				fullWidth
-				label="Valor Total Asegurado"
-				variant="outlined"
-				sx={{ mb: 2 }}
-				{...register("totalInsuredValue")}
-				error={!!errors.totalInsuredValue}
-				helperText={errors.totalInsuredValue?.message}
-				slotProps={{
-					inputLabel: { shrink: true },
-				}}
+			<Controller
+				name="totalInsuredValue"
+				control={control}
+				render={({ field: { onChange, onBlur, value, ref } }) => (
+					<NumericFormat
+						value={value}
+						onValueChange={(values) => {
+							const { floatValue } = values;
+							onChange(floatValue);
+						}}
+						thousandSeparator=","
+						decimalSeparator="."
+						prefix="$ "
+						customInput={TextField}
+						fullWidth
+						label="Valor Asegurado"
+						variant="outlined"
+						sx={{ mb: 2 }}
+						error={!!errors.totalInsuredValue}
+						helperText={errors.totalInsuredValue?.message}
+						slotProps={{
+							inputLabel: { shrink: true },
+						}}
+					/>
+				)}
 			/>
 			<TextField
 				fullWidth
@@ -310,7 +332,7 @@ export const InspectionForm = ({
 				disabled
 				value={
 					calculatedRate
-						? `Rango: ${calculatedRate.insurabilityRange.rangeStart} - ${calculatedRate.insurabilityRange.rangeEnd}`
+						? `Rango: ${formatCurrency(calculatedRate.insurabilityRange.rangeStart)} - ${formatCurrency(calculatedRate.insurabilityRange.rangeEnd)}`
 						: "Sin tarifa aplicable"
 				}
 			/>
