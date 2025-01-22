@@ -19,3 +19,9 @@ export const QUERY_KEYS = {
     INSPECTIONS_RISK_TYPES_SELECT: "inspectionsRiskTypesSelect",
     SUPERVISORS: "supervisors",
 };
+
+export const MODAL_STATES = {
+    ADD: "add",
+    EDIT: "edit",
+    CLOSED: "closed",
+};

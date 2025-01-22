@@ -17,6 +17,7 @@ import { IconInfoCircle, IconPhone } from "@tabler/icons-react";
 import { useTheme } from "@mui/material/styles";
 import { useInsurer } from "../../hooks/useInsurer.jsx";
 import { useParams } from "react-router-dom";
+import { IconEdit } from "@tabler/icons-react";
 
 export const InsureDetail = () => {
 	const theme = useTheme();
@@ -127,7 +128,7 @@ export const InsureDetail = () => {
 				</List>
 			</Box>
 
-			<Box flex={5} p={3} sx={{ backgroundColor: theme.palette.grey[100] }}>
+			<Box flex={5} p={1} sx={{ backgroundColor: theme.palette.grey[100] }}>
 				<Box
 					sx={{
 						display: "flex",
@@ -136,13 +137,16 @@ export const InsureDetail = () => {
 				>
 					{renderContent()}
 					<Button
-						variant="contained"
-						sx={{ height: 40 }}
+						variant="text"
+						sx={{
+							height: 40,
+							background: theme.palette.grey[300],
+						}}
 						onClick={() => {
 							setOpen(true);
 						}}
 					>
-						Editar
+						<IconEdit size={24} />
 					</Button>
 				</Box>
 				<Dialog

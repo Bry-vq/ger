@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import {
 	addRiskTypeService,
 	getRiskTypesService,
+	updateRiskTypeService,
 } from "../services/riskTypeServices.js";
 import { QUERY_KEYS } from "../../../utils/constanst.js";
 import { queryClient } from "../../../utils/queryClient.js";
@@ -26,8 +27,22 @@ export const useRiskType = (insurerId) => {
 		},
 	});
 
+	const { mutateAsync: updateRisk } = useMutation({
+		mutationFn: updateRiskTypeService,
+		queryKey: [QUERY_KEYS.RISK_TYPE],
+		onSuccess: async () => {
+			await queryClient().invalidateQueries({
+				queryKey: [QUERY_KEYS.RISK_TYPE],
+			});
+		},
+		onError: (error) => {
+			console.error(error);
+		},
+	});
+
 	return {
 		addRisk,
+		updateRisk,
 		riskTypes,
 		isRiskTypesFetching,
 	};

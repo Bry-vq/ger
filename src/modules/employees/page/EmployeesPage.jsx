@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { EmployeesTable } from "../components/EmployeesTable.jsx";
 import { useEmployee } from "../hooks/useEmployee.jsx";
 import * as yup from "yup";
+import { MODAL_STATES } from "../../../utils/constanst.js";
 
 const employeesFormSchema = yup.object().shape({
 	username: yup.string().required("Nombre es obligatorio"),
@@ -24,9 +25,12 @@ const employeesFormSchema = yup.object().shape({
 });
 
 export const EmployeesPage = () => {
-	const [open, setOpen] = useState(false);
+	const [anchorEl, setAnchorEl] = useState(null);
+	const [selectedRowId, setSelectedRowId] = useState(null);
+	const [modal, setModal] = useState(MODAL_STATES.CLOSED);
 	const { employees, isEmployeesFetching, addEmployee } = useEmployee();
 	const {
+		watch,
 		register,
 		handleSubmit,
 		reset,
@@ -43,10 +47,23 @@ export const EmployeesPage = () => {
 		},
 	});
 
+	const handleModalClose = () => {
+		setModal(MODAL_STATES.CLOSED);
+		reset({
+			id: undefined,
+			username: "",
+			documentType: "",
+			document: "",
+			email: "",
+			phone: "",
+		});
+	};
+
 	const handleFormSubmit = (data) => {
 		addEmployee(data);
 		reset();
-		setOpen(false);
+		setModal(MODAL_STATES.CLOSED);
+		handleModalClose();
 	};
 
 	return (
@@ -64,18 +81,38 @@ export const EmployeesPage = () => {
 				<Button
 					variant="contained"
 					color="primary"
-					onClick={() => setOpen(true)}
+					onClick={() => setModal(MODAL_STATES.ADD)}
 					sx={{ height: 40 }}
 				>
 					Nuevo Inspector
 				</Button>
 			</Box>
 
-			<EmployeesTable employees={employees} isLoading={isEmployeesFetching} />
+			<EmployeesTable
+				employees={employees}
+				isLoading={isEmployeesFetching}
+				setAnchorEl={setAnchorEl}
+				anchorEl={anchorEl}
+				isOptionsMenuOpen={Boolean(anchorEl)}
+				selectedRowId={selectedRowId}
+				onCloseMenu={() => setAnchorEl(null)}
+				setSelectedRowId={setSelectedRowId}
+				onEdit={(row) => {
+					reset({
+						id: row.id,
+						username: row.username,
+						documentType: row.documentType,
+						document: row.document,
+						email: row.email,
+						phone: row.phone,
+					});
+					setModal(MODAL_STATES.EDIT);
+				}}
+			/>
 
 			<Dialog
-				open={open}
-				onClose={() => setOpen(false)}
+				open={modal !== MODAL_STATES.CLOSED}
+				onClose={handleModalClose}
 				maxWidth="md" // Controla el ancho máximo
 				fullWidth // Hace que el diálogo ocupe el 100% del ancho definido por `maxWidth`
 				sx={{
@@ -89,13 +126,14 @@ export const EmployeesPage = () => {
 				<DialogContent>
 					<EmployeesForm
 						register={register}
+						watch={watch}
 						control={control}
 						errors={errors}
 						onSubmit={handleSubmit(handleFormSubmit)}
 					/>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={() => setOpen(false)} color="primary">
+					<Button onClick={handleModalClose} color="primary">
 						Cancelar
 					</Button>
 					<Button
