@@ -199,6 +199,12 @@ const overrides = (theme) => ({
     styleOverrides: {
       root: {
         borderRadius: Number(theme.shape.borderRadius) * 2,
+        "& .MuiDataGrid-columnHeader:focus, & .MuiDataGrid-cell:focus": {
+          outline: "none", // Elimina el outline en los headers y celdas al recibir foco
+        },
+        "& .MuiDataGrid-columnHeader:focus-within, & .MuiDataGrid-cell:focus-within": {
+            outline: "none", // Elimina el outline al recibir foco dentro del elemento
+        },
       },
     },
     defaultProps: {

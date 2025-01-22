@@ -1,18 +1,10 @@
-import {
-	Box,
-	CircularProgress,
-	IconButton,
-	Menu,
-	MenuItem,
-	Paper,
-} from "@mui/material";
+import { Box, IconButton, Menu, MenuItem, Paper } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { IconTrash, IconDotsVertical, IconEdit } from "@tabler/icons-react";
-import theme from "../../../theme/theme.js";
+import theme from "../../../../theme/theme.js";
 
-export const EmployeesTable = ({
-	employees,
-	isLoading,
+export const InsureRiskTypeTable = ({
+	rows,
 	onEdit,
 	anchorEl,
 	isOptionsMenuOpen,
@@ -27,9 +19,8 @@ export const EmployeesTable = ({
 	};
 
 	const columns = [
-		{ field: "document", headerName: "Documento", flex: 1 },
-		{ field: "username", headerName: "Nombre", flex: 1 },
-		{ field: "phone", headerName: "Teléfono", flex: 1 },
+		{ field: "name", headerName: "Tipo de Riesgo", flex: 2 },
+		{ field: "description", headerName: "Descripción", flex: 3 },
 		{
 			field: "actions",
 			headerName: "",
@@ -75,24 +66,10 @@ export const EmployeesTable = ({
 			),
 		},
 	];
+
 	return (
-		<Paper elevation={1} sx={{ height: "500px" }}>
-			{isLoading ? (
-				<Box
-					display="flex"
-					justifyContent="center"
-					alignItems="center"
-					height="100%"
-				>
-					<CircularProgress />
-				</Box>
-			) : (
-				<DataGrid
-					columns={columns}
-					rows={employees}
-					getRowId={(row) => row.id}
-				/>
-			)}
+		<Paper elevation={1}>
+			<DataGrid columns={columns} rows={rows} />
 		</Paper>
 	);
 };

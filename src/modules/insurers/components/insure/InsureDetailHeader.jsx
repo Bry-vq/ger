@@ -8,6 +8,14 @@ import {
 	Typography,
 	useTheme,
 } from "@mui/material";
+import {
+	IconFileDescription,
+	IconCash,
+	IconBuilding,
+	IconCoins,
+	IconShieldLock,
+} from "@tabler/icons-react";
+
 import React from "react";
 
 function a11yProps(index) {
@@ -16,18 +24,24 @@ function a11yProps(index) {
 		"aria-controls": `tabpanel-${index}`,
 	};
 }
+const tabs = [
+	{ title: "Detalles", icon: <IconFileDescription /> },
+	{ title: "Tipos de riesgo", icon: <IconShieldLock /> },
+	{ title: "Rangos de asegurabilidad", icon: <IconCoins /> },
+	{ title: "Tarifas", icon: <IconCash /> },
+	{ title: "Sucursales", icon: <IconBuilding /> },
+];
 
 export const InsureDetailHeader = ({
 	userTitle,
 	userSubtitle,
-	onTabClicked,
-	tabs,
+	setActiveTab,
 	activeTab,
 }) => {
 	const theme = useTheme();
 
 	const handleTabChange = (event, newValue) => {
-		onTabClicked(newValue);
+		setActiveTab(newValue);
 	};
 
 	return (

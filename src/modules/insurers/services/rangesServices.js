@@ -28,3 +28,17 @@ export const addInsurabilityRangeService = async (data) => {
 		throw new Error(handleAxiosError(error));
 	}
 };
+
+export const updateInsurabilityRangeService = async (data) => {
+	try {
+		const axiosClient = AxiosClient();
+		const response = await axiosClient.put("/insurability-ranges", data);
+
+		if (!response.data)
+			throw new Error("Failed to update insurability range. No response data.");
+
+		return response.data;
+	} catch (error) {
+		throw new Error(handleAxiosError(error));
+	}
+}

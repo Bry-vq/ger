@@ -1,53 +1,34 @@
-import {
-	Box,
-	Button,
-	IconButton,
-	Menu,
-	MenuItem,
-	Paper,
-	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogTitle,
-	TextField,
-} from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { Box, Button } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { IconDotsVertical, IconEdit } from "@tabler/icons-react";
 import { useRiskType } from "../../hooks/useRiskType.jsx";
 import { useParams } from "react-router-dom";
+import { InsureRiskTypeForm } from "./InsureRiskTypeForm.jsx";
+import { InsureRiskTypeTable } from "./InsureRiskTypeTable.jsx";
+import { MODAL_STATES } from "../../../../utils/constanst.js";
 
 export const InsureRiskType = () => {
 	const [anchorEl, setAnchorEl] = useState(null);
-	const [selectedRowId, setSelectedRowId] = useState(null); // Para almacenar la fila seleccionada
-	const [isOptionsMenuOpen, setIsOptionsMenuOpen] = useState(false);
-	const [isModalOpen, setIsModalOpen] = useState(false); // Estado para el modal
+	const [selectedRowId, setSelectedRowId] = useState(null);
+	const [modal, setModal] = useState(MODAL_STATES.CLOSED);
 	const { insurerId } = useParams();
-	const { riskTypes, addRisk } = useRiskType(insurerId);
+	const { riskTypes, addRisk, updateRisk } = useRiskType(insurerId);
 
 	const {
 		register,
 		handleSubmit,
+		watch,
 		reset,
 		formState: { errors },
 	} = useForm();
 
-	const handleMenuOptionClick = (event, rowId) => {
-		setAnchorEl(event.currentTarget);
-		setSelectedRowId(rowId);
-		setIsOptionsMenuOpen(true);
-	};
-
-	const handleMenuOptionClose = () => {
-		setAnchorEl(null);
-		setIsOptionsMenuOpen(false);
-	};
-
-	const handleModalOpen = () => setIsModalOpen(true);
 	const handleModalClose = () => {
-		setIsModalOpen(false);
-		reset();
+		setModal(MODAL_STATES.CLOSED);
+		reset({
+			id: undefined,
+			name: "",
+			description: "",
+		});
 	};
 
 	const onSubmit = (data) => {
@@ -55,101 +36,56 @@ export const InsureRiskType = () => {
 			...data,
 			insurerId: Number.parseInt(insurerId),
 		};
-		addRisk(finalData);
+
+		if (modal === MODAL_STATES.ADD) addRisk(finalData);
+		if (modal === MODAL_STATES.EDIT) updateRisk(finalData);
 		handleModalClose();
 	};
-
-	const columns = [
-		{ field: "name", headerName: "Tipo de Riesgo", flex: 2 },
-		{ field: "description", headerName: "Descripción", flex: 3 },
-		{
-			field: "actions",
-			headerName: "",
-			renderCell: (params) => (
-				<Box display="flex" justifyContent="center">
-					<IconButton
-						onClick={(event) => handleMenuOptionClick(event, params.row.id)}
-					>
-						<IconDotsVertical />
-					</IconButton>
-					<Menu
-						id="basic-menu"
-						anchorEl={anchorEl}
-						open={isOptionsMenuOpen && selectedRowId === params.row.id}
-						onClose={handleMenuOptionClose}
-						MenuListProps={{
-							"aria-labelledby": "basic-button",
-						}}
-					>
-						<MenuItem onClick={handleMenuOptionClose}>
-							<IconEdit size={24} />
-							Editar
-						</MenuItem>
-					</Menu>
-				</Box>
-			),
-		},
-	];
 
 	return (
 		<Box>
 			{/* Botón para crear un nuevo Risk Type */}
 			<Box display="flex" justifyContent="flex-end" mb={2}>
-				<Button variant="contained" color="primary" onClick={handleModalOpen}>
+				<Button
+					variant="contained"
+					color="primary"
+					onClick={() => setModal(MODAL_STATES.ADD)}
+				>
 					Agregar Tipo de Riesgo
 				</Button>
 			</Box>
 
 			{/* Tabla de Risk Types */}
-			<Paper elevation={1}>
-				<DataGrid
-					columns={columns}
-					rows={riskTypes}
-					getRowId={(row) => row.id}
-				/>
-			</Paper>
+			<InsureRiskTypeTable
+				rows={riskTypes}
+				onEdit={(row) => {
+					reset({
+						id: row.id,
+						name: row.name,
+						description: row.description,
+					});
+					setModal(MODAL_STATES.EDIT);
+				}}
+				setAnchorEl={setAnchorEl}
+				anchorEl={anchorEl}
+				isOptionsMenuOpen={Boolean(anchorEl)}
+				selectedRowId={selectedRowId}
+				onCloseMenu={() => setAnchorEl(null)}
+				setSelectedRowId={setSelectedRowId}
+			/>
 
-			{/* Modal para agregar nuevo tipo de riesgo */}
-			<Dialog
-				open={isModalOpen}
-				onClose={handleModalClose}
-				fullWidth
-				maxWidth="sm"
-			>
-				<DialogTitle>Agregar Tipo de Riesgo</DialogTitle>
-				<DialogContent>
-					<form onSubmit={handleSubmit(onSubmit)}>
-						<TextField
-							margin="dense"
-							label="Nombre del Tipo de Riesgo"
-							fullWidth
-							variant="outlined"
-							{...register("name", { required: "El nombre es obligatorio" })}
-							error={!!errors.name}
-							helperText={errors.name?.message}
-						/>
-						<TextField
-							margin="dense"
-							label="Descripción"
-							fullWidth
-							variant="outlined"
-							{...register("description", {
-								required: "La descripción es obligatoria",
-							})}
-							error={!!errors.description}
-							helperText={errors.description?.message}
-						/>
-						<DialogActions>
-							<Button onClick={handleModalClose} color="primary">
-								Cancelar
-							</Button>
-							<Button type="submit" color="primary" variant="contained">
-								Guardar
-							</Button>
-						</DialogActions>
-					</form>
-				</DialogContent>
-			</Dialog>
+			{/* Modal para agregar/editar tipo de riesgo */}
+			{modal !== MODAL_STATES.CLOSED && (
+				<InsureRiskTypeForm
+					open={modal !== MODAL_STATES.CLOSED}
+					onClose={handleModalClose}
+					onSubmit={handleSubmit(onSubmit)}
+					register={register}
+					watch={watch}
+					errors={errors}
+					modalType={modal}
+				/>
+			)}
 		</Box>
 	);
 };

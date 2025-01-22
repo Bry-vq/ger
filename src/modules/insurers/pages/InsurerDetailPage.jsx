@@ -2,14 +2,7 @@ import * as React from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Box, Typography, IconButton, useTheme } from "@mui/material";
 import { InsureDetailHeader } from "../components/insure/InsureDetailHeader.jsx";
-import {
-	IconFileDescription,
-	IconArrowLeft,
-	IconCash,
-	IconBuilding,
-	IconCoins,
-	IconShieldLock,
-} from "@tabler/icons-react";
+import { IconArrowLeft } from "@tabler/icons-react";
 import { InsureDetail } from "../components/insure/InsureDetail.jsx";
 import { BranchesTable } from "../components/insure/InsureBranchesTable.jsx";
 import { useState } from "react";
@@ -17,14 +10,6 @@ import { useInsurer } from "../hooks/useInsurer.jsx";
 import { InsureRiskType } from "../components/insure/InsureRiskType.jsx";
 import { InsureRanges } from "../components/insure/InsureRanges.jsx";
 import { InsureRates } from "../components/insure/InsureRates.jsx";
-
-const tabs = [
-	{ title: "Detalles", icon: <IconFileDescription /> },
-	{ title: "Tipos de riesgo", icon: <IconShieldLock /> },
-	{ title: "Rangos de asegurabilidad", icon: <IconCoins /> },
-	{ title: "Tarifas", icon: <IconCash /> },
-	{ title: "Sucursales", icon: <IconBuilding /> },
-];
 
 export const InsurerDetailPage = () => {
 	const [activeTab, setActiveTab] = useState(0);
@@ -38,6 +23,7 @@ export const InsurerDetailPage = () => {
 	if (isInsurerFetching) {
 		return <div>Cargando...</div>;
 	}
+
 	return (
 		<Box sx={{ width: "100%", minHeight: "100%", p: 3 }}>
 			<Box sx={{ display: "flex", mb: 3, justifyContent: "space-between" }}>
@@ -54,7 +40,7 @@ export const InsurerDetailPage = () => {
 					</IconButton>
 					<Box>
 						<Typography variant="h4" fontWeight="bold">
-							Detalles de la Aseguradora: {insurer.name}
+							Detalles de la Aseguradora: {insurer.name}{" "}
 						</Typography>
 						<Box sx={{ display: "flex" }}>
 							<Typography
@@ -79,8 +65,7 @@ export const InsurerDetailPage = () => {
 			<InsureDetailHeader
 				userTitle="Aseguradora"
 				activeTab={activeTab}
-				onTabClicked={setActiveTab}
-				tabs={tabs}
+				setActiveTab={setActiveTab}
 			/>
 
 			{activeTab === 0 && <InsureDetail />}
