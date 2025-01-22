@@ -13,7 +13,10 @@ import {
 	DialogContent,
 	DialogTitle,
 	Typography,
+	useTheme,
 } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
+import { useResponsiveWidth } from "../../../theme/useResponsiveWidth.jsx";
 
 const insuredFormSchema = yup.object().shape({
 	name: yup.string().required("Razon Social Asegurado es obligatoria"),
@@ -29,6 +32,7 @@ const insuredFormSchema = yup.object().shape({
 export const InsuredPage = () => {
 	const [open, setOpen] = useState(false);
 	const { insureds, isInsuredsFetching, addInsured } = useInsured();
+	const width = useResponsiveWidth();
 
 	const {
 		register,
@@ -83,7 +87,7 @@ export const InsuredPage = () => {
 				fullWidth
 				sx={{
 					"& .MuiDialog-paper": {
-						width: "50%",
+						width: width,
 						maxWidth: "none",
 					},
 				}}
