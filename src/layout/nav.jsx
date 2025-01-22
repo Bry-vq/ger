@@ -128,17 +128,19 @@ const Nav = () => {
   );
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "start",
-        alignItems: "start",
-		padding: "16px",
-      }}
-    >
+    <>
       {isMobile ? (
-        <>
+        <Box
+          sx={{
+            position: "fixed",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "start",
+            alignItems: "start",
+            padding: "16px",
+            zIndex: 100
+          }}
+        >
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -160,24 +162,34 @@ const Nav = () => {
           >
             {drawer}
           </Drawer>
-        </>
+        </Box>
       ) : (
         <Box
           sx={{
-            width: 300,
-            backgroundColor: "grey.200",
-            height: "100vh",
-            position: "sticky",
-            top: 0,
-            borderRight: "2px solid #e0e0e0",
             display: "flex",
             flexDirection: "column",
+            justifyContent: "start",
+            alignItems: "start",
+            padding: "16px",
           }}
         >
-          {drawer}
+          <Box
+            sx={{
+              width: 300,
+              backgroundColor: "grey.200",
+              height: "100vh",
+              position: "sticky",
+              top: 0,
+              borderRight: "2px solid #e0e0e0",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            {drawer}
+          </Box>
         </Box>
       )}
-    </Box>
+    </>
   );
 };
 
