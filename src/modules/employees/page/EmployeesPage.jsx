@@ -60,9 +60,8 @@ export const EmployeesPage = () => {
 	};
 
 	const handleFormSubmit = (data) => {
-		addEmployee(data);
+		if (modal === MODAL_STATES.ADD) addEmployee(data);
 		reset();
-		setModal(MODAL_STATES.CLOSED);
 		handleModalClose();
 	};
 
