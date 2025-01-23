@@ -36,6 +36,7 @@ export const InsuredPage = () => {
 
 	const {
 		register,
+		watch,
 		handleSubmit,
 		reset,
 		control,
@@ -96,6 +97,7 @@ export const InsuredPage = () => {
 				<DialogContent>
 					<InsuredForm
 						register={register}
+						watch={watch}
 						errors={errors}
 						onSubmit={handleSubmit(handleFormSubmit)}
 						control={control}

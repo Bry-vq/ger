@@ -31,6 +31,7 @@ export const InsuredBranchesTable = () => {
 
 	const {
 		register,
+		watch,
 		handleSubmit,
 		reset,
 		setValue,
@@ -100,9 +101,10 @@ export const InsuredBranchesTable = () => {
 				<DialogContent>
 					<InsuredBranchForm
 						register={register}
+						watch={watch}
+						setValue={setValue}
 						onSubmit={handleSubmit(handleFormSubmit)}
 						errors={errors}
-						setValue={setValue}
 					/>
 				</DialogContent>
 				<DialogActions>

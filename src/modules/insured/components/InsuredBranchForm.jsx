@@ -5,14 +5,20 @@ import {
 	TextField,
 } from "@mui/material";
 import { CITES } from "../../../const/departments.js";
-import { restrictToColombianPhone } from "../../../utils/functions.js";
+import { MuiTelInput } from "mui-tel-input";
 
 const filterOptions = createFilterOptions({
 	stringify: (option) => option.name,
 	limit: 8,
 });
 
-export const InsuredBranchForm = ({ register, onSubmit, errors, setValue }) => {
+export const InsuredBranchForm = ({
+	register,
+	onSubmit,
+	errors,
+	setValue,
+	watch,
+}) => {
 	return (
 		<form id="insured-branch-form" onSubmit={onSubmit}>
 			<Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -53,14 +59,14 @@ export const InsuredBranchForm = ({ register, onSubmit, errors, setValue }) => {
 						<TextField {...params} label="Ciudad Asegurado" />
 					)}
 				/>
-				<TextField
+				<MuiTelInput
 					fullWidth
+					defaultCountry={"co"}
 					label="Teléfono"
-					{...register("phone")}
-					onChange={restrictToColombianPhone}
-					variant="outlined"
-					multiline
-					sx={{ mb: 2 }}
+					onChange={(value) => setValue("phone", value)}
+					value={watch("phone") || "+57"}
+					error={!!errors.phone}
+					helperText={errors.phone ? errors.phone.message : ""}
 				/>
 			</Box>
 		</form>

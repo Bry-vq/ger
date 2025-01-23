@@ -1,7 +1,7 @@
 import { Box, Button } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useRange } from "../../hooks/useRange.jsx";
+import { useRange } from "../../../hooks/useRange.jsx";
 import { useParams } from "react-router-dom";
 import { InsureRangesTable } from "./InsureRangesTable.jsx";
 import { InsureRangesForm } from "./InsureRangesForm.jsx";

@@ -15,9 +15,11 @@ import {
 } from "@mui/material";
 import { IconInfoCircle, IconPhone } from "@tabler/icons-react";
 import { useTheme } from "@mui/material/styles";
-import { useInsurer } from "../../hooks/useInsurer.jsx";
+import { useInsurer } from "../../../hooks/useInsurer.jsx";
 import { useParams } from "react-router-dom";
 import { IconEdit } from "@tabler/icons-react";
+import { InsureForm } from "./InsureForm.jsx";
+import { useForm } from "react-hook-form";
 
 export const InsureDetail = () => {
 	const theme = useTheme();
@@ -25,6 +27,31 @@ export const InsureDetail = () => {
 	const { insurer } = useInsurer(insurerId);
 	const [activeTab, setActiveTab] = useState(0);
 	const [open, setOpen] = useState(false);
+
+	console.log(insurer);
+
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+		watch,
+		setValue,
+	} = useForm({
+		defaultValues: {
+			name: insurer.name,
+			document: insurer.document,
+			email: insurer.email,
+			address: insurer.address,
+			department: insurer.department,
+			city: insurer.city,
+			phone: insurer.phone,
+		},
+	});
+
+	const handleFormSubmit = (data) => {
+		console.log("data", data);
+	};
 
 	const handleSelectTab = (tabIndex) => {
 		setActiveTab(tabIndex);
@@ -151,7 +178,10 @@ export const InsureDetail = () => {
 				</Box>
 				<Dialog
 					open={open}
-					onClose={() => setOpen(false)}
+					onClose={() => {
+						setOpen(false);
+						reset();
+					}}
 					maxWidth="md"
 					fullWidth
 					sx={{
@@ -162,9 +192,23 @@ export const InsureDetail = () => {
 					}}
 				>
 					<DialogTitle>Editar Aseguradora</DialogTitle>
-					<DialogContent>Aqui sera el modal de editar</DialogContent>
+					<DialogContent>
+						<InsureForm
+							register={register}
+							watch={watch}
+							errors={errors}
+							setValue={setValue}
+							onSubmit={handleSubmit(handleFormSubmit)}
+						/>
+					</DialogContent>
 					<DialogActions>
-						<Button onClick={() => setOpen(false)} color="primary">
+						<Button
+							onClick={() => {
+								setOpen(false);
+								reset();
+							}}
+							color="primary"
+						>
 							Cancelar
 						</Button>
 						<Button

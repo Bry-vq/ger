@@ -1,11 +1,11 @@
 import { Box, Button } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useRiskType } from "../../hooks/useRiskType.jsx";
+import { useRiskType } from "../../../hooks/useRiskType.jsx";
 import { useParams } from "react-router-dom";
 import { InsureRiskTypeForm } from "./InsureRiskTypeForm.jsx";
+import { MODAL_STATES } from "../../../../../utils/constanst.js";
 import { InsureRiskTypeTable } from "./InsureRiskTypeTable.jsx";
-import { MODAL_STATES } from "../../../../utils/constanst.js";
 
 export const InsureRiskType = () => {
 	const [anchorEl, setAnchorEl] = useState(null);

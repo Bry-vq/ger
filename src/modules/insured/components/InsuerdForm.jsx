@@ -11,10 +11,7 @@ import {
 } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { CITES } from "../../../const/departments";
-import {
-	restrictToColombianPhone,
-	restrictToNumbers,
-} from "../../../utils/functions";
+import { MuiTelInput } from "mui-tel-input";
 
 const documentTypes = [
 	{ id: 1, value: "CC", label: "Cédula de Ciudadanía" },
@@ -30,6 +27,7 @@ const filterOptions = createFilterOptions({
 export const InsuredForm = ({
 	register,
 	onSubmit,
+	watch,
 	errors,
 	control,
 	setValue,
@@ -88,14 +86,23 @@ export const InsuredForm = ({
 				fullWidth
 				label="Documento del Asegurado"
 				{...register("document")}
-				onChange={restrictToNumbers}
+				onKeyDown={(e) => {
+					if (
+						e.key === "." ||
+						e.key === "e" ||
+						e.key === "+" ||
+						e.key === "-"
+					) {
+						e.preventDefault();
+					}
+				}}
 				sx={{ mb: 2 }}
 				error={!!errors.document}
 				helperText={errors.document ? errors.document.message : ""}
 			/>
 			<Autocomplete
 				disablePortal
-				sx={{ mb: 2, mt: 1 }}
+				sx={{ mb: 2 }}
 				onChange={(_, newValue) => {
 					setValue("department", newValue.department);
 					setValue("city", newValue.name);
@@ -124,15 +131,7 @@ export const InsuredForm = ({
 				error={!!errors.address}
 				helperText={errors.address ? errors.address.message : ""}
 			/>
-			<TextField
-				fullWidth
-				label="Teléfono"
-				{...register("phone")}
-				onChange={restrictToColombianPhone}
-				variant="outlined"
-				multiline
-				sx={{ mb: 2 }}
-			/>
+
 			<TextField
 				fullWidth
 				label="Correo Electrónico"
@@ -141,6 +140,15 @@ export const InsuredForm = ({
 				error={!!errors.email}
 				helperText={errors.email ? errors.email.message : ""}
 				type="email"
+			/>
+			<MuiTelInput
+				fullWidth
+				defaultCountry={"co"}
+				label="Teléfono"
+				onChange={(value) => setValue("phone", value)}
+				value={watch("phone") || "+57"}
+				error={!!errors.phone}
+				helperText={errors.phone ? errors.phone.message : ""}
 			/>
 		</form>
 	);

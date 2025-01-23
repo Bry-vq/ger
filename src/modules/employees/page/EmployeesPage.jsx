@@ -28,9 +28,11 @@ export const EmployeesPage = () => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [selectedRowId, setSelectedRowId] = useState(null);
 	const [modal, setModal] = useState(MODAL_STATES.CLOSED);
-	const { employees, isEmployeesFetching, addEmployee } = useEmployee();
+	const { employees, isEmployeesFetching, addEmployee, updateEmployee } =
+		useEmployee();
 	const {
 		watch,
+		setValue,
 		register,
 		handleSubmit,
 		reset,
@@ -61,6 +63,7 @@ export const EmployeesPage = () => {
 
 	const handleFormSubmit = (data) => {
 		if (modal === MODAL_STATES.ADD) addEmployee(data);
+		if (modal === MODAL_STATES.EDIT) updateEmployee(data);
 		reset();
 		handleModalClose();
 	};
@@ -125,6 +128,7 @@ export const EmployeesPage = () => {
 				<DialogContent>
 					<EmployeesForm
 						register={register}
+						setValue={setValue}
 						watch={watch}
 						control={control}
 						errors={errors}

@@ -3,6 +3,7 @@ import { QUERY_KEYS } from "../../../utils/constanst.js";
 import {
 	addEmployeeService,
 	getEmployeesService,
+	updateEmployeeService,
 } from "../services/employeesServices.jsx";
 import { queryClient } from "../../../utils/queryClient.js";
 
@@ -25,9 +26,23 @@ export const useEmployee = () => {
 		},
 	});
 
+	const { mutateAsync: updateEmployee } = useMutation({
+		mutationFn: updateEmployeeService,
+		queryKey: [QUERY_KEYS.EMPLOYEES],
+		onSuccess: () => {
+			queryClient().invalidateQueries({
+				queryKey: [QUERY_KEYS.EMPLOYEES],
+			});
+		},
+		onError: (error) => {
+			console.error(error);
+		},
+	});
+
 	return {
 		employees,
 		isEmployeesFetching,
 		addEmployee,
+		updateEmployee,
 	};
 };

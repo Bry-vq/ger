@@ -1,6 +1,6 @@
-import { useInsurerBranches } from "../../hooks/useInsurerBranch.jsx";
+import { useInsurerBranches } from "../../../hooks/useInsurerBranch.jsx";
 import { IconDotsVertical, IconEye } from "@tabler/icons-react";
-import { BranchForm } from "../branch/BranchForm.jsx";
+import { BranchForm } from "../../branch/BranchForm.jsx";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DataGrid } from "@mui/x-data-grid";
 import { useForm } from "react-hook-form";
@@ -22,6 +22,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const branchesFormSchema = yup.object().shape({
+	name: yup.string().required("El nombre obligatoria"),
 	address: yup.string().required("Dirección es obligatoria"),
 	city: yup.string().required("Ciudad es obligatoria"),
 	department: yup.string().required("Departamento es obligatorio"),
@@ -39,6 +40,7 @@ export const BranchesTable = () => {
 
 	const {
 		register,
+		watch,
 		handleSubmit,
 		reset,
 		formState: { errors },
@@ -76,9 +78,11 @@ export const BranchesTable = () => {
 	};
 
 	const columns = [
-		{ field: "address", headerName: "Nombre Sucursal", flex: 1 },
+		{ field: "name", headerName: "Nombre Sucursal", flex: 1 },
+		{ field: "address", headerName: "Dirección", flex: 1 },
 		{ field: "city", headerName: "Ciudad", flex: 1 },
 		{ field: "department", headerName: "Departamento", flex: 1 },
+		{ field: "phone", headerName: "Teléfono", flex: 1 },
 		{
 			field: "actions",
 			headerName: "",
@@ -150,6 +154,7 @@ export const BranchesTable = () => {
 				<DialogContent>
 					<BranchForm
 						register={register}
+						watch={watch}
 						errors={errors}
 						onSubmit={handleSubmit(handleFormSubmit)}
 						setValue={setValue}

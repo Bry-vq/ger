@@ -1,10 +1,9 @@
 import { Box, IconButton, Menu, MenuItem, Paper } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { IconTrash, IconDotsVertical, IconEdit } from "@tabler/icons-react";
-import { formatCurrency } from "../../../../utils/functions.js";
-import theme from "../../../../theme/theme.js";
+import theme from "../../../../../theme/theme.js";
 
-export const InsureRangesTable = ({
+export const InsureRiskTypeTable = ({
 	rows,
 	onEdit,
 	anchorEl,
@@ -20,18 +19,8 @@ export const InsureRangesTable = ({
 	};
 
 	const columns = [
-		{
-			field: "rangeStart",
-			headerName: "Valor Inicial",
-			flex: 2,
-			renderCell: (params) => formatCurrency(params.row.rangeStart),
-		},
-		{
-			field: "rangeEnd",
-			headerName: "Valor Final",
-			flex: 2,
-			renderCell: (params) => formatCurrency(params.row.rangeEnd),
-		},
+		{ field: "name", headerName: "Tipo de Riesgo", flex: 2 },
+		{ field: "description", headerName: "Descripción", flex: 3 },
 		{
 			field: "actions",
 			headerName: "",

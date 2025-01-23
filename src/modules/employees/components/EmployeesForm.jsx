@@ -7,10 +7,8 @@ import {
 	Typography,
 } from "@mui/material";
 import { Controller } from "react-hook-form";
-import {
-	restrictToColombianPhone,
-	restrictToNumbers,
-} from "../../../utils/functions";
+import { restrictToColombianPhone } from "../../../utils/functions";
+import { MuiTelInput } from "mui-tel-input";
 
 const documentTypes = [
 	{ id: 1, value: "CC", label: "Cédula de Ciudadanía" },
@@ -21,6 +19,7 @@ const documentTypes = [
 
 export const EmployeesForm = ({
 	register,
+	setValue,
 	control,
 	errors,
 	onSubmit,
@@ -50,6 +49,7 @@ export const EmployeesForm = ({
 					name="documentType"
 					labelId="simple-select-label"
 					control={control}
+					defaultValue={watch("documentType")}
 					render={({ field }) => (
 						<Select
 							{...field}
@@ -82,7 +82,16 @@ export const EmployeesForm = ({
 				value={watch("document")}
 				label="Documento"
 				{...register("document")}
-				onChange={restrictToNumbers}
+				onKeyDown={(e) => {
+					if (
+						e.key === "." ||
+						e.key === "e" ||
+						e.key === "+" ||
+						e.key === "-"
+					) {
+						e.preventDefault();
+					}
+				}}
 				variant="outlined"
 				multiline
 				sx={{ mb: 2 }}
@@ -96,15 +105,14 @@ export const EmployeesForm = ({
 				multiline
 				sx={{ mb: 2 }}
 			/>
-			<TextField
+			<MuiTelInput
 				fullWidth
-				value={watch("phone")}
+				defaultCountry={"co"}
 				label="Teléfono"
-				{...register("phone")}
-				onChange={restrictToColombianPhone}
-				variant="outlined"
-				multiline
-				sx={{ mb: 2 }}
+				onChange={(value) => setValue("phone", value)}
+				value={watch("phone") || "+57"}
+				error={!!errors.phone}
+				helperText={errors.phone ? errors.phone.message : ""}
 			/>
 		</form>
 	);

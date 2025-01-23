@@ -41,3 +41,17 @@ export const addEmployeeService = async (data) => {
 		throw new Error(handleAxiosError(error));
 	}
 };
+
+export const updateEmployeeService = async (data) => {
+	try {
+		const axiosClient = AxiosClient();
+		const response = await axiosClient.put("/employees", data);
+
+		if (!response.data)
+			throw new Error("Failed to update employee. No response data.");
+
+		return response.data;
+	} catch (error) {
+		throw new Error(handleAxiosError(error));
+	}
+};

@@ -1,11 +1,11 @@
 import {
+	Autocomplete,
 	Box,
 	createFilterOptions,
 	TextField,
-	Autocomplete,
 } from "@mui/material";
-import { restrictToColombianPhone } from "../../../../utils/functions.js";
-import { CITES } from "../../../../const/departments.js";
+import { CITES } from "../../../../../const/departments";
+import { restrictToColombianPhone } from "../../../../../utils/functions";
 import { MuiTelInput } from "mui-tel-input";
 
 const filterOptions = createFilterOptions({
@@ -13,16 +13,42 @@ const filterOptions = createFilterOptions({
 	limit: 8,
 });
 
-export const BranchForm = ({ register, onSubmit, errors, setValue, watch }) => {
+export const InsureForm = ({ register, onSubmit, errors, setValue, watch }) => {
+	console.log("watch", watch());
 	return (
-		<form id="branch-form" onSubmit={onSubmit}>
-			<Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+		<form id="insure-form" onSubmit={onSubmit}>
+			<Box display="flex" flexDirection="column" gap={2}>
 				<TextField
-					label="Nombre Sucursal"
+					label="Nombre"
 					{...register("name")}
 					error={!!errors.name}
 					helperText={errors.name ? errors.name.message : ""}
-					required
+					value={watch("name")}
+				/>
+				<TextField
+					label="Documento"
+					{...register("document")}
+					value={watch("document")}
+					type="number"
+					onKeyDown={(e) => {
+						if (
+							e.key === "." ||
+							e.key === "e" ||
+							e.key === "+" ||
+							e.key === "-"
+						) {
+							e.preventDefault();
+						}
+					}}
+					error={!!errors.document}
+					helperText={errors.document ? errors.document.message : ""}
+				/>
+				<TextField
+					label="Email"
+					{...register("email")}
+					error={!!errors.email}
+					helperText={errors.email ? errors.email.message : ""}
+					value={watch("email")}
 				/>
 				<Autocomplete
 					disablePortal
@@ -35,21 +61,26 @@ export const BranchForm = ({ register, onSubmit, errors, setValue, watch }) => {
 					options={CITES}
 					getOptionLabel={(option) => `${option.name} - ${option.department}`}
 					renderOption={(props, option) => {
-						const { key, ...restProps } = props;
+						const { ...optionProps } = props;
 						return (
-							<Box key={option.id} component="li" {...restProps}>
+							<Box key={option.id} component="li" {...optionProps}>
 								{`${option.name} - ${option.department}`}
 							</Box>
 						);
 					}}
+					defaultValue={
+						watch("city")
+							? CITES.find((city) => city.name === watch("city"))
+							: null
+					}
 					renderInput={(params) => <TextField {...params} label="Ciudad" />}
 				/>
 				<TextField
-					label="Direccion"
+					label="Dirección"
 					{...register("address")}
 					error={!!errors.address}
 					helperText={errors.address ? errors.address.message : ""}
-					required
+					value={watch("address")}
 				/>
 				<MuiTelInput
 					defaultCountry={"co"}
