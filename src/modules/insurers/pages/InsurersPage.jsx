@@ -9,11 +9,11 @@ import {
 } from "@mui/material";
 import { InsurersTable } from "../components/insurer/insurerDetail/InsuresTable";
 import { InsureForm } from "../components/insurer/insurerDetail/InsureForm";
-import { useInsurers } from "../hooks/useInsurers";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
+import { useInsurer } from "../hooks/useInsurers.jsx";
 
 const insureFormSchema = yup.object().shape({
 	name: yup.string().required("Nombre es obligatorio"),
@@ -26,7 +26,7 @@ const insureFormSchema = yup.object().shape({
 });
 
 export const InsuresPage = () => {
-	const { insures, isInsuresFetching, addInsurer } = useInsurers();
+	const { insures, isInsuresFetching, addInsurer } = useInsurer();
 	const [open, setOpen] = useState(false);
 	const {
 		register,

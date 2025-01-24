@@ -15,20 +15,19 @@ import {
 } from "@mui/material";
 import { IconInfoCircle, IconPhone } from "@tabler/icons-react";
 import { useTheme } from "@mui/material/styles";
-import { useInsurer } from "../../../hooks/useInsurer.jsx";
+
 import { useParams } from "react-router-dom";
 import { IconEdit } from "@tabler/icons-react";
 import { InsureForm } from "./InsureForm.jsx";
 import { useForm } from "react-hook-form";
+import { useInsurer } from "../../../hooks/useInsurers.jsx";
 
 export const InsureDetail = () => {
 	const theme = useTheme();
 	const { insurerId } = useParams();
-	const { insurer } = useInsurer(insurerId);
+	const { insurer, updateInsurer } = useInsurer(insurerId);
 	const [activeTab, setActiveTab] = useState(0);
 	const [open, setOpen] = useState(false);
-
-	console.log(insurer);
 
 	const {
 		register,
@@ -50,7 +49,13 @@ export const InsureDetail = () => {
 	});
 
 	const handleFormSubmit = (data) => {
-		console.log("data", data);
+		const finalData = {
+			...data,
+			id: insurerId,
+		};
+		updateInsurer(finalData);
+		setOpen(false);
+		reset();
 	};
 
 	const handleSelectTab = (tabIndex) => {

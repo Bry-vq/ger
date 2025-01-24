@@ -59,3 +59,18 @@ export const addInsurerService = async (data, token = null) => {
 		throw new Error(handleAxiosError(error));
 	}
 };
+
+export const updateInsurerService = async (data, token = null) => {
+	try {
+		const axiosClient = AxiosClient();
+		const requestHeaders = requestHeaderMaker(token);
+		const response = await axiosClient.put("/insurers", data, requestHeaders);
+
+		if (!response.data)
+			throw new Error("Failed to update insurer. No response data.");
+
+		return response.data;
+	} catch (error) {
+		throw new Error(handleAxiosError(error));
+	}
+}

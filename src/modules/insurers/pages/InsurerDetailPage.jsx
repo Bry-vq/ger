@@ -6,10 +6,11 @@ import { IconArrowLeft } from "@tabler/icons-react";
 import { InsureDetail } from "../components/insurer/insurerDetail/InsureDetail.jsx";
 import { BranchesTable } from "../components/insurer/branches/InsureBranchesTable.jsx";
 import { useState } from "react";
-import { useInsurer } from "../hooks/useInsurer.jsx";
+
 import { InsureRiskType } from "../components/insurer/riskType/InsureRiskType.jsx";
 import { InsureRates } from "../components/insurer/rate/InsurerRates.jsx";
 import { InsureRanges } from "../components/insurer/range/InsureRanges.jsx";
+import { useInsurer } from "../hooks/useInsurers.jsx";
 
 export const InsurerDetailPage = () => {
 	const [activeTab, setActiveTab] = useState(0);
