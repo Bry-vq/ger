@@ -7,15 +7,19 @@ import { IconDotsVertical, IconEdit } from "@tabler/icons-react";
 import { formatCurrency } from "../../../../../utils/functions.js";
 import { useRate } from "../../../hooks/useRate.jsx";
 import { useParams } from "react-router-dom";
+import { MODAL_STATES } from "../../../../../utils/constanst.js";
+import { InsurerRateForm } from "./InsurerRateForm.jsx";
 
 export const InsureRates = () => {
 	const [anchorEl, setAnchorEl] = useState(null); // Anchor element for menu
 	const [selectedRowId, setSelectedRowId] = useState(null);
 	const [isOptionsMenuOpen, setIsOptionsMenuOpen] = useState(false);
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [modal, setModal] = useState(MODAL_STATES.CLOSED);
 	const { insurerId } = useParams();
-	const { rates, ranges, riskTypes, createRate } = useRate(insurerId);
+	const { rates, ranges, riskTypes, createRate, updateRate } =
+		useRate(insurerId);
 	const {
+		watch,
 		register,
 		control,
 		handleSubmit,
@@ -34,15 +38,25 @@ export const InsureRates = () => {
 		setIsOptionsMenuOpen(false);
 	};
 
-	const handleModalOpen = () => setIsModalOpen(true);
-
 	const handleModalClose = () => {
-		setIsModalOpen(false);
-		reset();
+		setModal(MODAL_STATES.CLOSED);
+		reset({
+			id: undefined,
+			riskTypeId: "",
+			insuredValue: "",
+			fee: "",
+			year: "",
+		});
 	};
 
 	const onSubmit = (data) => {
-		createRate({ ...data, insurerId, year: Number(data.year) });
+		const finalData = {
+			...data,
+			insurerId: Number.parseInt(insurerId),
+		};
+		console.log(finalData);
+		if (modal === MODAL_STATES.ADD) createRate(finalData);
+		if (modal === MODAL_STATES.EDIT) updateRate(finalData);
 		handleModalClose();
 	};
 
@@ -101,7 +115,20 @@ export const InsureRates = () => {
 							"aria-labelledby": "basic-button",
 						}}
 					>
-						<MenuItem onClick={handleMenuOptionClose}>
+						<MenuItem
+							onClick={() => {
+								reset({
+									id: params.row.id,
+									riskTypeId: params.row.riskTypeId,
+									insurabilityRangeId: params.row.insurabilityRangeId,
+									insuredValue: params.row.insuredValue,
+									fee: params.row.fee,
+									year: params.row.year,
+								});
+								setModal(MODAL_STATES.EDIT);
+								handleMenuOptionClose();
+							}}
+						>
 							<IconEdit size={24} />
 							Editar
 						</MenuItem>
@@ -115,7 +142,11 @@ export const InsureRates = () => {
 		<Box>
 			{/* Button to open the modal */}
 			<Box display="flex" justifyContent="flex-end" mb={2}>
-				<Button variant="contained" color="primary" onClick={handleModalOpen}>
+				<Button
+					variant="contained"
+					color="primary"
+					onClick={() => setModal(MODAL_STATES.ADD)}
+				>
 					Agregar Tarifa
 				</Button>
 			</Box>
@@ -126,6 +157,19 @@ export const InsureRates = () => {
 			</Paper>
 
 			{/* Modal for adding a new insurance rate */}
+			{modal !== MODAL_STATES.CLOSED && (
+				<InsurerRateForm
+					open={modal !== MODAL_STATES.CLOSED}
+					onClose={handleModalClose}
+					onSubmit={handleSubmit(onSubmit)}
+					control={control}
+					register={register}
+					errors={errors}
+					watch={watch}
+					ranges={ranges}
+					riskTypes={riskTypes}
+				/>
+			)}
 		</Box>
 	);
 };

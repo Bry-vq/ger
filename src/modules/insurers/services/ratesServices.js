@@ -42,3 +42,17 @@ export const addRateService = async (rate) => {
 		throw new Error(handleAxiosError(error));
 	}
 };
+
+export const updateRateService = async (rate) => {
+	try {
+		const axiosClient = AxiosClient();
+		const response = await axiosClient.put("/rates", rate);
+
+		if (!response.data)
+			throw new Error("Failed to update rate. No response data.");
+
+		return response.data;
+	} catch (error) {
+		throw new Error(handleAxiosError(error));
+	}
+}

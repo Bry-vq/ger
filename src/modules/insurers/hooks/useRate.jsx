@@ -2,7 +2,11 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { getInsurabilityRangesService } from "../services/rangesServices.js";
 import { QUERY_KEYS } from "../../../utils/constanst.js";
 import { getRiskTypesService } from "../services/riskTypeServices.js";
-import { addRateService, getRatesService } from "../services/ratesServices.js";
+import {
+	addRateService,
+	getRatesService,
+	updateRateService,
+} from "../services/ratesServices.js";
 import { queryClient } from "../../../utils/queryClient.js";
 import { formatCurrency } from "../../../utils/functions.js";
 
@@ -10,6 +14,14 @@ export const useRate = (insurerId) => {
 	// Create rate
 	const { mutate: createRate } = useMutation({
 		mutationFn: addRateService,
+		onSuccess: () => {
+			queryClient().invalidateQueries(QUERY_KEYS.RATES);
+		},
+	});
+
+	// Update rate
+	const { mutate: updateRate } = useMutation({
+		mutationFn: updateRateService,
 		onSuccess: () => {
 			queryClient().invalidateQueries(QUERY_KEYS.RATES);
 		},
@@ -67,6 +79,7 @@ export const useRate = (insurerId) => {
 		rates: flattenedRates,
 		isRatesFetching,
 		createRate,
+		updateRate,
 		ranges: mappedRanges,
 		riskTypes: mappedRiskTypes,
 		isRangesFetching,

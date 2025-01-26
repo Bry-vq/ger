@@ -13,7 +13,6 @@ import {
 	DialogContent,
 	DialogTitle,
 	Typography,
-	useTheme,
 } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import { useResponsiveWidth } from "../../../theme/useResponsiveWidth.jsx";

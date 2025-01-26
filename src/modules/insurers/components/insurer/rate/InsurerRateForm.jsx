@@ -7,6 +7,8 @@ import {
 	Select,
 	FormControl,
 	InputLabel,
+	Button,
+	MenuItem,
 } from "@mui/material";
 import { Controller } from "react-hook-form";
 
@@ -19,6 +21,8 @@ export const InsurerRateForm = ({
 	watch,
 	errors,
 	modalType,
+	riskTypes,
+	ranges,
 }) => {
 	return (
 		<Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
@@ -120,7 +124,7 @@ export const InsurerRateForm = ({
 					/>
 					{/* Dialog actions */}
 					<DialogActions>
-						<Button onClick={handleModalClose} color="primary">
+						<Button onClick={onClose} color="primary">
 							Cancelar
 						</Button>
 						<Button type="submit" color="primary" variant="contained">
