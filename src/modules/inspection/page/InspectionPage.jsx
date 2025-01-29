@@ -136,6 +136,12 @@ export const InspectionPage = () => {
 			extraPaymentForAccommodation: "",
 			differentiatedPayment: "",
 			comments: "",
+			advisorCompany: "", // Compañía asesora
+			serviceAssigned: "", // Servicio asignado
+			jobType: "", // Tipo de trabajo
+			travelExpensesStatus: "", // Estado de gastos de viaje
+			insurerRateId: null, // ID de la tasa del asegurador (puede ser null)
+			ica: false, // Checkbox de ICA (por defecto en falso)
 		},
 	});
 

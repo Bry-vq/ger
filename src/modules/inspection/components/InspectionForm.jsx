@@ -1,5 +1,7 @@
 import {
+	Checkbox,
 	FormControl,
+	FormControlLabel,
 	InputLabel,
 	MenuItem,
 	Select,
@@ -18,6 +20,7 @@ export const InspectionForm = ({
 	insuredsSelect,
 	insuredBranchesSelect,
 	employeesSelect,
+	suscriptorsSelect,
 	riskTypesSelect,
 	ratesByRisk,
 	totalInsuredValue,
@@ -50,6 +53,8 @@ export const InspectionForm = ({
 		}
 	}, [ratesByRisk, totalInsuredValue, setValue]);
 
+	console.log("ica", watch("ica"));
+
 	return (
 		<form id="inspection-form" onSubmit={onSubmit}>
 			{/* Compañía Asesora (JAC, IAR)*/}
@@ -64,7 +69,6 @@ export const InspectionForm = ({
 				</InputLabel>
 				<Controller
 					name="advisorCompany"
-					labelId="simple-select-label-insured"
 					control={control}
 					render={({ field }) => (
 						<Select
@@ -100,7 +104,6 @@ export const InspectionForm = ({
 				</InputLabel>
 				<Controller
 					name="serviceAssigned"
-					labelId="simple-select-label-service"
 					control={control}
 					render={({ field }) => (
 						<Select
@@ -150,7 +153,6 @@ export const InspectionForm = ({
 				<InputLabel id="simple-select-label-job">Tipo de Trabajo</InputLabel>
 				<Controller
 					name="jobType"
-					labelId="simple-select-label-job"
 					control={control}
 					render={({ field }) => (
 						<Select {...field} label="Tipo de Trabajo" error={!!errors.jobType}>
@@ -186,7 +188,6 @@ export const InspectionForm = ({
 				<InputLabel id="simple-select-label-employee">Inspector</InputLabel>
 				<Controller
 					name="employeeId"
-					labelId="simple-select-label-employee"
 					control={control}
 					render={({ field }) => (
 						<Select {...field} label="Inspector" error={!!errors.employeeId}>
@@ -215,7 +216,6 @@ export const InspectionForm = ({
 				<InputLabel id="simple-select-label-insured">Asegurado</InputLabel>
 				<Controller
 					name="insuredId"
-					labelId="simple-select-label-insured"
 					control={control}
 					render={({ field }) => (
 						<Select {...field} label="Asegurado" error={!!errors.insuredId}>
@@ -246,7 +246,6 @@ export const InspectionForm = ({
 				</InputLabel>
 				<Controller
 					name="insuredBranchId"
-					labelId="simple-select-label-insured-branch"
 					control={control}
 					render={({ field }) => (
 						<Select
@@ -281,7 +280,6 @@ export const InspectionForm = ({
 				</InputLabel>
 				<Controller
 					name="insurerId"
-					labelId="simple-select-label-insurer"
 					control={control}
 					render={({ field }) => (
 						<Select
@@ -314,7 +312,6 @@ export const InspectionForm = ({
 				<InputLabel id="simple-select-label-branch">Sucursal</InputLabel>
 				<Controller
 					name="branchId"
-					labelId="simple-select-label-branch"
 					control={control}
 					render={({ field }) => (
 						<Select {...field} label="Sucursal" error={!!errors.branchId}>
@@ -331,6 +328,29 @@ export const InspectionForm = ({
 						{errors.branchId.message}
 					</Typography>
 				)}
+			</FormControl>
+
+			{/* Suscriptor */}
+			<FormControl
+				fullWidth
+				margin="dense"
+				error={!!errors.suscriptor}
+				sx={{ mb: 2 }}
+			>
+				<InputLabel id="simple-select-label-suscriptor">Suscriptor</InputLabel>
+				<Controller
+					name="suscriptorId"
+					control={control}
+					render={({ field }) => (
+						<Select {...field} label="Suscriptor" error={!!errors.suscriptorId}>
+							{suscriptorsSelect?.map((suscriptor) => (
+								<MenuItem key={suscriptor.value} value={suscriptor.value}>
+									{suscriptor.label}
+								</MenuItem>
+							))}
+						</Select>
+					)}
+				/>
 			</FormControl>
 
 			{/* Centro de Costo */}
@@ -445,7 +465,55 @@ export const InspectionForm = ({
 				helperText={errors.coordinates?.message}
 			/>
 
-			{/* Tipo de Construcción */}
+			{/* Tipo de Construcción - Select 1. MUROS DE MAMPOSTERÍA SIMPLE, ADOBE Y BAHAREQUE
+			2. ESTRUCTURAS MIXTAS PÓRTICOS Y MUROS
+			3. SISTEMA RIGIZADO
+			4. MUROS - MAMPOSTERÍA REFORZADA
+			5. PÓRTICOS DE ACERO
+			 */}
+			<FormControl
+				fullWidth
+				margin="dense"
+				error={!!errors.constructionType}
+				sx={{ mb: 2 }}
+			>
+				<InputLabel id="simple-select-label-construction-type">
+					Tipo de Construcción
+				</InputLabel>
+				<Controller
+					name="constructionType"
+					control={control}
+					render={({ field }) => (
+						<Select
+							{...field}
+							label="Tipo de Construcción"
+							error={!!errors.constructionType}
+						>
+							<MenuItem
+								key={1}
+								value={"1. MUROS DE MAMPOSTERÍA SIMPLE, ADOBE Y BAHAREQUE"}
+							>
+								1. MUROS DE MAMPOSTERÍA SIMPLE, ADOBE Y BAHAREQUE
+							</MenuItem>
+							<MenuItem
+								key={2}
+								value={"2. ESTRUCTURAS MIXTAS PÓRTICOS Y MUROS"}
+							>
+								2. ESTRUCTURAS MIXTAS PÓRTICOS Y MUROS
+							</MenuItem>
+							<MenuItem key={3} value={"3. SISTEMA RIGIZADO"}>
+								3. SISTEMA RIGIZADO
+							</MenuItem>
+							<MenuItem key={4} value={"4. MUROS - MAMPOSTERÍA REFORZADA"}>
+								4. MUROS - MAMPOSTERÍA REFORZADA
+							</MenuItem>
+							<MenuItem key={5} value={"5. PÓRTICOS DE ACERO"}>
+								5. PÓRTICOS DE ACERO
+							</MenuItem>
+						</Select>
+					)}
+				/>
+			</FormControl>
 
 			{/* Año de Construcción */}
 			<TextField
@@ -525,7 +593,6 @@ export const InspectionForm = ({
 				</InputLabel>
 				<Controller
 					name="travelExpensesStatus"
-					labelId="simple-select-label-travel-expenses-status"
 					control={control}
 					render={({ field }) => (
 						<Select
@@ -547,6 +614,115 @@ export const InspectionForm = ({
 				/>
 			</FormControl>
 
+			{/* Rama/Riesgo - Select con TRDM, INCENDIO, AMIT, TRC, TRMYE, TRDME, SOLIHOGAR, SOLIPYME} */}
+			<FormControl
+				fullWidth
+				margin="dense"
+				error={!!errors.riskBranch}
+				sx={{ mb: 2 }}
+			>
+				<InputLabel id="simple-select-label-risk-branch">
+					Rama/Riesgo
+				</InputLabel>
+				<Controller
+					name="riskBranch"
+					control={control}
+					render={({ field }) => (
+						<Select {...field} label="Rama/Riesgo" error={!!errors.riskBranch}>
+							<MenuItem key={1} value={"TRDM"}>
+								TRDM
+							</MenuItem>
+							<MenuItem key={2} value={"INCENDIO"}>
+								INCENDIO
+							</MenuItem>
+							<MenuItem key={3} value={"AMIT"}>
+								AMIT
+							</MenuItem>
+							<MenuItem key={4} value={"TRC"}>
+								TRC
+							</MenuItem>
+							<MenuItem key={5} value={"TRMYE"}>
+								TRMYE
+							</MenuItem>
+							<MenuItem key={6} value={"TRDME"}>
+								TRDME
+							</MenuItem>
+							<MenuItem key={7} value={"SOLIHOGAR"}>
+								SOLIHOGAR
+							</MenuItem>
+							<MenuItem key={8} value={"SOLIPYME"}>
+								SOLIPYME
+							</MenuItem>
+						</Select>
+					)}
+				/>
+			</FormControl>
+
+			{/* Recomendaciones - Select con A. Critica, B. Necesaria, C. Complementaria
+			D. Preventiva, E. Multiples
+			*/}
+			<FormControl
+				fullWidth
+				margin="dense"
+				error={!!errors.recommendations}
+				sx={{ mb: 2 }}
+			>
+				<InputLabel id="simple-select-label-recommendations">
+					Recomendaciones
+				</InputLabel>
+				<Controller
+					name="recommendations"
+					control={control}
+					render={({ field }) => (
+						<Select
+							{...field}
+							label="Recomendaciones"
+							error={!!errors.recommendations}
+						>
+							<MenuItem key={1} value={"A. Critica"}>
+								A. Critica
+							</MenuItem>
+							<MenuItem key={2} value={"B. Necesaria"}>
+								B. Necesaria
+							</MenuItem>
+							<MenuItem key={3} value={"C. Complementaria"}>
+								C. Complementaria
+							</MenuItem>
+							<MenuItem key={4} value={"D. Preventiva"}>
+								D. Preventiva
+							</MenuItem>
+							<MenuItem key={5} value={"E. Multiples"}>
+								E. Multiples
+							</MenuItem>
+						</Select>
+					)}
+				/>
+			</FormControl>
+
+			{/* Garantias - Select con SI y NO */}
+			<FormControl
+				fullWidth
+				margin="dense"
+				error={!!errors.guarantees}
+				sx={{ mb: 2 }}
+			>
+				<InputLabel id="simple-select-label-guarantees">Garantias</InputLabel>
+				<Controller
+					name="guarantees"
+					control={control}
+					render={({ field }) => (
+						<Select {...field} label="Garantias" error={!!errors.guarantees}>
+							<MenuItem key={1} value={"SI"}>
+								SI
+							</MenuItem>
+							<MenuItem key={2} value={"NO"}>
+								NO
+							</MenuItem>
+						</Select>
+					)}
+				/>
+			</FormControl>
+
 			{/* Tipo de Riesgo */}
 			<FormControl
 				fullWidth
@@ -559,7 +735,6 @@ export const InspectionForm = ({
 				</InputLabel>
 				<Controller
 					name="riskTypeId"
-					labelId="simple-select-label-employee"
 					control={control}
 					render={({ field }) => (
 						<Select
@@ -606,6 +781,7 @@ export const InspectionForm = ({
 					/>
 				)}
 			/>
+
 			{/* Tarifa */}
 			<TextField
 				fullWidth
@@ -620,7 +796,23 @@ export const InspectionForm = ({
 				}
 			/>
 
-			
+			{/* ICA checkbox true or false*/}
+			<Controller
+				name="ica"
+				control={control}
+				render={({ field }) => (
+					<FormControlLabel
+						control={
+							<Checkbox
+								{...field}
+								checked={field.value} // Usa checked en lugar de defaultChecked
+								onChange={(e) => field.onChange(e.target.checked)}
+							/>
+						}
+						label="APLICA ICA%"
+					/>
+				)}
+			/>
 
 			{/* Pago Diferenciado */}
 			<TextField
