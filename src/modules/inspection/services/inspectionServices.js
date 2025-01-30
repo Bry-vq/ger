@@ -1,4 +1,5 @@
 import { AxiosClient } from "../../../utils/axiosClient.js";
+import { handleAxiosError } from "../../../utils/axiosError.js";
 
 export const getInspectionsService = async () => {
     try {
