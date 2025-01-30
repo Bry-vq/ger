@@ -54,7 +54,7 @@ const LoginPage = () => {
 						}}
 					>
 						<Typography variant="h5" fontWeight={600}>
-							GESIAR
+							GER
 						</Typography>
 					</Box>
 					<Typography variant="h4" textAlign="center">

@@ -90,8 +90,11 @@ const Nav = () => {
 				borderRadius: "8px",
 			}}
 		>
-			<Typography variant="h5" fontWeight={600}>
-				GESIAR
+			<Typography variant="h4" fontWeight={600}>
+				GER
+			</Typography>
+			<Typography variant="body1" textAlign="center">
+				Administrador y Gestor de Riesgos
 			</Typography>
 		</StyledBox>
 	);
